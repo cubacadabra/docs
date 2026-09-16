@@ -41,9 +41,12 @@ navigation/type checking; the builder resolves SDK modules from its canonical
 toolchain. Source projects use `src/main.luau`; built packages use the bundled
 entry `game.luau`.
 
-An optional source `src/server.luau` is bundled separately as `authority.luau`
-when the manifest requests it. This is a rules artifact for a trusted host,
-not a secret and not part of the client game entry.
+When `src/server.luau` exists, the builder automatically bundles it separately
+as `authority.luau` and records `package.authorityEntry` in the generated
+manifest and package descriptor. Declaring an authority entry without that
+source file is an error. This is a rules artifact for a trusted host, not a
+secret and not part of the client game entry. See the
+[builder implementation at the reviewed revision](https://github.com/cubacadabra/tools/blob/4c2c2f1683c7/src/cubacadabra/game_builder.py#L934-L950).
 
 ## Ownership boundaries
 

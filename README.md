@@ -43,8 +43,19 @@ relevant material from the sibling repositories as of **September 16, 2026**.
 
 ## How to read this guide
 
-“Implemented” means the owning repository documents or tests the behavior.
-“Planned” and “proposed” do not promise a shipped feature. When a detail here
-conflicts with code or a current contract test, the implementation and test in
-the owning repository win. See [Sources and resolved conflicts](sources.md)
-before treating an older plan or review as a current requirement.
+Use these status words carefully:
+
+- **Implemented** means the behavior exists in the current code. A unit test
+  can establish a component behavior, but does not show that a product path
+  uses it.
+- **Integrated** means the behavior is connected to its intended application,
+  service, or host path.
+- **Host-verified** means that path has been exercised on the named platform or
+  device; target compilation alone is not host verification.
+- **Planned** means proposed work, not a shipped feature.
+
+“Available to users” or “production” needs evidence of integration and release
+status, plus host verification where the claim depends on a platform. A source
+document or unit test alone does not establish that status. See
+[Sources and resolved conflicts](sources.md) for precedence, reviewed source
+revisions, and the disposition of every inventoried document.
