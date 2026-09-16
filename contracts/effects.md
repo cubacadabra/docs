@@ -1,7 +1,6 @@
 # Game-owned world effects
 
 **Status:** current bounded effects contract for the reviewed runtime.
-**Migrated from:** `rust/docs/effects-runtime.md`.
 
 Rust renders, bounds, and advances effects, while each game owns their visual
 composition. An interaction without a `visual` uses a neutral ring. Setting

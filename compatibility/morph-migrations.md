@@ -1,7 +1,6 @@
 # Morph Phase 0 baseline inventory
 
 **Status:** historical inventory captured 2026-09-10. Preserve the explicit legacy ID mapping and unknown-ID rejection; recheck asset inventories and pending capture claims against code before treating them as current.
-**Migrated from:** `rust/docs/morph_baseline_inventory.md`.
 
 Status: inventory captured September 10, 2026. Rendered baseline images and
 device timings are still pending the existing `dev-showcase` validation-fixture

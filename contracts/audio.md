@@ -1,7 +1,6 @@
 # Game-owned audio
 
 **Status:** experimental one-shot audio contract while SDK versions remain below 1.0.
-**Migrated from:** `rust/docs/audio-runtime.md`.
 
 The runtime exposes a deliberately small one-shot sound seam for game packages.
 Games name sounds in their manifest and trigger those names from Luau; scripts do

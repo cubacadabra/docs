@@ -1,7 +1,6 @@
 # Shared client runtime
 
 **Contract status:** current shared client/session contract. Hosts must follow this boundary.
-**Migrated from:** `rust/docs/client-runtime.md`.
 
 `cubacadabra-client` is the common engine-facing client used by all four
 interactive hosts. It exists so Swift, Kotlin, JavaScript, and Studio do not

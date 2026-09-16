@@ -1,7 +1,6 @@
 # Storage architecture for the first public MVP
 
 **Status:** current MVP storage guidance. Free-plan allocations are a dated snapshot checked September 2026 and must be rechecked before operational budgeting.
-**Migrated from:** `backend/docs/storage-architecture.md`.
 
 The default production layout should remain one SQLite-backed Durable Object
 per live game instance, D1 for durable relational product data, R2 for immutable

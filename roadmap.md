@@ -91,6 +91,14 @@ privacy/data deletion, resource limits, and support operations before broad
 public creator distribution. Current block/report endpoints do not complete
 that policy.
 
+### 8. Deliver the shared avatar editor surface
+
+The backend catalog and revision-checked saved-appearance paths are current
+contracts. The standalone editor remains proposed until web, iOS, and Android
+prove the same Rust composition, local preview events, catalog browsing, and
+save-conflict handling at their real host boundaries. Follow the target
+ownership and event seam in [the avatar editor architecture](architecture/avatar-editor.md).
+
 ## Open decisions
 
 - Whether a general-purpose scene/prefab encoding needs a binary form. JSON is

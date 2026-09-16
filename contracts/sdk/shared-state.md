@@ -1,7 +1,6 @@
 # Shared state SDK v1
 
 **Status:** shared-state SDK v1 contract for cooperative state; not cheat-resistant authority.
-**Migrated from:** `tools/docs/shared-state-v1.md`.
 
 Use the shared-state helper when several clients can change one retained piece
 of cooperative game state.

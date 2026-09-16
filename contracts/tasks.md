@@ -1,7 +1,6 @@
 # Luau task scheduler
 
 **Status:** current simulation-tick scheduler contract for native and browser runtimes.
-**Migrated from:** `rust/docs/task-scheduler.md`.
 
 Game scripts can schedule cooperative work through `api.task`. The scheduler
 uses the engine's fixed simulation ticks; it never sleeps on wall-clock time.

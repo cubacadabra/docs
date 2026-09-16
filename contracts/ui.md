@@ -1,7 +1,6 @@
 # Shared in-game UI runtime
 
 **Status:** current bounded retained UI contract. Exact API, layout rules, limits, and native ABI below are normative for the reviewed runtime.
-**Migrated from:** `rust/docs/ui-runtime.md`.
 
 The engine owns a retained two-dimensional UI document that is laid out in
 logical viewport units, hit-tested by Rust, and drawn as an orthographic pass

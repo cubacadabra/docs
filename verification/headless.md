@@ -1,7 +1,6 @@
 # Headless engine proof
 
 **Status:** current headless test procedure. The executable fixture is stored under `rust/tests/fixtures/headless/`.
-**Migrated from:** `rust/docs/headless/README.md`.
 
 This fixture runs the same manifest/package and Luau lifecycle that an
 interactive client loads, but the process creates no window, GPU device,

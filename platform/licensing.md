@@ -1,7 +1,6 @@
 # Cubacadabra preview licensing
 
 **Status:** current preview repository reuse policy summary; check individual dependency notices and release obligations.
-**Migrated from:** `tools/docs/licensing.md`.
 
 This is the current repository policy for the developer preview. It is a
 project policy summary, not legal advice.

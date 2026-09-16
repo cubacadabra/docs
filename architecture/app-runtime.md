@@ -1,7 +1,6 @@
 # Shared application runtime
 
 **Contract status:** current shared application-runtime architecture. Implemented slices and verification scope are stated in the body.
-**Migrated from:** `rust/docs/app-runtime.md`.
 
 `cubacadabra-app` owns portable account behavior. It is a sibling of
 `cubacadabra-client` (active game sessions) and `cubacadabra-engine` (simulation).

@@ -1,7 +1,6 @@
 # Character art direction
 
 **Status:** active visual direction; player approval remains open.
-**Migrated from:** `rust/docs/character_art_direction.md`.
 
 Status: active direction; one person in development, visual approval open.
 

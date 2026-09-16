@@ -1,7 +1,6 @@
 # Engine snapshots
 
 **Status:** EngineSnapshot v1 state-format contract. It is not a persistence service.
-**Migrated from:** `rust/docs/snapshots.md`.
 
 `EngineSnapshot` is the V1 platform contract for freezing and resuming an
 engine world. It is a state format, not a storage service: callers decide

@@ -1,7 +1,6 @@
 # Character runtime and verification
 
 **Status:** current runtime bounds and reproducible validation guidance; renderer tests do not prove host persistence, reconnect, or device performance.
-**Migrated from:** `rust/docs/character_runtime.md`.
 
 Art decisions live in [Character art direction](../product/character-direction.md).
 These reusable engine contracts are independent of visual approval.

@@ -1,7 +1,6 @@
 # Multiplayer authority map
 
 **Status:** prototype implemented and tested in Rust; not integrated into the live Durable Object game path. The message classification describes current behavior at the reviewed revision.
-**Migrated from:** `rust/docs/authority-map.md`.
 
 This is the current protocol map as implemented by the Rust client and the
 Cloudflare `World` Durable Object. “Server-validated” means the server checks

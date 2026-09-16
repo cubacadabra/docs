@@ -11,7 +11,8 @@ their generators.
 
 - **Understand Cubacadabra:** [product vision](product/vision.md),
   [principles](product/principles.md), and
-  [architecture overview](architecture/overview.md).
+  [architecture overview](architecture/overview.md), including the proposed
+  [avatar editor boundary](architecture/avatar-editor.md).
 - **Build or change a platform feature:** read the relevant page in
   [contracts](contracts/README.md), then the applicable
   [architecture](architecture/README.md) and

@@ -1,8 +1,14 @@
 # Source disposition ledger
 
-This is the migration inventory for files found under sibling repository `docs/` directories and the served developer-site `dist/docs/` directory. It records where useful material went and what should happen to the original if cleanup is approved later. It is provenance, not a prerequisite for understanding Cubacadabra.
+This is the migration inventory for files found under sibling repository `docs/` directories and the served developer-site `dist/docs/` directory. It records where useful material went and the disposition of the source copies. It is provenance, not a prerequisite for understanding Cubacadabra.
 
-**No source document or asset in another repository was deleted.** The headless fixture, character evidence, and Racer captures were copied to their canonical destinations; the old copies remain. Some sibling READMEs, test references, and agent instructions were updated to point to this corpus.
+The reviewed hand-written documents were moved or distilled here, and their
+source `docs/` directories were retired after checking code, CI, fixtures, and
+public routes for dependencies. The headless fixture remains with Rust tests;
+character evidence remains under this repository's `evidence/`; public
+developer documentation URLs are configured to redirect to their canonical
+pages. This is
+provenance for the migration, not a prerequisite for understanding the platform.
 
 ## Status meanings
 
@@ -15,7 +21,7 @@ This is the migration inventory for files found under sibling repository `docs/`
 
 ## Reviewed revisions
 
-The inventory and source-document review used the checked-out source snapshots below, before this pass changed README/test references. Source docs themselves were left untouched. Commit IDs are recorded as text so this ledger does not link readers back to docs that may later be retired.
+The inventory and source-document review used the checked-out source snapshots below before cleanup. Commit IDs are recorded as text so this ledger preserves provenance without making source repositories a reading dependency.
 
 | Repository | Reviewed revision |
 | --- | --- |
@@ -30,24 +36,29 @@ The inventory and source-document review used the checked-out source snapshots b
 
 No `android_app/docs/` directory or source files were present. The separate generated OpenAPI/schema references remain with the backend generator, as allowed by the documentation policy.
 
+The workspace also contained duplicate local checkouts `rust2` and `studio2`
+of the same Rust and Studio remotes at matching revisions. Their duplicate
+`docs/` trees were retired with the primary checkouts; they were not separate
+documentation sources.
+
 ## File-by-file disposition
 
 ### `backend`
 
 | Original file | Status | Canonical destination or rationale |
 | --- | --- | --- |
-| `backend/docs/morph_D1_R2.md` | `MIGRATED` | platform/morph-catalog.md, platform/moderation.md, platform/publishing.md, and verification/acceptance-criteria.md preserve current D1/R2 behavior and the durable content-safety, revision, immutable-asset, and publish-atomicity requirements. Proposed UI/schema details are not treated as implemented. |
+| `backend/docs/morph_D1_R2.md` | `MIGRATED` | architecture/avatar-editor.md preserves the proposed cross-platform editor and host boundary; platform/morph-catalog.md, platform/moderation.md, platform/publishing.md, and verification/acceptance-criteria.md preserve current D1/R2 behavior and durable content-safety, revision, immutable-asset, and publish-atomicity requirements. Unverified UI details remain labeled proposed. |
 | `backend/docs/storage-architecture.md` | `MIGRATED` | platform/backend-storage.md preserves data placement, operational rules, measurement needs, and dated free-plan allocations. |
 
 ### `developer/dist`
 
 | Original file | Status | Canonical destination or rationale |
 | --- | --- | --- |
-| `developer/dist/docs/first-game/index.html` | `SUPERSEDED` | This served page duplicates the stale SDK 0.3 preview body; the central creator guide and normative contracts replace its hand-written guidance. Keep the deployed asset until the public developer route is migrated. |
-| `developer/dist/docs/game-facing-api/index.html` | `SUPERSEDED` | This served page duplicates the stale SDK 0.3 preview body; current APIs are documented in contracts/. Keep the deployed asset until the public developer route is migrated. |
-| `developer/dist/docs/game-lifecycle/index.html` | `SUPERSEDED` | This served page duplicates the stale SDK 0.3 preview body; current lifecycle details are in contracts/lifecycle.md. Keep the deployed asset until the public developer route is migrated. |
-| `developer/dist/docs/index.html` | `MIGRATED` | contracts/creator-guide.md and studio/overview.md preserve the useful current create/import flow and correct the Python/build distinction. The served static page remains in place during this migration. |
-| `developer/dist/docs/package-format/index.html` | `SUPERSEDED` | This served page duplicates the stale SDK 0.3 preview body; current package behavior is in contracts/game-package.md and compatibility/versions.md. Keep the deployed asset until the public developer route is migrated. |
+| `developer/dist/docs/first-game/index.html` | `SUPERSEDED` | This served page duplicated the stale SDK 0.3 preview body; its public URL is configured to permanently redirect to contracts/creator-guide.md. |
+| `developer/dist/docs/game-facing-api/index.html` | `SUPERSEDED` | This served page duplicated the stale SDK 0.3 preview body; its public URL is configured to permanently redirect to contracts/luau-api.md. |
+| `developer/dist/docs/game-lifecycle/index.html` | `SUPERSEDED` | This served page duplicated the stale SDK 0.3 preview body; its public URL is configured to permanently redirect to contracts/lifecycle.md. |
+| `developer/dist/docs/index.html` | `MIGRATED` | The public docs index is configured to permanently redirect to this repository's README and table of contents. |
+| `developer/dist/docs/package-format/index.html` | `SUPERSEDED` | This served page duplicated the stale SDK 0.3 preview body; its public URL is configured to permanently redirect to contracts/game-package.md. |
 
 ### `ios_app`
 
@@ -63,8 +74,8 @@ No `android_app/docs/` directory or source files were present. The separate gene
 
 | Original file | Status | Canonical destination or rationale |
 | --- | --- | --- |
-| `other-examples/racer/docs/images/racer-gameplay.png` | `MOVE-EVIDENCE` | Racer gameplay capture copied without editing to evidence/examples/racer-gameplay.png; the example README now links to the central evidence copy. Original remains in place. |
-| `other-examples/racer/docs/images/racer-lab.png` | `MOVE-EVIDENCE` | Racer Lab capture copied without editing to evidence/examples/racer-lab.png; the example README now links to the central evidence copy. Original remains in place. |
+| `other-examples/racer/docs/images/racer-gameplay.png` | `MOVE-EVIDENCE` | Racer gameplay capture copied without editing to evidence/examples/racer-gameplay.png; the example README now links to the central evidence copy and the source duplicate was retired after verification. |
+| `other-examples/racer/docs/images/racer-lab.png` | `MOVE-EVIDENCE` | Racer Lab capture copied without editing to evidence/examples/racer-lab.png; the example README now links to the central evidence copy and the source duplicate was retired after verification. |
 
 ### `rust`
 
@@ -74,40 +85,40 @@ No `android_app/docs/` directory or source files were present. The separate gene
 | `rust/docs/README.md` | `SUPERSEDED` | Repository-local index replaced by this repository README and section indexes. Rust build/test instructions remain in rust/README.md. |
 | `rust/docs/app-runtime.md` | `MIGRATED` | architecture/app-runtime.md contains the current shared account-runtime ownership, lifecycle, bindings, and verification scope. |
 | `rust/docs/art/person/README.md` | `MIGRATED` | evidence/character/README.md preserves the selected study evidence, context, and reproduction notes. |
-| `rust/docs/art/person/gait.mp4` | `MOVE-EVIDENCE` | Copied without editing to evidence/character/gait.mp4; original remains in place until source cleanup is authorized. |
-| `rust/docs/art/person/gameplay-laptop.png` | `MOVE-EVIDENCE` | Copied without editing to evidence/character/gameplay-laptop.png; original remains in place until source cleanup is authorized. |
-| `rust/docs/art/person/gameplay-phone.png` | `MOVE-EVIDENCE` | Copied without editing to evidence/character/gameplay-phone.png; original remains in place until source cleanup is authorized. |
-| `rust/docs/art/person/greeting.mp4` | `MOVE-EVIDENCE` | Copied without editing to evidence/character/greeting.mp4; original remains in place until source cleanup is authorized. |
-| `rust/docs/art/person/hero-back.png` | `MOVE-EVIDENCE` | Copied without editing to evidence/character/hero-back.png; original remains in place until source cleanup is authorized. |
-| `rust/docs/art/person/hero-curious.png` | `MOVE-EVIDENCE` | Copied without editing to evidence/character/hero-curious.png; original remains in place until source cleanup is authorized. |
-| `rust/docs/art/person/hero-face.png` | `MOVE-EVIDENCE` | Copied without editing to evidence/character/hero-face.png; original remains in place until source cleanup is authorized. |
-| `rust/docs/art/person/hero-front.png` | `MOVE-EVIDENCE` | Copied without editing to evidence/character/hero-front.png; original remains in place until source cleanup is authorized. |
-| `rust/docs/art/person/hero-side.png` | `MOVE-EVIDENCE` | Copied without editing to evidence/character/hero-side.png; original remains in place until source cleanup is authorized. |
-| `rust/docs/art/person/hero-study-gameplay.png` | `MOVE-EVIDENCE` | Copied without editing to evidence/character/hero-study-gameplay.png; original remains in place until source cleanup is authorized. |
-| `rust/docs/art/person/hero-study-silhouette.png` | `MOVE-EVIDENCE` | Copied without editing to evidence/character/hero-study-silhouette.png; original remains in place until source cleanup is authorized. |
-| `rust/docs/art/person/hero-three-quarter.png` | `MOVE-EVIDENCE` | Copied without editing to evidence/character/hero-three-quarter.png; original remains in place until source cleanup is authorized. |
-| `rust/docs/art/person/hero-wave-silhouette.png` | `MOVE-EVIDENCE` | Copied without editing to evidence/character/hero-wave-silhouette.png; original remains in place until source cleanup is authorized. |
-| `rust/docs/art/person/hero-wave.png` | `MOVE-EVIDENCE` | Copied without editing to evidence/character/hero-wave.png; original remains in place until source cleanup is authorized. |
-| `rust/docs/art/person/hero-wink.png` | `MOVE-EVIDENCE` | Copied without editing to evidence/character/hero-wink.png; original remains in place until source cleanup is authorized. |
-| `rust/docs/art/person/longer-back.png` | `MOVE-EVIDENCE` | Copied without editing to evidence/character/longer-back.png; original remains in place until source cleanup is authorized. |
-| `rust/docs/art/person/longer-face.png` | `MOVE-EVIDENCE` | Copied without editing to evidence/character/longer-face.png; original remains in place until source cleanup is authorized. |
-| `rust/docs/art/person/longer-front.png` | `MOVE-EVIDENCE` | Copied without editing to evidence/character/longer-front.png; original remains in place until source cleanup is authorized. |
-| `rust/docs/art/person/longer-gameplay.png` | `MOVE-EVIDENCE` | Copied without editing to evidence/character/longer-gameplay.png; original remains in place until source cleanup is authorized. |
-| `rust/docs/art/person/longer-side.png` | `MOVE-EVIDENCE` | Copied without editing to evidence/character/longer-side.png; original remains in place until source cleanup is authorized. |
-| `rust/docs/art/person/longer-silhouette.png` | `MOVE-EVIDENCE` | Copied without editing to evidence/character/longer-silhouette.png; original remains in place until source cleanup is authorized. |
-| `rust/docs/art/person/longer-three-quarter.png` | `MOVE-EVIDENCE` | Copied without editing to evidence/character/longer-three-quarter.png; original remains in place until source cleanup is authorized. |
-| `rust/docs/art/person/review-metrics.json` | `MOVE-EVIDENCE` | Copied without editing to evidence/character/review-metrics.json; original remains in place until source cleanup is authorized. |
-| `rust/docs/art/person/soft-back.png` | `MOVE-EVIDENCE` | Copied without editing to evidence/character/soft-back.png; original remains in place until source cleanup is authorized. |
-| `rust/docs/art/person/soft-face.png` | `MOVE-EVIDENCE` | Copied without editing to evidence/character/soft-face.png; original remains in place until source cleanup is authorized. |
-| `rust/docs/art/person/soft-front.png` | `MOVE-EVIDENCE` | Copied without editing to evidence/character/soft-front.png; original remains in place until source cleanup is authorized. |
-| `rust/docs/art/person/soft-gameplay.png` | `MOVE-EVIDENCE` | Copied without editing to evidence/character/soft-gameplay.png; original remains in place until source cleanup is authorized. |
-| `rust/docs/art/person/soft-side.png` | `MOVE-EVIDENCE` | Copied without editing to evidence/character/soft-side.png; original remains in place until source cleanup is authorized. |
-| `rust/docs/art/person/soft-silhouette.png` | `MOVE-EVIDENCE` | Copied without editing to evidence/character/soft-silhouette.png; original remains in place until source cleanup is authorized. |
-| `rust/docs/art/person/soft-three-quarter.png` | `MOVE-EVIDENCE` | Copied without editing to evidence/character/soft-three-quarter.png; original remains in place until source cleanup is authorized. |
-| `rust/docs/art/person/task6-moving-contact-diagnostic.json` | `MOVE-EVIDENCE` | Copied without editing to evidence/character/task6-moving-contact-diagnostic.json; original remains in place until source cleanup is authorized. |
-| `rust/docs/art/person/task6-moving-raised-contact-diagnostic.json` | `MOVE-EVIDENCE` | Copied without editing to evidence/character/task6-moving-raised-contact-diagnostic.json; original remains in place until source cleanup is authorized. |
-| `rust/docs/art/person/task7-moving-contact-diagnostic.json` | `MOVE-EVIDENCE` | Copied without editing to evidence/character/task7-moving-contact-diagnostic.json; original remains in place until source cleanup is authorized. |
-| `rust/docs/art/person/task7-moving-raised-contact-diagnostic.json` | `MOVE-EVIDENCE` | Copied without editing to evidence/character/task7-moving-raised-contact-diagnostic.json; original remains in place until source cleanup is authorized. |
+| `rust/docs/art/person/gait.mp4` | `MOVE-EVIDENCE` | Copied without editing to evidence/character/gait.mp4; source duplicate was retired after the central copy was verified. |
+| `rust/docs/art/person/gameplay-laptop.png` | `MOVE-EVIDENCE` | Copied without editing to evidence/character/gameplay-laptop.png; source duplicate was retired after the central copy was verified. |
+| `rust/docs/art/person/gameplay-phone.png` | `MOVE-EVIDENCE` | Copied without editing to evidence/character/gameplay-phone.png; source duplicate was retired after the central copy was verified. |
+| `rust/docs/art/person/greeting.mp4` | `MOVE-EVIDENCE` | Copied without editing to evidence/character/greeting.mp4; source duplicate was retired after the central copy was verified. |
+| `rust/docs/art/person/hero-back.png` | `MOVE-EVIDENCE` | Copied without editing to evidence/character/hero-back.png; source duplicate was retired after the central copy was verified. |
+| `rust/docs/art/person/hero-curious.png` | `MOVE-EVIDENCE` | Copied without editing to evidence/character/hero-curious.png; source duplicate was retired after the central copy was verified. |
+| `rust/docs/art/person/hero-face.png` | `MOVE-EVIDENCE` | Copied without editing to evidence/character/hero-face.png; source duplicate was retired after the central copy was verified. |
+| `rust/docs/art/person/hero-front.png` | `MOVE-EVIDENCE` | Copied without editing to evidence/character/hero-front.png; source duplicate was retired after the central copy was verified. |
+| `rust/docs/art/person/hero-side.png` | `MOVE-EVIDENCE` | Copied without editing to evidence/character/hero-side.png; source duplicate was retired after the central copy was verified. |
+| `rust/docs/art/person/hero-study-gameplay.png` | `MOVE-EVIDENCE` | Copied without editing to evidence/character/hero-study-gameplay.png; source duplicate was retired after the central copy was verified. |
+| `rust/docs/art/person/hero-study-silhouette.png` | `MOVE-EVIDENCE` | Copied without editing to evidence/character/hero-study-silhouette.png; source duplicate was retired after the central copy was verified. |
+| `rust/docs/art/person/hero-three-quarter.png` | `MOVE-EVIDENCE` | Copied without editing to evidence/character/hero-three-quarter.png; source duplicate was retired after the central copy was verified. |
+| `rust/docs/art/person/hero-wave-silhouette.png` | `MOVE-EVIDENCE` | Copied without editing to evidence/character/hero-wave-silhouette.png; source duplicate was retired after the central copy was verified. |
+| `rust/docs/art/person/hero-wave.png` | `MOVE-EVIDENCE` | Copied without editing to evidence/character/hero-wave.png; source duplicate was retired after the central copy was verified. |
+| `rust/docs/art/person/hero-wink.png` | `MOVE-EVIDENCE` | Copied without editing to evidence/character/hero-wink.png; source duplicate was retired after the central copy was verified. |
+| `rust/docs/art/person/longer-back.png` | `MOVE-EVIDENCE` | Copied without editing to evidence/character/longer-back.png; source duplicate was retired after the central copy was verified. |
+| `rust/docs/art/person/longer-face.png` | `MOVE-EVIDENCE` | Copied without editing to evidence/character/longer-face.png; source duplicate was retired after the central copy was verified. |
+| `rust/docs/art/person/longer-front.png` | `MOVE-EVIDENCE` | Copied without editing to evidence/character/longer-front.png; source duplicate was retired after the central copy was verified. |
+| `rust/docs/art/person/longer-gameplay.png` | `MOVE-EVIDENCE` | Copied without editing to evidence/character/longer-gameplay.png; source duplicate was retired after the central copy was verified. |
+| `rust/docs/art/person/longer-side.png` | `MOVE-EVIDENCE` | Copied without editing to evidence/character/longer-side.png; source duplicate was retired after the central copy was verified. |
+| `rust/docs/art/person/longer-silhouette.png` | `MOVE-EVIDENCE` | Copied without editing to evidence/character/longer-silhouette.png; source duplicate was retired after the central copy was verified. |
+| `rust/docs/art/person/longer-three-quarter.png` | `MOVE-EVIDENCE` | Copied without editing to evidence/character/longer-three-quarter.png; source duplicate was retired after the central copy was verified. |
+| `rust/docs/art/person/review-metrics.json` | `MOVE-EVIDENCE` | Copied without editing to evidence/character/review-metrics.json; source duplicate was retired after the central copy was verified. |
+| `rust/docs/art/person/soft-back.png` | `MOVE-EVIDENCE` | Copied without editing to evidence/character/soft-back.png; source duplicate was retired after the central copy was verified. |
+| `rust/docs/art/person/soft-face.png` | `MOVE-EVIDENCE` | Copied without editing to evidence/character/soft-face.png; source duplicate was retired after the central copy was verified. |
+| `rust/docs/art/person/soft-front.png` | `MOVE-EVIDENCE` | Copied without editing to evidence/character/soft-front.png; source duplicate was retired after the central copy was verified. |
+| `rust/docs/art/person/soft-gameplay.png` | `MOVE-EVIDENCE` | Copied without editing to evidence/character/soft-gameplay.png; source duplicate was retired after the central copy was verified. |
+| `rust/docs/art/person/soft-side.png` | `MOVE-EVIDENCE` | Copied without editing to evidence/character/soft-side.png; source duplicate was retired after the central copy was verified. |
+| `rust/docs/art/person/soft-silhouette.png` | `MOVE-EVIDENCE` | Copied without editing to evidence/character/soft-silhouette.png; source duplicate was retired after the central copy was verified. |
+| `rust/docs/art/person/soft-three-quarter.png` | `MOVE-EVIDENCE` | Copied without editing to evidence/character/soft-three-quarter.png; source duplicate was retired after the central copy was verified. |
+| `rust/docs/art/person/task6-moving-contact-diagnostic.json` | `MOVE-EVIDENCE` | Copied without editing to evidence/character/task6-moving-contact-diagnostic.json; source duplicate was retired after the central copy was verified. |
+| `rust/docs/art/person/task6-moving-raised-contact-diagnostic.json` | `MOVE-EVIDENCE` | Copied without editing to evidence/character/task6-moving-raised-contact-diagnostic.json; source duplicate was retired after the central copy was verified. |
+| `rust/docs/art/person/task7-moving-contact-diagnostic.json` | `MOVE-EVIDENCE` | Copied without editing to evidence/character/task7-moving-contact-diagnostic.json; source duplicate was retired after the central copy was verified. |
+| `rust/docs/art/person/task7-moving-raised-contact-diagnostic.json` | `MOVE-EVIDENCE` | Copied without editing to evidence/character/task7-moving-raised-contact-diagnostic.json; source duplicate was retired after the central copy was verified. |
 | `rust/docs/audio-runtime.md` | `MIGRATED` | contracts/audio.md preserves the versioned API, WAV constraints, queue behavior, failure semantics, and exclusions. |
 | `rust/docs/authority-map.md` | `MIGRATED` | architecture/authority.md preserves the message trust map, prototype boundary, and live-integration gaps; package auto-detection is corrected. |
 | `rust/docs/baselines/.DS_Store` | `DISCARDED` | macOS Finder metadata; the directory held no baseline evidence. |
@@ -168,6 +179,12 @@ No `android_app/docs/` directory or source files were present. The separate gene
 
 The first flat consolidation pages in this repository were reorganized and superseded during this pass: `architecture.md` became `architecture/overview.md` plus focused architecture pages; `creator-contract.md` became `contracts/*`; `platform-services.md` became `platform/*`; `product.md` became `product/*`; and `studio-and-assets.md` became `studio/*` plus evidence/compatibility pages. Their useful claims were checked against the reviewed source snapshots and current implementation notes.
 
-## Cleanup gate
+## Cleanup completion
 
-Before deleting any sibling `docs/` directory, verify the corresponding source files against this ledger; confirm no code, CI, fixtures, or supported public route still depends on that directory; update the developer site if its deployed `dist/docs/` routes are included; and obtain explicit owner authorization. This migration intentionally stops before deleting or emptying source directories.
+The source `docs/` directories in the reviewed backend, iOS, Rust, Studio,
+Tools, and Web repositories were removed after checking references outside
+those directories. Rust headless inputs remain in `tests/fixtures/headless/`;
+generated backend API/schema references remain with their generator; repo
+READMEs and contributor instructions keep local build and implementation
+guidance. The developer site's established docs URLs are configured with
+permanent redirects to this corpus.

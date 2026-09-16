@@ -1,7 +1,6 @@
 # Character asset flow
 
 **Status:** current local import slice plus separately labeled target workflow. Manifest wiring and reproducible cross-client package use remain open.
-**Migrated from:** `studio/docs/character-asset-flow.md`.
 
 ## Product decision
 

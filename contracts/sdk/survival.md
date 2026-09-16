@@ -1,7 +1,6 @@
 # Survival SDK v1
 
 **Status:** survival SDK v1 lifecycle helper contract.
-**Migrated from:** `tools/docs/survival-v1.md`.
 
 The runtime owns gravity, fall detection, hazards, health, and respawn. A game
 manifest declares those rules; the Luau helper only keeps lifecycle state for a
