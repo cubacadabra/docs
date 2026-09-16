@@ -1,111 +1,110 @@
-# Roadmap and known gaps
+# Roadmap and open work
 
-This page summarizes the durable work left before calling the creator
-contract stable. It is a current cross-repository view, not a schedule or a
-promise that every item in an older plan will ship.
+This is a current cross-repository gap list, not a schedule, release promise,
+or requirement to implement every proposal in the historical source material.
+Feature terms and evidence labels follow the
+[documentation authority rules](README.md#documentation-authority).
 
 ## Working foundations
 
-- One Luau package is built for the Rust runtime shared by Studio, web, iOS,
-  and Android.
-- The client protocol handles typed world messages, routing, remote-player
-  state, and game-owned network output.
-- The backend provides live WebSocket worlds, authenticated accounts,
-  moderation, subscriptions, basic authenticated Cube uploads, latest-version
-  catalogs, and package file delivery.
-- The shared app core has migrated username/profile, Morph, cube-catalog, and
-  blocked-user decisions to Rust action/snapshot/effect behavior.
-- SDK helpers cover cooperative shared state, common obby/survival lifecycle
-  behavior, cycles, and disclosure controls.
-- Engine snapshots, simulation-tick tasks, headless deterministic runs,
-  terrain, package media, and Morph asset delivery have explicit bounded
-  contracts.
-- Studio provides local project authoring and preview, a Morphs workspace, and
-  an optional Codex workflow.
+- The tools builder produces package format 3 and accepts SDK `0.3.0` and
+  `0.4.0`; terrain requires `0.4.0`. Packages include generated Luau and
+  integrity metadata. See [package contract](contracts/game-package.md).
+- Rust provides shared engine, client/session, application-state, and bounded
+  Luau runtime foundations. Web uses generated WASM; iOS and Android use
+  native bridges; Studio calls Rust directly.
+- The network service provides server-assigned presence, validated service
+  requests, and ordered cooperative retained state. Compare-and-set prevents
+  lost writes; it does not validate game-rule meaning.
+- Studio creates local projects and imports/validates/previews supported GLB
+  assets. Project-local catalog update, manifest declarations, and
+  reproducible package use on every client are not yet one integrated path.
+- SDK helpers cover cooperative shared state, obby and survival lifecycle,
+  disclosure, and a local two-phase cycle. Exact behavior lives in
+  [SDK contracts](contracts/sdk/README.md).
+- Engine snapshots, deterministic headless runs, bounded UI/effects/audio,
+  simulation-time tasks, static terrain, package assets, and MorphPack v5
+  have explicit contracts.
 
-## Work that remains
+## Open work
 
-### 1. Prove multiplayer behavior under real failure
+### 1. Integrate trusted game authority
 
-The cooperative compare-and-set path still needs repeatable authenticated
-multi-client evidence for reconnects, simultaneous operations, lost replies,
-stale actions, malformed messages, and long-running sessions. Keep game rules
-in Luau; test a proposed authority mechanism separately from the current
-cooperative protocol.
+The Rust `AuthorityBoundary`, Luau adapter, portable server runtime, and
+`authority.luau` artifact are prototypes. The live Durable Object does not yet
+execute game-owned rules. Production authority needs authenticated actor
+binding, trustworthy world/movement facts, bounded game-owned execution,
+atomic persistence of accepted state and request receipts, and publication
+only after commit. Client-reported movement is not collision evidence. Test
+every alternate mutation route for bypasses before protecting rewards.
 
-### 2. Integrate trusted game authority before competitive rewards
+### 2. Define durable game-owned data
 
-The Rust `AuthorityBoundary`, Luau adapter, and package `authority.luau` entry
-are prototypes. A production path still needs to bind authenticated socket
-identity, provide trustworthy world/movement facts, execute constrained
-game-owned validation and simulation, persist accepted state/receipts
-atomically, and publish only accepted results. Current client movement is not
-collision evidence.
+Engine snapshots represent an in-memory running world and optional explicit
+game state; they are not a creator database. Durable inventory, progression,
+and rewards need ownership/access rules, schema migrations, quotas,
+concurrency, reconnect/restart, deletion, recovery, and transactional writes.
 
-### 3. Define durable game-owned state
+### 3. Make build and release activation transactional
 
-Engine snapshots can represent a running engine and explicit game-owned state,
-but there is no general creator-facing persistent game database contract.
-Before offering durable inventory, progression, or rewards, specify schema
-migrations, ownership and access checks, quotas, concurrency, reconnect and
-restart behavior, deletion, and recovery.
+The tools builder stages directory output and preserves an earlier successful
+package when a build fails. Directory and ZIP outputs are not one atomic
+transaction. Hosts validate different portions of package contents and retain
+different caches. Stage and verify every required asset, then activate one
+immutable package revision. Interruption tests must leave a complete old or
+new release, never a mixed set; see
+[acceptance criteria](verification/acceptance-criteria.md).
 
-### 4. Finish release and creator operations
+### 4. Finish local Morph asset integration
 
-The current Cube service accepts authenticated package uploads, checks package
-metadata and hashes, stores versioned files, lists latest versions, and serves
-launchable packages. A mature workflow still needs an explicit draft/validate/
-stage/publish lifecycle, immutable version selection, rollback, visibility
-and access rules, clear package diagnostics, and richer discovery. The current
-Morph release CLI is an operator workflow; Studio does not yet offer creator
-self-service Morph publication to a community catalog.
+Studio imports and locally previews supported rigid-wearable GLBs, writes the
+source/sidecar/pack/thumbnail, updates the local catalog, and registers the
+pack with its renderer. The action does not currently wire the asset into
+`manifest.assets.morphPacks`. Prove manifest wiring, package hashes, and the
+same asset loading on Studio, web, iOS, and Android. Creator-facing community
+publish remains an operator-managed release path, not a self-service Studio
+feature.
 
-### 5. Close cross-host contract gaps
+### 5. Prove host behavioral conformance
 
-Keep the compatibility workflow green from a clean repository set and prove
-the real boundaries on each supported host. Native Rust target compilation is
-not the same as an Android APK/device test. Account and package tests should
-cover the production Kotlin/JNI path as well as Rust, Swift, and the generated
-WASM. Recheck the host verification notes in
-[the app runtime doc](https://github.com/cubacadabra/rust/blob/main/docs/app-runtime.md) before release.
+Keep native Rust and browser Luau outcomes equivalent and exercise real web,
+iOS Swift/C, Android JNI/Kotlin, and Studio loader/cache boundaries. Compare
+callback order, module cache behavior, task scheduling, JSON conversion,
+structured failures, SDK transitions, and asset loading. Rust target
+compilation is not an Android device test. See
+[host conformance](compatibility/host-conformance.md).
 
-### 6. Set operational, safety, and performance budgets
+### 6. Complete the shared editing pipeline
 
-Choose targets from measurements for package startup, asset decode, memory,
-frame time, network traffic, concurrent sessions, and long-run reliability.
-Before broad public user-created content, define permissions, reporting and
-review operations, takedown/appeal handling, privacy/data deletion, resource
-limits, and useful diagnostics. Existing block/report endpoints are a
-foundation, not the whole policy and operations system.
+The generic `DataModel` currently supplies a stable entity graph and ordered
+mutation feed; it is not yet a Luau `Instance` surface or connected to every
+consumer. Manual Studio edits, Luau, and future AI edits should converge on
+shared validation, changes, preview, undo, and hot reload. See the proposed
+[editing model](studio/editing-model.md).
 
-## Suggested order
+### 7. Set measured service, safety, and performance budgets
 
-1. Reconcile the public developer guide with the builder and shipped flows,
-   especially package/API versions and what “publish” means.
-2. Keep the compatibility suite green and add authenticated multiplayer
-   failure tests plus Android production-bridge/device verification.
-3. Complete one narrow trusted-authority vertical slice before promising
-   competitive outcomes or durable rewards.
-4. Define and test durable game data, release/rollback, privacy, moderation,
-   support, and performance behavior only as the product commits to them.
+Choose targets from real measurements for package startup, asset decode,
+memory, frame time, network traffic, concurrent sessions, and long sessions.
+Define public-content permissions, review, reporting, takedown/appeal,
+privacy/data deletion, resource limits, and support operations before broad
+public creator distribution. Current block/report endpoints do not complete
+that policy.
 
-The SDK `1.0.0` checklist in
-[`rust/docs/features_still_needed.md`](https://github.com/cubacadabra/rust/blob/main/docs/features_still_needed.md)
-is a proposed release gate. Its example “labs” for the third game are test
-ideas, not a requirement to add UI to the product. Prefer automated tests for
-the guarantees those probes are meant to demonstrate.
+## Open decisions
 
-## Decisions to leave open until evidence requires them
-
-- Whether a general-purpose scene/prefab encoding needs a binary counterpart.
-  Current authored worlds remain JSON; `.morphpack` solves Morph assets only.
+- Whether a general-purpose scene/prefab encoding needs a binary form. JSON is
+  current; identity and reference requirements apply regardless of encoding.
 - Whether trusted game rules first run in a Worker/WASM Durable Object or a
-  separate server runtime. The interface should be host-independent; the
-  deployment target is not settled by the current prototype.
-- Whether to add more Rust app-core features. Keep sharing semantic state and
-  decisions where it removes real drift; keep native/web controls, navigation,
-  and accessibility presentation in each host.
-- What creator, organization, or parent pricing should be. The web pricing
-  document is strategy brainstorming, not the public price book.
+  separate host. The generic command boundary is independent of deployment.
+- How far more application state should move into shared Rust. Share semantic
+  decisions where it removes real drift; keep OS UI and accessibility in hosts.
+- Whether to adopt the pricing principles in
+  [product principles](product/principles.md). Exact price tables remain
+  discarded speculation, not commitments.
+- Which platform-facing AI editing integration to use. The durable requirement
+  is one validated editor pipeline; Codex/App Server details in old notes are
+  not a current product or dependency decision.
 
-No release date or pricing tier is established by the plans summarized here.
+No release date, SDK 1.0 gate, or pricing tier is established by historical
+plans.

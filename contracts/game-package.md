@@ -1,0 +1,52 @@
+# Game package contract
+
+**Current contract:** the builder validates creator source and produces the
+portable package consumed by hosts. Package metadata includes a manifest,
+the bundled game entry, an SDK/API version, and declared runtime assets. A
+package descriptor and file hashes let hosts verify the downloaded files.
+
+The builder is the current executable authority for accepted manifest fields,
+SDK versions, path validation, module resolution, and output behavior. Keep
+this page focused on cross-repository semantics; exact field details are
+specified by the builder's schema/tests and must be migrated here before those
+sources are retired. Never infer a format field from a sample that the
+builder does not accept.
+
+## Version distinction
+
+The current tools builder supports SDK versions `0.3.0` and `0.4.0`;
+`world.terrain` requires `0.4.0`. The default project creator emits SDK
+`0.3.0` and package `formatVersion: 3`. Package format version and SDK version
+are separate compatibility axes. See
+[the version matrix](../compatibility/versions.md).
+
+## Authority entry
+
+When `src/server.luau` exists, the builder automatically bundles it as
+`authority.luau` and records the authority entry in generated manifest and
+package descriptor metadata and hashes. A declared authority entry without
+the source file is an error. This packaging behavior does not mean any
+interactive host or backend currently executes the entry; see
+[authority](../architecture/authority.md).
+
+## Asset declarations
+
+Assets needed at runtime must be explicitly declared in package metadata and
+included in the package's integrity data. A local Studio catalog entry alone
+does not make an asset available to every host. Hosts validate the descriptor
+and declared content before use; failure must be explicit and must not fall
+back to a mutable “latest” asset that can mix package revisions.
+
+## Build failure guarantees
+
+The builder rejects source/output overlap and refuses to replace an output it
+does not own. Directory builds stage their contents and preserve the previous
+successful directory if the new build fails. Directory plus ZIP output is
+not currently a single atomic transaction: the two replacements can succeed
+or fail independently. See the proposed release activation criteria in
+[verification/acceptance-criteria.md](../verification/acceptance-criteria.md).
+
+Raw source package builds require Python 3 for the current release tool. The
+Studio New Project flow creates a starter project without Python; that is a
+separate operation from building the raw project. See
+[Studio workflow](../studio/overview.md).

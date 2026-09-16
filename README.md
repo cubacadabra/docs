@@ -1,61 +1,72 @@
 # Cubacadabra documentation
 
-This repository is the cross-repository guide to Cubacadabra’s current product,
-runtime, creator contract, and open work. It consolidates the useful, still
-relevant material from the sibling repositories as of **September 16, 2026**.
+This repository is the canonical home for hand-written, cross-repository
+Cubacadabra documentation. Normative contracts live under `contracts/`;
+architecture pages describe system boundaries; decisions and proposals are
+identified by status. Source code, schemas, and tests remain the executable
+truth for implementation details, and generated API references remain with
+their generators.
 
-## Start here
+## Choose a path
 
-- [Product and current scope](product.md) — what Cubacadabra offers today and
-  what is still a preview or proposal.
-- [Architecture](architecture.md) — repository roles, runtime boundaries,
-  data flow, multiplayer authority, and storage.
-- [Creator contract](creator-contract.md) — packages, lifecycle, Luau APIs,
-  SDK helpers, and the trust limits creators need to understand.
-- [Platform services](platform-services.md) — shared account behavior,
-  backend responsibilities, data placement, and licensing.
-- [Studio and character assets](studio-and-assets.md) — current editor and
-  Morph workflow, compiled assets, and character-art status.
-- [Roadmap and known gaps](roadmap.md) — the important release work that
-  remains, without carrying forward stale review findings as current bugs.
-- [Sources and resolved conflicts](sources.md) — what was reviewed, which
-  documents establish current behavior, and how conflicting statements were
-  resolved.
+- **Understand Cubacadabra:** [product vision](product/vision.md),
+  [principles](product/principles.md), and
+  [architecture overview](architecture/overview.md).
+- **Build or change a platform feature:** read the relevant page in
+  [contracts](contracts/README.md), then the applicable
+  [architecture](architecture/README.md) and
+  [verification guidance](verification/README.md).
+- **Create a game:** start with the
+  [creator guide](contracts/creator-guide.md), then use the
+  [game package contract](contracts/game-package.md),
+  [Luau API](contracts/luau-api.md),
+  [world manifest](contracts/world-manifest.md), and SDK contracts in
+  [contracts/sdk](contracts/sdk/README.md).
+- **Work on Studio:** see [Studio overview](studio/overview.md),
+  [asset workflow](studio/asset-workflow.md), and
+  [editing model](studio/editing-model.md).
+- **Work on backend services:** see
+  [storage](platform/backend-storage.md),
+  [Morph catalog and saved appearance](platform/morph-catalog.md),
+  [authentication](platform/authentication.md),
+  [moderation](platform/moderation.md), and
+  [publishing](platform/publishing.md).
+- **Understand a design choice:** read [decisions](decisions/README.md) and note each
+  record's status.
+- **See what remains:** read [roadmap](roadmap.md).
+- **Trace migrated material:** consult the
+  [source disposition ledger](sources.md). It records provenance and future
+  cleanup status; it is not required to understand the platform.
 
-## Current snapshot
+## Documentation authority
 
-- Cubacadabra is a **developer preview**, not a stable `1.0.0` creator platform.
-- A game is authored as JSON manifest/world data, Luau source, and optional
-  assets. The tools builder emits a versioned, self-contained package; the same
-  Rust runtime powers Studio and the web, iOS, and Android game clients.
-- The game builder accepts SDK contracts `0.3.0` and `0.4.0`. Terrain requires
-  `0.4.0`; the preview guide is still titled 0.3. The package format is 3.
-- Game rules belong to the game’s Luau. Rust provides generic simulation,
-  rendering, client, and application mechanisms. Native and web shells own
-  platform UI and side effects.
-- Multiplayer retained state is ordered by the backend, but game-written
-  payloads are still client-authored. Compare-and-set prevents honest clients
-  from overwriting one another; it does not make scores or rewards trustworthy.
-- The optional `src/server.luau` is packaged as `authority.luau` and can run in
-  a Rust authority prototype. The live Durable Object does not execute it yet.
-- Morph assets use a custom `.morphpack` format, currently schema 5. It is a
-  character-asset format, not a general scene or prefab format.
+`contracts/` pages are normative when marked **Current contract**. Other
+status labels mean:
 
-## How to read this guide
+- **Implemented:** code implements the described behavior; this does not imply
+  every product path uses it.
+- **Integrated:** the relevant production path invokes the implementation.
+- **Host-verified:** evidence exercises the actual host boundary named by the
+  page. A Rust unit test or target compile alone is not host verification.
+- **Proposed:** a design or acceptance criterion for future work, not a shipped
+  behavior or commitment.
+- **Historical:** useful context only; it must not override a current contract.
+- **Owner confirmation needed:** a product principle or policy proposal that
+  has not been approved as a public promise.
 
-Use these status words carefully:
+Claims about production availability need release evidence in addition to
+implementation and integration evidence.
 
-- **Implemented** means the behavior exists in the current code. A unit test
-  can establish a component behavior, but does not show that a product path
-  uses it.
-- **Integrated** means the behavior is connected to its intended application,
-  service, or host path.
-- **Host-verified** means that path has been exercised on the named platform or
-  device; target compilation alone is not host verification.
-- **Planned** means proposed work, not a shipped feature.
+## Maintenance
 
-“Available to users” or “production” needs evidence of integration and release
-status, plus host verification where the claim depends on a platform. A source
-document or unit test alone does not establish that status. See
-[Sources and resolved conflicts](sources.md) for precedence, reviewed source
-revisions, and the disposition of every inventoried document.
+Any change to a public or cross-repository contract updates its canonical page
+here in the same piece of work. Update the owning schema/code/tests as
+appropriate, then update this repository and affected host-conformance or
+migration guidance. Do not allow an implementation-local `docs/` page or an
+old review to become a competing specification. Repository READMEs may retain
+local build, test, and release instructions and link here; they should not
+restate cross-repository contracts.
+
+The source ledger is a temporary migration record. Once sibling `docs/`
+directories have been retired, keep provenance only where it helps explain a
+decision; the canonical pages must stand on their own.
