@@ -21,6 +21,24 @@ The game repository remains the source of truth. The community catalog is a
 distribution and discovery layer, not the place where a game's source art is
 silently stored.
 
+**Current local Morph workflow**
+
+```mermaid
+flowchart LR
+    GLB["Project GLB"]
+    Inspect["Inspect and validate<br/>supported rigid wearable"]
+    Sidecar["Mapping sidecar<br/>source.morph.json"]
+    Compile["Compile"]
+    Pack["runtime.morphpack"]
+    Catalog["Project-local catalog"]
+    Preview["Live Studio renderer preview"]
+
+    GLB --> Inspect --> Sidecar --> Compile --> Pack --> Catalog --> Preview
+```
+
+This path stays on the creator's machine and in the game repository. It does
+not authenticate, make a network request, or publish the asset.
+
 ## Implemented in this slice
 
 - Studio discovers `assets/characters/catalog.json` automatically when a game is
@@ -66,6 +84,22 @@ UI and its stricter body validation are added.
    exactly what will be public, then uploads an immutable version. The game
    still references a pinned asset ID/version; publishing never changes the
    local game automatically.
+
+**Target community publishing workflow — not yet a Studio action**
+
+```mermaid
+flowchart LR
+    Asset["Validated project-owned asset"]
+    Share["Explicit Share with community<br/>action"]
+    Review["Validate ownership, license,<br/>attribution, and content"]
+    Upload["Immutable version upload"]
+    Metadata["Community catalog metadata<br/>pinned asset ID/version"]
+
+    Asset --> Share --> Review --> Upload --> Metadata
+```
+
+Publishing is always explicit. It neither replaces the project-owned source
+nor silently changes the game's pinned local reference.
 
 ## Repository shape
 

@@ -6,20 +6,37 @@
 interactive hosts. It exists so Swift, Kotlin, JavaScript, and Studio do not
 independently implement the same multiplayer state machine.
 
-```text
-                     ClientSession (Rust)
-                    /        |          \
- package + Luau -> Engine   protocol   host actions
-                              |        /           \
-                         remote state SetWorld    SendText
-                              |
-                         Engine/Luau
+**Shared session and transport flow**
 
- Studio: direct Rust calls
- iOS:    C ABI -> Swift transport and UI
- Android:C ABI -> JNI -> Kotlin transport and UI
- Web:    wasm-bindgen -> JavaScript transport and UI
+```mermaid
+flowchart LR
+    Package["Game package<br/>manifest + Luau"] --> Session["ClientSession<br/>Rust"]
+    Session --> Engine["Engine<br/>simulation and Luau"]
+    Socket["WebSocket text<br/>untrusted server/client messages"] --> Session
+    Session -->|"typed remote state<br/>and game messages"| Engine
+    Session -->|"SetWorld"| Transport["Host transport<br/>routing and reconnect"]
+    Session -->|"SendText"| Transport
+    Transport -->|"WebSocket text"| Socket
 ```
+
+**Bindings adapt one Rust implementation**
+
+```mermaid
+flowchart TB
+    Semantics["cubacadabra-client<br/>shared Rust semantics"]
+    Studio["Cubacadabra Studio<br/>direct Rust calls"]
+    IOS["iOS<br/>C ABI → Swift"]
+    Android["Android<br/>C ABI → JNI → Kotlin"]
+    Web["Web<br/>WASM → JavaScript"]
+
+    Semantics --> Studio
+    Semantics --> IOS
+    Semantics --> Android
+    Semantics --> Web
+```
+
+The bindings expose the same client/session semantics; they are not separate
+implementations of Cubacadabra gameplay or protocol decisions.
 
 ## Rust owns
 

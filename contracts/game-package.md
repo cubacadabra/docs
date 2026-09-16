@@ -16,6 +16,44 @@ specified by the builder's schema/tests and must be migrated here before those
 sources are retired. Never infer a format field from a sample that the
 builder does not accept.
 
+**Creator source to host loading**
+
+```mermaid
+flowchart LR
+    subgraph Source["Creator source"]
+        Manifest["manifest.json"]
+        Main["src/main.luau"]
+        Server["src/server.luau<br/>optional"]
+        Assets["Local assets"]
+    end
+
+    Builder["Builder<br/>validate, resolve, bundle"]
+
+    subgraph Package["Portable game package"]
+        GeneratedManifest["Generated manifest"]
+        Game["game.luau"]
+        Authority["authority.luau<br/>optional"]
+        RuntimeAssets["Declared runtime assets"]
+        Descriptor["package.json<br/>file hashes"]
+    end
+
+    Host["Host loader<br/>verify descriptor and files"]
+
+    Manifest --> Builder
+    Main --> Builder
+    Server -->|"optional authority source"| Builder
+    Assets --> Builder
+    Builder --> GeneratedManifest
+    Builder --> Game
+    Builder -->|"automatically bundles server source"| Authority
+    Builder --> RuntimeAssets
+    Builder --> Descriptor
+    Package --> Host
+```
+
+The optional `authority.luau` output is a packaged prototype artifact. Its
+presence does not imply that an interactive host or backend executes it.
+
 ## Version distinction
 
 The current tools builder supports SDK versions `0.3.0` and `0.4.0`;
@@ -54,3 +92,16 @@ Raw source package builds require Python 3 for the current release tool. The
 Studio New Project flow creates a starter project without Python; that is a
 separate operation from building the raw project. See
 [Studio workflow](../studio/overview.md).
+
+**Safe directory build replacement**
+
+```mermaid
+flowchart LR
+    Source["Creator source"] --> Stage["Validate and build<br/>in staging"]
+    Stage --> Complete{"Build complete?"}
+    Complete -->|"No"| Preserve["Preserve previous<br/>successful directory"]
+    Complete -->|"Yes"| Replace["Replace owned<br/>output directory"]
+```
+
+This guarantee applies to directory replacement. Directory plus ZIP output is
+not currently one atomic transaction.

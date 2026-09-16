@@ -73,3 +73,9 @@ restate cross-repository contracts.
 The source ledger is a temporary migration record. Once sibling `docs/`
 directories have been retired, keep provenance only where it helps explain a
 decision; the canonical pages must stand on their own.
+
+Technical diagrams follow the [diagram conventions](diagrams/how.md): keep
+living architecture and flows as inline fenced `mermaid` blocks beside their
+authoritative prose, reserve SVG for deliberately designed canonical graphics,
+and use PNG for screenshots or rendered visual evidence rather than
+hand-maintained architecture.

@@ -6,18 +6,29 @@ package owns game-specific rules in Luau; hosts own operating-system
 presentation, credentials, transports, and device integration; the backend
 owns identity, routing, storage, and server-validated service behavior.
 
-```text
-creator source (manifest, Luau, assets)
-        │ tools build and validate
-        ▼
-versioned package ──► host loader ──► shared Rust engine/client
-                           │                  │
-                           │ transport/UI     │ generic simulation/data
-                           ▼                  ▼
-                 web / iOS / Android / Studio
-                           │
-                           ▼
-               backend services and storage
+**Cubacadabra at a glance**
+
+```mermaid
+flowchart LR
+    Source["Creator/game source<br/>manifest, Luau, assets"]
+    Tools["Build tooling<br/>validate and bundle"]
+    Package["Portable game package<br/>versioned and hashed"]
+    Runtime["Shared Rust runtime<br/>engine and client"]
+    Studio["Cubacadabra Studio"]
+    Web["Web"]
+    IOS["iOS"]
+    Android["Android"]
+    Backend["Backend/platform services<br/>identity, routing, storage"]
+
+    Source --> Tools --> Package --> Runtime
+    Runtime --> Studio
+    Runtime --> Web
+    Runtime --> IOS
+    Runtime --> Android
+    Studio <-->|"host-owned transport when used"| Backend
+    Web <-->|"host-owned transport"| Backend
+    IOS <-->|"host-owned transport"| Backend
+    Android <-->|"host-owned transport"| Backend
 ```
 
 ## Repository responsibilities
@@ -30,6 +41,25 @@ versioned package ──► host loader ──► shared Rust engine/client
 | `backend` | Authentication, world routing, service validation, retained data and package delivery | Game-specific rules such as a particular score or gate |
 | `web`, `ios_app`, `android_app` | Host UI, device APIs, credentials, transport and platform decoding | Independent copies of shared gameplay or account decisions where Rust owns them |
 | `docs` | Canonical hand-written platform docs, contracts, decisions, and verification criteria | Generated API output or executable fixtures |
+
+**Runtime ownership layers**
+
+```mermaid
+flowchart TB
+    Hosts["Platform hosts as applicable<br/>Studio, Web, iOS, Android<br/>UI, credentials, transport, OS APIs"]
+    App["cubacadabra-app<br/>portable account behavior"]
+    Client["cubacadabra-client<br/>active game session behavior"]
+    Engine["cubacadabra-engine<br/>simulation, DataModel, Luau runtime"]
+
+    Hosts -->|"account actions and effects"| App
+    Hosts -->|"package, input, and transport"| Client
+    Client -->|"engine-facing session"| Engine
+    Hosts -->|"Studio direct Rust / renderer APIs"| Engine
+```
+
+`cubacadabra-app` and `cubacadabra-client` are sibling semantic layers. Host
+bindings adapt them to each platform; they are not separate implementations of
+Cubacadabra rules.
 
 ## Important boundaries
 

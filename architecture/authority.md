@@ -8,6 +8,26 @@ or canonicalizes an input. “Server-authoritative” means clients consume the
 server-produced result as the source of truth. CAS gives a retained channel a
 single ordered writer; it does not validate the meaning of the payload.
 
+**Current cooperative state flow**
+
+```mermaid
+flowchart LR
+    Game["Client game<br/>client-authored meaning"]
+    Runtime["cubacadabra-client<br/>Rust runtime"]
+    World["World Durable Object<br/>orders and retains"]
+    State["Ordered retained state<br/>opaque client-authored payload"]
+    Clients["Connected clients<br/>server sequence and timestamps"]
+
+    Game -->|"set_state / compare_set_state"| Runtime
+    Runtime -->|"untrusted payload proposal"| World
+    World --> State
+    State -->|"server-ordered game_state"| Clients
+```
+
+The Durable Object is authoritative for identity, ordering, timestamps, and
+conflict results on this path. It does not make game-owned payload claims such
+as a score or capture legitimate.
+
 ## Transport and presence
 
 | Message or mutation | Direction | Current classification | What that means |
@@ -98,6 +118,20 @@ network, persistence, filesystem, or renderer APIs. The builder detects
 and includes it in the package file hashes. This is an experimental artifact
 contract; current clients and the Durable Object do not execute it.
 
+**Prototype authority execution — not integrated into the live path**
+
+```mermaid
+flowchart LR
+    Command["Command<br/>no client-supplied actor"]
+    Host["Trusted host context<br/>authenticated actor and trusted facts"]
+    Rules["authority.luau<br/>game-owned rules"]
+    Execute["Validate, then simulate<br/>bounded execution"]
+    Result["Accepted state and events<br/>or explicit rejection"]
+
+    Command -->|"untrusted intent"| Host
+    Host --> Rules --> Execute --> Result
+```
+
 Maze 101 now contains that first game-owned rules module. Tests run the actual
 Luau source through the Rust adapter and cover per-player coin progress,
 duplicate pickups, host-supplied positions, independent finish state, and
@@ -136,3 +170,24 @@ world and movement context, persist round state and deduplication receipts
 atomically, and only then publish accepted events. A profile reward needs its
 own durable idempotency receipt and must not be described as saved until its
 transaction has committed.
+
+**Proposed trusted path — commit before publication**
+
+```mermaid
+sequenceDiagram
+    participant Client as Untrusted client
+    participant Host as Trusted authority host
+    participant Rules as authority.luau
+    participant Store as Durable storage
+
+    Client->>Host: Command intent
+    Note over Host: Bind authenticated identity and trusted world facts
+    Host->>Rules: Validate and simulate from committed checkpoint
+    Rules-->>Host: Candidate state, events, and request receipt
+    Host->>Store: Atomically commit state and receipt
+    Store-->>Host: Commit confirmed
+    Host-->>Client: Publish accepted state and events
+```
+
+This ordering is a target requirement, not a description of the current
+Durable Object integration.

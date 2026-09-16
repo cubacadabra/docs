@@ -6,6 +6,29 @@
 `cubacadabra-client` (active game sessions) and `cubacadabra-engine` (simulation).
 Studio uses ordinary Rust types and methods; JSON, C and WASM are outer adapters.
 
+**Current shared action/effect sequence**
+
+```mermaid
+sequenceDiagram
+    participant UI as Host UI
+    participant App as Rust AppModel
+    participant Host as Host platform adapter
+    participant API as Backend API
+
+    UI->>App: Dispatch semantic action
+    App-->>Host: Emit HTTP/platform effect
+    Note over App: Rust owns validation, state transitions, and response decoding
+    Note over Host: Host owns credentials, HTTP, OS APIs, and native presentation
+    Host->>API: Execute authenticated request
+    API-->>Host: Return HTTP response
+    Host->>App: Dispatch completion or failure
+    App-->>UI: Publish updated snapshot
+    UI->>UI: Render native state
+```
+
+The host performs effects but does not reinterpret their semantic result. Rust
+does not retain credentials or perform platform HTTP and presentation work.
+
 ## Implemented slices: account profile, cube catalog, and blocked users
 
 All account-username entry points now use the shared model:

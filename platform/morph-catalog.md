@@ -4,6 +4,27 @@
 Catalog release construction is operator tooling; this page describes the
 client-facing read and saved-appearance paths.
 
+**Current operator-managed catalog release and read path**
+
+```mermaid
+flowchart LR
+    Source["Source asset"]
+    Compiler["Morph compiler"]
+    Pack["Immutable MorphPack"]
+    R2["R2<br/>SHA-256-addressed object"]
+    D1["D1 catalog release<br/>active metadata per channel"]
+    Query["Client catalog query"]
+    Download["Verified pack download"]
+
+    Source --> Compiler --> Pack --> R2
+    R2 -->|"immutable artifact URL"| D1
+    D1 --> Query --> Download
+    R2 --> Download
+```
+
+Catalog publication is currently a maintainer/operator workflow, not a public
+client API or creator self-service flow.
+
 ## Catalog reads
 
 `GET /morphs/catalog` is public and reads one active JSON catalog document for
@@ -45,6 +66,31 @@ and returns the normalized appearance and revision. Invalid bodies or
 catalog references return `400 invalid_request` or `400 invalid_appearance`;
 auth failures return `401 not_authenticated`, age failures return
 `403 age_required`, and service failures return `503 auth_unavailable`.
+
+**Revision-checked appearance save**
+
+```mermaid
+sequenceDiagram
+    participant Client
+    participant API as Appearance API
+    participant D1
+
+    Client->>API: GET appearance
+    API->>D1: Read appearance and revision
+    D1-->>API: Current record
+    API-->>Client: Appearance + revision
+    Note over Client: Edit locally
+    Client->>API: PUT appearance + expectedRevision
+    API->>API: Validate account, age, shape, and catalog references
+    API->>D1: Compare expected revision and write
+    alt Revision matches
+        D1-->>API: Updated appearance + next revision
+        API-->>Client: Success
+    else Revision is stale
+        D1-->>API: Current appearance + revision
+        API-->>Client: 409 stale_appearance
+    end
+```
 
 ### Version 2 loadout
 

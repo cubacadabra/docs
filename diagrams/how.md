@@ -213,11 +213,11 @@ prose
 
 ```mermaid
 ...
-````
+```
 
 prose
 
-```
+````
 
 The diagram and the explanation should usually change together.
 
@@ -227,7 +227,7 @@ Standalone `.mmd` files make sense only when:
 - it is huge
 - you want it viewable independently
 
-GitHub supports those standalone files too. :contentReference[oaicite:2]{index=2}
+GitHub supports those standalone files too. ([GitHub Docs][1])
 
 ## I'd actually add a diagram convention to the docs repo
 
@@ -283,7 +283,5 @@ I could easily see **20–30 Mermaid diagrams** across this repo without it feel
 One caution: Mermaid is good at communicating structure, but don't turn every paragraph into a diagram. A useful diagram should save the reader from mentally constructing relationships from the prose.
 
 So my answer is: **go heavily Mermaid—probably 90% Mermaid, 5–10% polished SVG, and PNG only where you're showing actual visual output.**
-```
 
 [1]: https://docs.github.com/en/repositories/working-with-files/using-files/working-with-non-code-files?utm_source=chatgpt.com "Working with non-code files - GitHub Docs"
-

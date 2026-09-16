@@ -8,6 +8,36 @@ has a class, name, parent, and JSON-compatible property bag. Game-specific
 concepts remain in Luau; the model represents generic engine objects and
 properties.
 
+**Proposed shared mutation integration**
+
+```mermaid
+flowchart LR
+    Studio["Manual Studio edits"]
+    Luau["Luau changes"]
+    AI["Future AI edits"]
+    Mutation["Common validation<br/>and mutation model"]
+    Feed["Ordered DataModel<br/>change feed"]
+    Renderer["Renderer"]
+    Physics["Physics"]
+    Network["Networking"]
+    Persistence["Persistence"]
+    Editing["Undo and hot reload"]
+
+    Studio --> Mutation
+    Luau --> Mutation
+    AI --> Mutation
+    Mutation --> Feed
+    Feed --> Renderer
+    Feed --> Physics
+    Feed --> Network
+    Feed --> Persistence
+    Feed --> Editing
+```
+
+This is the proposed convergence path. The `DataModel` and ordered feed exist;
+the creator-facing Luau surface and the downstream consumer bridges shown here
+remain incomplete.
+
 ## Mutation contract
 
 The mutation methods are `create_entity`, `set_name`, `set_parent`,

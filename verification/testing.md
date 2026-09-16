@@ -11,6 +11,24 @@ which boundary the evidence covers.
 | Host conformance test | The named real adapter/loader path behaves as specified | Untested hosts or production scale |
 | Release evidence | The shipped artifact and declared release path | Unmeasured reliability beyond the sampled evidence |
 
+**Complementary evidence boundaries**
+
+```mermaid
+flowchart TB
+    Unit["Unit<br/>module behavior"]
+    Integration["Integration<br/>exercised component path"]
+    Host["Host conformance<br/>real adapter and loader"]
+    Release["Release evidence<br/>shipped artifact and path"]
+
+    Unit -->|"adds connected-path evidence"| Integration
+    Integration -->|"adds real-host evidence"| Host
+    Host -->|"adds shipped-artifact evidence"| Release
+```
+
+This is an evidence ladder, not a quality ranking. Each level proves a
+different boundary, and none substitutes for the narrower tests or for an
+unmeasured host, path, or reliability claim.
+
 ## Minimum contract test groups
 
 - Manifest/package validation and deterministic package outputs.

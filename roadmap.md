@@ -5,6 +5,24 @@ or requirement to implement every proposal in the historical source material.
 Feature terms and evidence labels follow the
 [documentation authority rules](README.md#documentation-authority).
 
+**Major unfinished platform areas**
+
+```mermaid
+flowchart TB
+    Authority["Trusted authority"] --> Readiness["Cross-platform release readiness"]
+    Durable["Durable game-owned data"] --> Readiness
+    Releases["Transactional releases"] --> Readiness
+    Assets["End-to-end asset integration"] --> Readiness
+    Hosts["Host conformance"] --> Readiness
+    Editing["Shared editing pipeline"] --> Readiness
+    Safety["Measured safety and<br/>performance budgets"] --> Readiness
+    Avatar["Shared avatar editor"] --> Readiness
+```
+
+This is a gap map, not a schedule or an assertion that the areas can be
+completed independently. The sections below define their current foundations
+and remaining evidence.
+
 ## Working foundations
 
 - The tools builder produces package format 3 and accepts SDK `0.3.0` and

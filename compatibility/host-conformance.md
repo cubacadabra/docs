@@ -5,6 +5,29 @@ merely shared Rust code or a successful target compile. Compare native `mlua`
 and browser `luaur-rt` behavior and exercise the actual iOS, Android, web, and
 Studio loading/adaptation paths where those hosts consume the contract.
 
+**One fixture, comparable semantic outcomes**
+
+```mermaid
+flowchart LR
+    Fixture["Canonical contract fixture"]
+    Native["Rust / native<br/>mlua"]
+    Web["Web<br/>WASM / JavaScript"]
+    IOS["iOS<br/>Swift / C"]
+    Android["Android<br/>JNI / Kotlin"]
+    Studio["Cubacadabra Studio<br/>direct Rust"]
+    Compare["Compare semantic outcomes<br/>state, events, errors, ordering"]
+
+    Fixture --> Native --> Compare
+    Fixture --> Web --> Compare
+    Fixture --> IOS --> Compare
+    Fixture --> Android --> Compare
+    Fixture --> Studio --> Compare
+```
+
+A target compiling successfully does not traverse these production adapter,
+loader, lifecycle, and cache boundaries and therefore is not host-conformance
+evidence.
+
 ## Compare semantic behavior
 
 For each supported contract, fixtures should compare:

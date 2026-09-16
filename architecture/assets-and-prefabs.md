@@ -18,6 +18,38 @@ be required for that build.
 
 These are durable design constraints, not a selected encoding:
 
+**Proposed object-reference and asset-reference behavior**
+
+```mermaid
+flowchart LR
+    subgraph A["Chest A"]
+        ChestA["Chest A<br/>object ID"]
+        LidA["Lid A<br/>object ID"]
+        HingeA["Hinge A"]
+        ChestA -->|"contains"| LidA
+        ChestA -->|"contains"| HingeA
+        HingeA -->|"object reference"| LidA
+    end
+
+    subgraph B["Duplicated Chest B"]
+        ChestB["Chest B<br/>new object ID"]
+        LidB["Lid B<br/>new object ID"]
+        HingeB["Hinge B"]
+        ChestB -->|"contains"| LidB
+        ChestB -->|"contains"| HingeB
+        HingeB -->|"remapped object reference"| LidB
+    end
+
+    Mesh["shared chest.mesh<br/>immutable asset reference"]
+    ChestA -.->|"duplicate"| ChestB
+    LidA -->|"asset reference"| Mesh
+    LidB -->|"same asset reference"| Mesh
+```
+
+Duplicating the authored objects creates new document-local identities and
+remaps internal object references. It does not require duplicating an immutable
+asset dependency.
+
 1. Give authored objects stable document-local IDs, separate from runtime
    entity IDs.
 2. Model references between objects separately from references to reusable
@@ -34,6 +66,27 @@ These are durable design constraints, not a selected encoding:
    to them. Script execution requires a separate explicit runtime operation.
 7. Saving, reloading, and importing must preserve supported semantics and
    references. Serialization round-trip tests are part of the feature.
+
+**Proposed safe document import boundary**
+
+```mermaid
+flowchart LR
+    Source["Creator source"]
+    Import["Parse, inspect, and validate<br/>no script execution"]
+    Document["Cubacadabra document<br/>stable object IDs"]
+    Dependencies["Explicit pinned or<br/>content-addressed dependencies"]
+    Runtime["Explicit runtime<br/>instantiation"]
+
+    Source --> Import
+    Import --> Document
+    Import --> Dependencies
+    Document --> Runtime
+    Dependencies --> Runtime
+```
+
+No general document encoding has been selected. The diagram records the
+required separation between safe parsing/import and explicit runtime script
+execution.
 
 The key duplication and import acceptance criteria are in
 [verification/acceptance-criteria.md](../verification/acceptance-criteria.md).

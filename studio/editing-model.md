@@ -13,6 +13,31 @@ bridge to renderer, physics, networking, and persistence. Future integrations
 should build on the shared mutation feed rather than add parallel setters or
 per-frame scans. See [DataModel](../architecture/data-model.md).
 
+**Proposed shared editing pipeline**
+
+```mermaid
+flowchart LR
+    Manual["Manual Studio edit"]
+    Luau["Luau edit"]
+    AI["Future AI edit"]
+    Mutation["Shared validation<br/>and mutation"]
+    Feed["Preview and ordered<br/>change feed"]
+    Undo["Undo"]
+    Reload["Hot reload"]
+    Consumers["Runtime consumers"]
+
+    Manual --> Mutation
+    Luau --> Mutation
+    AI --> Mutation
+    Mutation --> Feed
+    Feed --> Undo
+    Feed --> Reload
+    Feed --> Consumers
+```
+
+Only the generic `DataModel` graph and bounded mutation feed are implemented
+foundations today. The complete cross-source editing transaction is proposed.
+
 ## Acceptance scenario
 
 1. Import a project-owned texture and see all relevant viewports update.

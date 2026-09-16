@@ -34,6 +34,35 @@ On a conflict, the sender receives the current `game_state` with
 channel has been written with compare-and-set, legacy `set_state` writes cannot
 overwrite it.
 
+**The three cooperative network lanes**
+
+```mermaid
+flowchart TB
+    Choice["Game chooses a delivery guarantee"]
+
+    subgraph Ephemeral["Ephemeral message"]
+        Publish["publish(payload)"] --> Broadcast["Broadcast to clients<br/>connected now"]
+    end
+
+    subgraph Retained["Retained state"]
+        Set["set_state(payload)"] --> Store["Replace latest value"]
+        Store --> Join["Broadcast now<br/>replay to later joiners"]
+    end
+
+    subgraph CAS["Compare-and-set retained state"]
+        Compare["compare_set_state<br/>expected sequence + payload"] --> Match{"Sequence matches?"}
+        Match -->|"Yes"| Commit["Increment sequence,<br/>persist, broadcast"]
+        Match -->|"No"| Conflict["Return current state<br/>conflict = true"]
+    end
+
+    Choice --> Publish
+    Choice --> Set
+    Choice --> Compare
+```
+
+All three payloads remain game-owned and client-authored. Compare-and-set
+makes ordering race-safe; it does not make payload meaning server-validated.
+
 State messages also include `updatedAt` and `ageMs`. Games should use `ageMs`
 to resume short timers after reconnecting rather than trusting a client wall
 clock. A newly connected player receives every retained channel, not only
