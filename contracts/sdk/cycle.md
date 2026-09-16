@@ -1,5 +1,9 @@
 # Cycle SDK v1
 
+**Status:** Current contract
+
+**Maturity:** Preview
+
 `@cubacadabra/cycle` is a local deterministic day/night or other two-phase
 clock. It advances from the simulation delta passed by the game; it does not
 network or persist state by itself.

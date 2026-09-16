@@ -1,6 +1,8 @@
 # Morph pack v5 (pre-launch)
 
-**Status:** normative pre-launch MorphPack schema v5 contract; schemas 1–4 are rejected.
+**Status:** Current contract
+
+**Maturity:** Preview
 
 The compiler emits **only v5** and the shared runtime accepts **only v5**.
 Schemas 1–4 fail with `MORPH_PACK_UNSUPPORTED_SCHEMA`; rebuild from source.

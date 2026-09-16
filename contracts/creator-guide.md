@@ -1,5 +1,9 @@
 # Create and build a game
 
+**Status:** Current contract
+
+**Maturity:** Preview
+
 This is a practical entry point. Normative API details and limits live in the
 linked contract pages; this guide is not a competing schema.
 

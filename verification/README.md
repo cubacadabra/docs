@@ -9,3 +9,5 @@
 - [Performance](performance.md) — current bounds and measurement rules.
 - [Character runtime](character-runtime.md) — engine constraints and capture
   commands.
+- [Release readiness](release-readiness.md) — proposed production checks and
+  evidence gate; not committed v1 scope.

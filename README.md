@@ -41,8 +41,10 @@ their generators.
 
 ## Documentation authority
 
-`contracts/` pages are normative when marked **Current contract**. Other
-status labels mean:
+`contracts/` pages are normative when marked **Status: Current contract**.
+Each contract also carries a separate **Maturity** value (`Preview`,
+`Experimental`, or `Stable`) so maturity does not change whether the text is
+normative. Other status labels mean:
 
 - **Implemented:** code implements the described behavior; this does not imply
   every product path uses it.

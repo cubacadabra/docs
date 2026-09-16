@@ -1,5 +1,9 @@
 # World and manifest contract
 
+**Status:** Current contract
+
+**Maturity:** Preview
+
 The manifest owns package content and generic world data, not engine code.
 The current builder validates the exact accepted shape. The contract examples
 below describe current preview capabilities; package/SDK version distinctions

@@ -1,6 +1,8 @@
 # Game-owned network messages
 
-**Status:** current cooperative v1 network contract. Server ordering and retention do not validate game-rule meaning.
+**Status:** Current contract
+
+**Maturity:** Preview
 
 The runtime exposes a small transport seam for game packages. It does not
 interpret the channel name or payload, and it must not grow types for a game's

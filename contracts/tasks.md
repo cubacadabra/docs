@@ -1,6 +1,8 @@
 # Luau task scheduler
 
-**Status:** current simulation-tick scheduler contract for native and browser runtimes.
+**Status:** Current contract
+
+**Maturity:** Preview
 
 Game scripts can schedule cooperative work through `api.task`. The scheduler
 uses the engine's fixed simulation ticks; it never sleeps on wall-clock time.

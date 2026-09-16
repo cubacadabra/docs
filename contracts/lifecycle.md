@@ -1,6 +1,8 @@
 # Game lifecycle contract
 
-**Status:** Current preview lifecycle API. Every callback is optional.
+**Status:** Current contract
+
+**Maturity:** Preview
 
 The source entry `src/main.luau` returns a table. The runtime invokes the
 following callbacks when the corresponding event occurs:

@@ -1,6 +1,8 @@
 # Engine snapshots
 
-**Status:** EngineSnapshot v1 state-format contract. It is not a persistence service.
+**Status:** Current contract
+
+**Maturity:** Preview
 
 `EngineSnapshot` is the V1 platform contract for freezing and resuming an
 engine world. It is a state format, not a storage service: callers decide

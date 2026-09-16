@@ -1,5 +1,9 @@
 # Obby SDK v1
 
+**Status:** Current contract
+
+**Maturity:** Preview
+
 The runtime owns physics, ladder volumes, checkpoints, fall detection, and
 respawn. The helper keeps game-owned course status and routes the lifecycle
 events to optional callbacks.

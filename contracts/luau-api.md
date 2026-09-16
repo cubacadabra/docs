@@ -1,5 +1,9 @@
 # Game-facing Luau API
 
+**Status:** Current contract
+
+**Maturity:** Preview
+
 Game code is a Luau module that returns a table of lifecycle callbacks. The
 shared runtime provides generic primitives; individual experiences define
 their own rules and compose those primitives. Platform UI, credentials,

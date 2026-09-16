@@ -1,6 +1,8 @@
 # Disclosure SDK v1
 
-**Status:** disclosure SDK v1 helper contract.
+**Status:** Current contract
+
+**Maturity:** Preview
 
 Use this helper when a compact game-owned control should reveal and hide one
 or more optional UI nodes. The game still owns the document, copy, styles, and

@@ -99,6 +99,14 @@ prove the same Rust composition, local preview events, catalog browsing, and
 save-conflict handling at their real host boundaries. Follow the target
 ownership and event seam in [the avatar editor architecture](architecture/avatar-editor.md).
 
+### 9. Close the release-readiness gate
+
+The proposed production checks in [release readiness](verification/release-readiness.md)
+need owners, thresholds, and repeatable evidence before a stable SDK release
+can be claimed. This includes authenticated soak and malformed-message tests,
+host and accessibility conformance, permissions, observability, and measured
+performance budgets.
+
 ## Open decisions
 
 - Whether a general-purpose scene/prefab encoding needs a binary form. JSON is

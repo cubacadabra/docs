@@ -1,6 +1,10 @@
 # Game package contract
 
-**Current contract:** the builder validates creator source and produces the
+**Status:** Current contract
+
+**Maturity:** Preview
+
+The builder validates creator source and produces the
 portable package consumed by hosts. Package metadata includes a manifest,
 the bundled game entry, an SDK/API version, and declared runtime assets. A
 package descriptor and file hashes let hosts verify the downloaded files.
