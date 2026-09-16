@@ -3,10 +3,10 @@
 **Contract status:** current shared client/session contract. Hosts must follow this boundary.
 
 `cubacadabra-client` is the common session runtime used by Player hosts and by
-Studio preview. Current Player hosts are web, iOS, and Android; native desktop
-Player targets for macOS, Windows, and Linux are planned. Studio is a separate
-desktop creator application that embeds the same runtime for preview and
-testing; it is not the end-user desktop Player.
+Studio preview. Current Player hosts are web, iOS, Android, and the native
+desktop Player for macOS, Windows, and Linux. Studio is a separate desktop
+creator application that embeds the same runtime for preview and testing; it
+is not the end-user desktop Player.
 
 **Shared session and transport flow**
 
@@ -34,7 +34,7 @@ flowchart TB
         Android["Android<br/>C ABI → JNI → Kotlin"]
         Web["Web<br/>WASM → JavaScript"]
     end
-    subgraph Planned["Planned Player application"]
+    subgraph DesktopPlayer["Desktop Player application"]
         Desktop["Desktop Player<br/>macOS · Windows · Linux"]
     end
 
@@ -42,7 +42,7 @@ flowchart TB
     Semantics --> IOS
     Semantics --> Android
     Semantics --> Web
-    Semantics -.-> Desktop
+    Semantics --> Desktop
 ```
 
 The bindings expose the same client/session semantics; they are not separate

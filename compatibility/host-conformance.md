@@ -4,9 +4,9 @@ Portable behavior means equivalent outcomes at each real host boundary, not
 merely shared Rust code or a successful target compile. Compare native `mlua`
 and browser `luaur-rt` behavior and exercise the actual Player hosts—web, iOS,
 and Android—plus the Studio preview/loading path where those hosts consume the
-contract. Native Desktop Player targets for macOS, Windows, and Linux are
-planned and need their own evidence when implemented; they are not current
-conformance claims.
+contract. Native Desktop Player hosts for macOS, Windows, and Linux are now
+implemented and need their own evidence; implementation and target compilation
+alone are not current conformance claims.
 
 **One fixture, comparable semantic outcomes**
 
@@ -18,7 +18,7 @@ flowchart LR
     IOS["iOS<br/>Swift / C"]
     Android["Android<br/>JNI / Kotlin"]
     Studio["Studio preview<br/>direct Rust"]
-    Desktop["Desktop Player<br/>macOS / Windows / Linux<br/>planned"]
+    Desktop["Desktop Player<br/>macOS / Windows / Linux<br/>current"]
     Compare["Compare semantic outcomes<br/>state, events, errors, ordering"]
 
     Fixture --> Native --> Compare
@@ -60,8 +60,8 @@ loader or cache path; test both layers.
 - Studio direct Rust API tests for editor and preview boundaries.
 - Package tests that load the built output, not only source validators.
 
-Planned Desktop Player conformance must add actual macOS, Windows, and Linux
-player shells to this fixture matrix. Studio evidence must remain labeled as
+Desktop Player conformance must exercise the actual macOS, Windows, and Linux
+player shells in this fixture matrix. Studio evidence must remain labeled as
 creator-host preview evidence, not end-user Player evidence.
 
 Current gaps and acceptance probes are in

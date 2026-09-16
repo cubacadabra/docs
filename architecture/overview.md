@@ -20,16 +20,16 @@ flowchart LR
     Runtime["Shared Rust runtime<br/>engine · client · app"]
     Studio["Creator application<br/>Cubacadabra Studio"]
     Player["Player applications<br/>Web · iOS · Android"]
-    Desktop["Desktop Player<br/>macOS · Windows · Linux<br/>planned"]
+    Desktop["Desktop Player<br/>macOS · Windows · Linux<br/>current"]
     Backend["Backend/platform services<br/>identity, routing, storage"]
 
     Source --> Tools --> Package --> Runtime
     Runtime --> Studio
     Runtime --> Player
-    Runtime -.-> Desktop
+    Runtime --> Desktop
     Studio <-->|"host-owned transport when used"| Backend
     Player <-->|"host-owned transport"| Backend
-    Desktop -.->|"planned host-owned transport"| Backend
+    Desktop <-->|"host-owned transport"| Backend
 ```
 
 ## Repository responsibilities
@@ -41,7 +41,7 @@ flowchart LR
 | `studio` | Local authoring, preview, asset workflow and editor interactions | A separate interpretation of package validity |
 | `backend` | Authentication, world routing, service validation, retained data and package delivery | Game-specific rules such as a particular score or gate |
 | `web`, `ios_app`, `android_app` | Current Player host UI, device APIs, credentials, transport and platform decoding | Independent copies of shared gameplay or account decisions where Rust owns them |
-| future desktop Player host | Native desktop Player shell and OS integration | Studio editor, project/build machinery, or a separate gameplay implementation |
+| `desktop` | Native desktop Player shell and OS integration | Studio editor, project/build machinery, or a separate gameplay implementation |
 | `docs` | Canonical hand-written platform docs, contracts, decisions, and verification criteria | Generated API output or executable fixtures |
 
 **Runtime ownership layers**
@@ -49,7 +49,7 @@ flowchart LR
 ```mermaid
 flowchart TB
     Creator["Creator host<br/>Studio<br/>editor, project, build, preview"]
-    Players["Player hosts<br/>Web, iOS, Android<br/>desktop targets planned"]
+    Players["Player hosts<br/>Web, iOS, Android, Desktop"]
     App["cubacadabra-app<br/>portable account behavior"]
     Client["cubacadabra-client<br/>active game session behavior"]
     Engine["cubacadabra-engine<br/>simulation, DataModel, Luau runtime"]
@@ -64,8 +64,8 @@ flowchart TB
 
 `cubacadabra-app` and `cubacadabra-client` are sibling semantic layers. Studio
 and Player host bindings adapt them to each platform; they are not separate
-implementations of Cubacadabra rules. A future Desktop Player can reuse the
-native Rust boundary without reusing Studio's editor.
+implementations of Cubacadabra rules. The Desktop Player reuses the native Rust
+boundary without reusing Studio's editor.
 
 The creator build boundary is shared across the game repositories and Studio.
 The Rust `tools` project/build crates are now the Studio implementation and the

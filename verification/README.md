@@ -7,8 +7,7 @@ deliberately conservative: shared tests, target compilation, real host loading,
 and release evidence prove different things.
 
 Studio evidence is creator-host preview evidence. Player evidence belongs to the
-end-user hosts: web, iOS, Android, and the planned native desktop Player
-targets.
+end-user hosts: web, iOS, Android, and the native desktop Player targets.
 
 - [Testing strategy](testing.md) — what unit, integration, compile, host, and
   release evidence establishes.

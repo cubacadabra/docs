@@ -62,8 +62,8 @@ and measurable threshold are recorded.
 - Verify UI and input at 390x844, 768x1024, 1280x800, and 1440x900, including
   safe areas, keyboard and touch input, focus order, contrast, overflow,
   reduced motion, and accessible names. Test the actual web, iOS, Android, and
-  Studio host adapters; target compilation alone is insufficient. Planned
-  Desktop Player targets need separate macOS, Windows, and Linux evidence.
+  Studio host adapters; target compilation alone is insufficient. Desktop
+  Player targets need separate macOS, Windows, and Linux evidence.
 - Run the same package and scripted interaction trace on every supported host
   and compare lifecycle timing, input semantics, audio and image behavior,
   network results, state transitions, emitted events, and errors.

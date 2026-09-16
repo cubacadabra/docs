@@ -27,21 +27,20 @@ package, restores account/product state through host-owned services, and runs
 game sessions. It does not include Studio's editor, project store, asset
 importer, or build UI.
 
-Current player hosts are web, iOS, and Android. Native desktop Player targets
-for macOS, Windows, and Linux are planned; they should reuse the shared Rust
-engine/client/app crates through one desktop-player product boundary rather than
-turning Studio into the way desktop users play.
+Current player hosts are web, iOS, Android, and the native desktop Player for
+macOS, Windows, and Linux. They reuse the shared Rust engine/client/app crates
+through one desktop-player product boundary rather than turning Studio into
+the way desktop users play.
 
 ## Target matrix
 
 | Product | macOS | Windows | Linux | Web | iOS | Android |
 | --- | --- | --- | --- | --- | --- | --- |
 | Studio | Current | Current | Current | — | — | — |
-| Player | Planned | Planned | Planned | Current | Current | Current |
+| Player | Current | Current | Current | Current | Current | Current |
 
 “Current” identifies an active product/host path in the checked-in architecture;
-it does not by itself claim release readiness for every contract. “Planned” is a
-product target, not current host evidence.
+it does not by itself claim release readiness for every contract.
 
 ## Shared desktop architecture
 
@@ -52,6 +51,6 @@ crates, but their shells remain separate:
 | --- | --- | --- |
 | engine, client, app state, renderer-facing semantics | editor, project store, build/import, diagnostics, test sessions | catalog/launch, account/settings, player shell, game sessions |
 
-The repository layout for a future Player implementation is not fixed by this
-page. The product boundary is fixed early so code organization does not imply
-that creators and players use the same application.
+The Desktop Player implementation lives in the `desktop` repository. The
+product boundary remains explicit so code organization does not imply that
+creators and players use the same application.

@@ -12,9 +12,8 @@ That experience is delivered by two distinct products:
   authors projects, builds packages, imports assets, and embeds the real runtime
   for preview and testing.
 - **Cubacadabra Player** is end-user software with no authoring/editor
-  machinery. Player targets are web, iOS, and Android today, with native
-  desktop Player targets for macOS, Windows, and Linux planned separately from
-  Studio.
+  machinery. Player targets are web, iOS, Android, and the native desktop
+  Player for macOS, Windows, and Linux, separately from Studio.
 
 See the [platform model](platforms.md) for the product/host matrix. Studio and
 Desktop Player can both be Rust desktop hosts, but they are different products:
