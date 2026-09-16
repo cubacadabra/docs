@@ -53,6 +53,7 @@ comes from one integrated release package.
   [world manifest](contracts/world-manifest.md), and SDK contracts in
   [contracts/sdk](contracts/sdk/README.md).
 - **Work on Studio:** see [Studio overview](studio/overview.md),
+  [creator build toolchain](architecture/toolchain.md),
   [asset workflow](studio/asset-workflow.md), and
   [editing model](studio/editing-model.md).
 - **Work on backend services:** see

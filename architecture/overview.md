@@ -37,7 +37,7 @@ flowchart LR
 | Area | Owns | Does not own |
 | --- | --- | --- |
 | `rust` | Shared engine, client and application-runtime behavior, typed contracts, portable simulation | Product rules for an individual game; credentials or OS UI |
-| `tools` | Project creation, SDK bundling, validation and package construction | Runtime authority or host presentation |
+| `tools` | Project creation, SDK bundling, validation and package construction; native Rust CLI migration in progress | Runtime authority or host presentation |
 | `studio` | Local authoring, preview, asset workflow and editor interactions | A separate interpretation of package validity |
 | `backend` | Authentication, world routing, service validation, retained data and package delivery | Game-specific rules such as a particular score or gate |
 | `web`, `ios_app`, `android_app` | Current Player host UI, device APIs, credentials, transport and platform decoding | Independent copies of shared gameplay or account decisions where Rust owns them |
@@ -66,6 +66,12 @@ flowchart TB
 and Player host bindings adapt them to each platform; they are not separate
 implementations of Cubacadabra rules. A future Desktop Player can reuse the
 native Rust boundary without reusing Studio's editor.
+
+The creator build boundary is shared across the game repositories and Studio.
+The Python tools CLI is still the current implementation, while `tools` is
+starting a Rust replacement for the project/build surface so installed Studio
+can ship a native builder without Python. See the [creator build toolchain](toolchain.md)
+for the migration boundary and required evidence.
 
 ## Important boundaries
 

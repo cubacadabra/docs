@@ -10,6 +10,8 @@ The product taxonomy is equally important: Studio is creator software; Player
 is end-user software. See the [platform model](../product/platforms.md).
 
 - [Overview](overview.md) — repository roles and system boundaries.
+- [Creator build toolchain](toolchain.md) — the in-progress native Rust tools
+  migration and Studio packaging boundary.
 - [Authority](authority.md) — message trust map and unintegrated prototype.
 - [Data model](data-model.md) — stable entities and ordered mutations.
 - [Client runtime](client-runtime.md) — Rust session behavior and host duties.

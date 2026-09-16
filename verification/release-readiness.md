@@ -42,6 +42,12 @@ and measurable threshold are recorded.
   validator, asset diagnostics, logs, fixtures, CI-friendly build commands,
   and runnable examples for the supported APIs. Diagnostics show the API,
   input, result, and useful failure explanation without exposing secrets.
+- Ship Studio's project/build CLI as a native executable. Verify raw-project
+  preview on macOS, Windows, and Linux with Python unavailable; the release
+  archive must not require `cubacadabra.pyz`, an interpreter, or `PYTHONPATH`.
+- Compare native-builder output with the current package contract across the
+  representative game and example repositories, including package hashes,
+  SDK/module bundling, validation errors, and last-good-build behavior.
 - Define the minimum discovery identity needed for a published game: creator,
   title, description, thumbnail, tags, age rating, supported platforms,
   visibility, version, and basic play analytics. Search and recommendations

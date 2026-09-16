@@ -73,7 +73,18 @@ immutable package revision. Interruption tests must leave a complete old or
 new release, never a mixed set; see
 [acceptance criteria](verification/acceptance-criteria.md).
 
-### 4. Finish local Morph asset integration
+### 4. Complete the native tools CLI migration
+
+The Python CLI remains the current `tools` implementation, and Studio release
+artifacts still bundle `cubacadabra.pyz` and use Python 3 for raw-project
+builds. Rust workspace scaffolding now exists for the project, builder, and
+CLI surfaces, but it is not yet a compatible replacement. Finish the native
+implementation, preserve package and diagnostic behavior, update release and
+compatibility workflows, and prove Studio raw-project preview on clean macOS,
+Windows, and Linux machines without Python. See the [creator build
+toolchain](architecture/toolchain.md).
+
+### 5. Finish local Morph asset integration
 
 Studio imports and locally previews supported rigid-wearable GLBs, writes the
 source/sidecar/pack/thumbnail, updates the local catalog, and registers the
@@ -83,7 +94,7 @@ same asset loading on Studio, web, iOS, and Android. Creator-facing community
 publish remains an operator-managed release path, not a self-service Studio
 feature.
 
-### 5. Prove host behavioral conformance
+### 6. Prove host behavioral conformance
 
 Keep native Rust and browser Luau outcomes equivalent and exercise real web,
 iOS Swift/C, Android JNI/Kotlin, and Studio loader/cache boundaries. Compare
@@ -92,7 +103,7 @@ structured failures, SDK transitions, and asset loading. Rust target
 compilation is not an Android device test. See
 [host conformance](compatibility/host-conformance.md).
 
-### 6. Complete the shared editing pipeline
+### 7. Complete the shared editing pipeline
 
 The generic `DataModel` currently supplies a stable entity graph and ordered
 mutation feed; it is not yet a Luau `Instance` surface or connected to every
@@ -100,7 +111,7 @@ consumer. Manual Studio edits, Luau, and future AI edits should converge on
 shared validation, changes, preview, undo, and hot reload. See the proposed
 [editing model](studio/editing-model.md).
 
-### 7. Set measured service, safety, and performance budgets
+### 8. Set measured service, safety, and performance budgets
 
 Choose targets from real measurements for package startup, asset decode,
 memory, frame time, network traffic, concurrent sessions, and long sessions.
@@ -109,7 +120,7 @@ privacy/data deletion, resource limits, and support operations before broad
 public creator distribution. Current block/report endpoints do not complete
 that policy.
 
-### 8. Deliver the shared avatar editor surface
+### 9. Deliver the shared avatar editor surface
 
 The backend catalog and revision-checked saved-appearance paths are current
 contracts. The standalone editor remains proposed until web, iOS, and Android
@@ -117,7 +128,7 @@ prove the same Rust composition, local preview events, catalog browsing, and
 save-conflict handling at their real host boundaries. Follow the target
 ownership and event seam in [the avatar editor architecture](architecture/avatar-editor.md).
 
-### 9. Close the release-readiness gate
+### 10. Close the release-readiness gate
 
 The proposed production checks in [release readiness](verification/release-readiness.md)
 need owners, thresholds, and repeatable evidence before a stable SDK release

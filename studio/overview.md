@@ -12,6 +12,14 @@ entry point, embedded SDK, and asset directories. This does not build a raw
 source project. The current release packaging contains a Python zipapp and
 requires Python 3 to build raw projects.
 
+The raw-project path currently invokes the shared `cubacadabra` builder, using
+`CUBACADABRA_CLI_PATH`, a bundled/adjacent executable, or the development
+checkout fallback under `../tools/src`. An in-progress Rust migration in
+`tools` is intended to replace that Python zipapp with a native `cubacadabra`
+executable. Until the migration passes clean-machine host verification, the
+Python requirement remains a current release limitation. See the [creator
+build toolchain](../architecture/toolchain.md).
+
 ## Local asset workflow
 
 Importing a GLB, validating a supported mapping, previewing it, and adding it
