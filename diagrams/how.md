@@ -38,6 +38,7 @@ and descriptions so the visual is not the only way to understand the claim.
 ## Current designed diagrams
 
 - `cubacadabra-platform.svg` — root platform map
+- `cubacadabra-products.svg` — Studio versus Player product boundary
 - `runtime-ownership.svg` — Rust layers, hosts and platform boundary
 - `creator-runtime-pipeline.svg` — source to package to runtime
 - `sdk-layering.svg` — runtime primitives to reusable Luau helpers

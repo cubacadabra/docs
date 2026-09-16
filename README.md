@@ -2,12 +2,18 @@
 
 Open-source game platform, engine, and creator stack.
 
-![Cubacadabra platform architecture](diagrams/cubacadabra-platform.svg)
-
 Cubacadabra combines a custom Rust runtime, Luau game rules, portable hashed
 packages, cross-host adapters, Studio authoring, and platform services. This
 repository is the canonical home for the hand-written contracts and architecture
 that connect those pieces.
+
+**Build with Cubacadabra Studio. Play everywhere with Cubacadabra Player.**
+
+![Cubacadabra products](diagrams/cubacadabra-products.svg)
+
+## Platform architecture
+
+![Cubacadabra platform architecture](diagrams/cubacadabra-platform.svg)
 
 ## Working product evidence
 
@@ -34,6 +40,8 @@ comes from one integrated release package.
   [principles](product/principles.md), and
   [architecture overview](architecture/overview.md), including the proposed
   [avatar editor boundary](architecture/avatar-editor.md).
+- **Understand products and targets:** see the
+  [Studio versus Player platform model](product/platforms.md).
 - **Build or change a platform feature:** read the relevant page in
   [contracts](contracts/README.md), then the applicable
   [architecture](architecture/README.md) and

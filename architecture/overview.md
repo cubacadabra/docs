@@ -6,6 +6,10 @@ package owns game-specific rules in Luau; hosts own operating-system
 presentation, credentials, transports, and device integration; the backend
 owns identity, routing, storage, and server-validated service behavior.
 
+The product taxonomy is explicit: **Studio is creator software** and
+**Cubacadabra Player is end-user software**. Studio can embed the runtime for
+preview, but players do not use Studio. See the [product/platform model](../product/platforms.md).
+
 **Cubacadabra at a glance**
 
 ```mermaid
@@ -13,22 +17,19 @@ flowchart LR
     Source["Creator/game source<br/>manifest, Luau, assets"]
     Tools["Build tooling<br/>validate and bundle"]
     Package["Portable game package<br/>versioned and hashed"]
-    Runtime["Shared Rust runtime<br/>engine and client"]
-    Studio["Cubacadabra Studio"]
-    Web["Web"]
-    IOS["iOS"]
-    Android["Android"]
+    Runtime["Shared Rust runtime<br/>engine · client · app"]
+    Studio["Creator application<br/>Cubacadabra Studio"]
+    Player["Player applications<br/>Web · iOS · Android"]
+    Desktop["Desktop Player<br/>macOS · Windows · Linux<br/>planned"]
     Backend["Backend/platform services<br/>identity, routing, storage"]
 
     Source --> Tools --> Package --> Runtime
     Runtime --> Studio
-    Runtime --> Web
-    Runtime --> IOS
-    Runtime --> Android
+    Runtime --> Player
+    Runtime -.-> Desktop
     Studio <-->|"host-owned transport when used"| Backend
-    Web <-->|"host-owned transport"| Backend
-    IOS <-->|"host-owned transport"| Backend
-    Android <-->|"host-owned transport"| Backend
+    Player <-->|"host-owned transport"| Backend
+    Desktop -.->|"planned host-owned transport"| Backend
 ```
 
 ## Repository responsibilities
@@ -39,27 +40,32 @@ flowchart LR
 | `tools` | Project creation, SDK bundling, validation and package construction | Runtime authority or host presentation |
 | `studio` | Local authoring, preview, asset workflow and editor interactions | A separate interpretation of package validity |
 | `backend` | Authentication, world routing, service validation, retained data and package delivery | Game-specific rules such as a particular score or gate |
-| `web`, `ios_app`, `android_app` | Host UI, device APIs, credentials, transport and platform decoding | Independent copies of shared gameplay or account decisions where Rust owns them |
+| `web`, `ios_app`, `android_app` | Current Player host UI, device APIs, credentials, transport and platform decoding | Independent copies of shared gameplay or account decisions where Rust owns them |
+| future desktop Player host | Native desktop Player shell and OS integration | Studio editor, project/build machinery, or a separate gameplay implementation |
 | `docs` | Canonical hand-written platform docs, contracts, decisions, and verification criteria | Generated API output or executable fixtures |
 
 **Runtime ownership layers**
 
 ```mermaid
 flowchart TB
-    Hosts["Platform hosts as applicable<br/>Studio, Web, iOS, Android<br/>UI, credentials, transport, OS APIs"]
+    Creator["Creator host<br/>Studio<br/>editor, project, build, preview"]
+    Players["Player hosts<br/>Web, iOS, Android<br/>desktop targets planned"]
     App["cubacadabra-app<br/>portable account behavior"]
     Client["cubacadabra-client<br/>active game session behavior"]
     Engine["cubacadabra-engine<br/>simulation, DataModel, Luau runtime"]
 
-    Hosts -->|"account actions and effects"| App
-    Hosts -->|"package, input, and transport"| Client
+    Creator -->|"preview package + editor actions"| App
+    Creator -->|"package, input, and preview transport"| Client
+    Players -->|"account actions and effects"| App
+    Players -->|"package, input, and transport"| Client
     Client -->|"engine-facing session"| Engine
-    Hosts -->|"Studio direct Rust / renderer APIs"| Engine
+    Creator -->|"direct Rust / renderer APIs"| Engine
 ```
 
-`cubacadabra-app` and `cubacadabra-client` are sibling semantic layers. Host
-bindings adapt them to each platform; they are not separate implementations of
-Cubacadabra rules.
+`cubacadabra-app` and `cubacadabra-client` are sibling semantic layers. Studio
+and Player host bindings adapt them to each platform; they are not separate
+implementations of Cubacadabra rules. A future Desktop Player can reuse the
+native Rust boundary without reusing Studio's editor.
 
 ## Important boundaries
 

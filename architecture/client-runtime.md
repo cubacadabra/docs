@@ -2,9 +2,11 @@
 
 **Contract status:** current shared client/session contract. Hosts must follow this boundary.
 
-`cubacadabra-client` is the common engine-facing client used by all four
-interactive hosts. It exists so Swift, Kotlin, JavaScript, and Studio do not
-independently implement the same multiplayer state machine.
+`cubacadabra-client` is the common session runtime used by Player hosts and by
+Studio preview. Current Player hosts are web, iOS, and Android; native desktop
+Player targets for macOS, Windows, and Linux are planned. Studio is a separate
+desktop creator application that embeds the same runtime for preview and
+testing; it is not the end-user desktop Player.
 
 **Shared session and transport flow**
 
@@ -24,15 +26,23 @@ flowchart LR
 ```mermaid
 flowchart TB
     Semantics["cubacadabra-client<br/>shared Rust semantics"]
-    Studio["Cubacadabra Studio<br/>direct Rust calls"]
-    IOS["iOS<br/>C ABI → Swift"]
-    Android["Android<br/>C ABI → JNI → Kotlin"]
-    Web["Web<br/>WASM → JavaScript"]
+    subgraph Creator["Creator application"]
+        Studio["Studio preview<br/>direct Rust calls"]
+    end
+    subgraph Current["Current Player applications"]
+        IOS["iOS<br/>C ABI → Swift"]
+        Android["Android<br/>C ABI → JNI → Kotlin"]
+        Web["Web<br/>WASM → JavaScript"]
+    end
+    subgraph Planned["Planned Player application"]
+        Desktop["Desktop Player<br/>macOS · Windows · Linux"]
+    end
 
     Semantics --> Studio
     Semantics --> IOS
     Semantics --> Android
     Semantics --> Web
+    Semantics -.-> Desktop
 ```
 
 The bindings expose the same client/session semantics; they are not separate
@@ -76,7 +86,9 @@ or translate the Luau network outbox.
 ## Binding rules
 
 Studio depends on `cubacadabra-client` directly and uses Rust methods and
-enums. It should not route Rust-to-Rust calls through JSON or the C ABI.
+enums. It should not route Rust-to-Rust calls through JSON or the C ABI. A
+Desktop Player can use the same native Rust style while keeping a player shell
+separate from editor/project UI.
 
 iOS and Android create an opaque `CubacadabraClient`. `client_engine` returns a
 borrowed engine pointer for existing input, snapshot, and renderer APIs. The
