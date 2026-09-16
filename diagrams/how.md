@@ -30,10 +30,10 @@ Use the same restrained palette across flagship SVGs:
 - proposed or not yet integrated — dashed outline
 - current path — solid connector
 
-Keep text large enough to read on GitHub, use transparent backgrounds where
-possible, and include a short status note when a graphic contains a proposed or
-unverified boundary. The SVGs include accessible titles and descriptions so the
-visual is not the only way to understand the claim.
+Keep text large enough to read on GitHub, use a light canvas for predictable
+contrast in both GitHub themes, and include a short status note when a graphic
+contains a proposed or unverified boundary. The SVGs include accessible titles
+and descriptions so the visual is not the only way to understand the claim.
 
 ## Current designed diagrams
 

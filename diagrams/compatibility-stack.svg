@@ -3,6 +3,7 @@
   <defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#718096"/></marker><style>
   text{font-family:Inter,ui-sans-serif,system-ui,sans-serif;fill:#1f2937}.eyebrow{font-size:12px;font-weight:700;letter-spacing:1.7px;fill:#64748b}.title{font-size:28px;font-weight:750;fill:#102a43}.label{font-size:15px;font-weight:700}.small{font-size:12px;fill:#52606d}.tiny{font-size:11px;fill:#627d98}.edge{fill:none;stroke:#718096;stroke-width:2;marker-end:url(#arrow)}
   </style></defs>
+  <rect width="100%" height="100%" fill="#ffffff"/>
   <text x="55" y="54" class="eyebrow">COMPATIBILITY / VERSION STACK</text><text x="55" y="90" class="title">Separate axes, explicit rejection, pinned assets</text><text x="55" y="118" class="small">A package version is not an SDK version. Unknown binary schemas and mutable “latest” references are rejected.</text>
   <rect x="55" y="155" width="785" height="495" rx="20" fill="#f8fafc" stroke="#d9e2ec"/><text x="82" y="187" class="eyebrow">CURRENT DOCUMENTED AXES</text>
   <g><rect x="82" y="215" width="690" height="55" rx="12" fill="#eef2ff" stroke="#a5b4fc"/><text x="108" y="248" class="label">Package descriptor</text><text x="370" y="248" class="small">formatVersion 3 · emitted by tools builder</text></g>

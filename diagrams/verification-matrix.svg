@@ -3,6 +3,7 @@
   <defs><style>
     text{font-family:Inter,ui-sans-serif,system-ui,sans-serif;fill:#1f2937}.eyebrow{font-size:12px;font-weight:700;letter-spacing:1.7px;fill:#64748b}.title{font-size:29px;font-weight:750;fill:#102a43}.label{font-size:14px;font-weight:700}.small{font-size:12px;fill:#52606d}.tiny{font-size:11px;fill:#627d98}.head{font-size:13px;font-weight:700;fill:#334e68}.cell{font-size:20px;font-weight:800}.line{stroke:#d9e2ec;stroke-width:1}.v{fill:#dcfce7;stroke:#86efac}.p{fill:#fef3c7;stroke:#f6c453}.r{fill:#fee2e2;stroke:#fca5a5}.na{fill:#f1f5f9;stroke:#cbd5e1}
   </style></defs>
+  <rect width="100%" height="100%" fill="#ffffff"/>
   <text x="55" y="52" class="eyebrow">VERIFICATION / EVIDENCE BOUNDARIES</text><text x="55" y="89" class="title">What each layer of evidence actually proves</text><text x="55" y="117" class="small">Current checked-in documentation status; compile checks are not device execution, and prototypes are not release evidence.</text>
   <rect x="55" y="150" width="1340" height="480" rx="18" fill="#fff" stroke="#d9e2ec"/>
   <text x="80" y="185" class="head">Contract area</text><text x="475" y="185" text-anchor="middle" class="head">Rust</text><text x="625" y="185" text-anchor="middle" class="head">Web</text><text x="775" y="185" text-anchor="middle" class="head">iOS</text><text x="925" y="185" text-anchor="middle" class="head">Android</text><text x="1075" y="185" text-anchor="middle" class="head">Studio</text><text x="1225" y="185" text-anchor="middle" class="head">Release</text>

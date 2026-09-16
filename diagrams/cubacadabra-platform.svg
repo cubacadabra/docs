@@ -17,6 +17,7 @@
       .group{fill:#ffffff;fill-opacity:.74;stroke:#d9e2ec;stroke-width:1.5}
     </style>
   </defs>
+  <rect width="100%" height="100%" fill="#ffffff"/>
   <text x="60" y="56" class="eyebrow">CUBACADABRA / PLATFORM MAP</text>
   <text x="60" y="94" class="title">One package, many hosts, shared semantics</text>
   <text x="60" y="122" class="sub">The creator-facing stack ends in a portable package; hosts provide presentation and platform integration around a shared Rust core.</text>
