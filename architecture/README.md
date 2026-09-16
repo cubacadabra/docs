@@ -1,5 +1,11 @@
 # Architecture
 
+![Runtime ownership architecture](../diagrams/runtime-ownership.svg)
+
+Architecture is organized around one rule: shared Rust owns portable semantics,
+game packages own game-specific Luau rules, and hosts own presentation,
+credentials, transport, and device integration.
+
 - [Overview](overview.md) — repository roles and system boundaries.
 - [Authority](authority.md) — message trust map and unintegrated prototype.
 - [Data model](data-model.md) — stable entities and ordered mutations.

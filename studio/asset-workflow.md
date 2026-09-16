@@ -23,6 +23,8 @@ silently stored.
 
 **Current local Morph workflow**
 
+![Morph asset pipeline](../diagrams/morph-pipeline.svg)
+
 ```mermaid
 flowchart LR
     GLB["Project GLB"]

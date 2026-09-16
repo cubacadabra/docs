@@ -12,6 +12,8 @@ compiler to guess shading.
 
 ## Binary layout
 
+![MorphPack v5 binary layout](../diagrams/morph-pack-v5-layout.svg)
+
 All scalar fields are little-endian. Existing bounded limits remain enforced.
 
 - Header: `CUBAMORP` (8 bytes), schema `u16 = 5`, reserved flags `u16`,

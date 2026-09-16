@@ -2,6 +2,8 @@
 
 **Status:** prototype implemented and tested in Rust; not integrated into the live Durable Object game path. The message classification describes current behavior at the reviewed revision.
 
+![Multiplayer authority paths](../diagrams/trusted-multiplayer.svg)
+
 This is the current protocol map as implemented by the Rust client and the
 Cloudflare `World` Durable Object. “Server-validated” means the server checks
 or canonicalizes an input. “Server-authoritative” means clients consume the

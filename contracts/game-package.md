@@ -18,6 +18,8 @@ builder does not accept.
 
 **Creator source to host loading**
 
+![Package anatomy](../diagrams/package-anatomy.svg)
+
 ```mermaid
 flowchart LR
     subgraph Source["Creator source"]

@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 900" role="img" aria-labelledby="title desc">
+  <title id="title">Cubacadabra platform architecture</title>
+  <desc id="desc">Creators author JSON, Luau and GLB assets. The build system validates and bundles a portable package consumed by Studio, web, iOS and Android through a shared Rust runtime, with platform services behind host-owned connections.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#718096"/></marker>
+    <style>
+      text{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#1f2937}
+      .eyebrow{font-size:13px;font-weight:700;letter-spacing:2px;fill:#64748b}
+      .title{font-size:30px;font-weight:750;fill:#102a43}
+      .sub{font-size:15px;fill:#52606d}
+      .label{font-size:16px;font-weight:700}
+      .small{font-size:13px;fill:#52606d}
+      .tiny{font-size:11px;fill:#627d98}
+      .card{stroke-width:1.5}
+      .edge{fill:none;stroke:#718096;stroke-width:2;marker-end:url(#arrow)}
+      .edge-soft{fill:none;stroke:#a0aec0;stroke-width:1.5;stroke-dasharray:6 6;marker-end:url(#arrow)}
+      .group{fill:#ffffff;fill-opacity:.74;stroke:#d9e2ec;stroke-width:1.5}
+    </style>
+  </defs>
+  <text x="60" y="56" class="eyebrow">CUBACADABRA / PLATFORM MAP</text>
+  <text x="60" y="94" class="title">One package, many hosts, shared semantics</text>
+  <text x="60" y="122" class="sub">The creator-facing stack ends in a portable package; hosts provide presentation and platform integration around a shared Rust core.</text>
+
+  <rect x="60" y="155" width="1280" height="138" rx="22" class="group"/>
+  <text x="84" y="184" class="eyebrow">CREATOR / SOURCE</text>
+  <rect x="84" y="205" width="210" height="61" rx="14" fill="#f8fafc" stroke="#cbd5e1" class="card"/>
+  <text x="105" y="232" class="label">Studio</text><text x="105" y="253" class="small">local authoring + preview</text>
+  <rect x="320" y="205" width="210" height="61" rx="14" fill="#f8fafc" stroke="#cbd5e1" class="card"/>
+  <text x="341" y="232" class="label">Git / files</text><text x="341" y="253" class="small">JSON manifests + source</text>
+  <rect x="556" y="205" width="210" height="61" rx="14" fill="#f8fafc" stroke="#cbd5e1" class="card"/>
+  <text x="577" y="232" class="label">Luau</text><text x="577" y="253" class="small">game rules + lifecycle</text>
+  <rect x="792" y="205" width="210" height="61" rx="14" fill="#f0fdf4" stroke="#86efac" class="card"/>
+  <text x="813" y="232" class="label">Blender / GLB</text><text x="813" y="253" class="small">editable asset source</text>
+  <rect x="1038" y="205" width="274" height="61" rx="14" fill="#fffbeb" stroke="#f6c453" class="card"/>
+  <text x="1060" y="232" class="label">JSON + Luau + GLB</text><text x="1060" y="253" class="small">explicit, reviewable inputs</text>
+
+  <rect x="255" y="330" width="890" height="92" rx="18" fill="#eef2ff" stroke="#a5b4fc" class="card"/>
+  <text x="700" y="363" text-anchor="middle" class="eyebrow" fill="#4f46e5">BUILD SYSTEM</text>
+  <text x="700" y="389" text-anchor="middle" class="label">validate · resolve dependency graph · bundle SDK · compile assets · hash outputs</text>
+  <text x="700" y="410" text-anchor="middle" class="small">The builder is the executable authority for accepted package fields and output behavior.</text>
+  <path d="M700 294 V330" class="edge"/>
+
+  <rect x="390" y="462" width="620" height="94" rx="18" fill="#f8fafc" stroke="#64748b" stroke-width="2"/>
+  <text x="700" y="495" text-anchor="middle" class="eyebrow">PORTABLE PACKAGE</text>
+  <text x="700" y="521" text-anchor="middle" class="label">manifest · game.luau · assets · package descriptor · SHA-256 map</text>
+  <text x="700" y="542" text-anchor="middle" class="small">optional authority.luau is packaged, but current execution remains a prototype</text>
+  <path d="M700 422 V462" class="edge"/>
+
+  <rect x="60" y="598" width="1280" height="132" rx="22" class="group"/>
+  <text x="84" y="627" class="eyebrow">HOSTS / PRESENTATION</text>
+  <rect x="84" y="648" width="215" height="57" rx="13" fill="#f5f3ff" stroke="#c4b5fd" class="card"/><text x="106" y="674" class="label">Web</text><text x="106" y="694" class="small">WASM + JavaScript</text>
+  <rect x="326" y="648" width="215" height="57" rx="13" fill="#f5f3ff" stroke="#c4b5fd" class="card"/><text x="348" y="674" class="label">iOS</text><text x="348" y="694" class="small">Swift + C bridge</text>
+  <rect x="568" y="648" width="215" height="57" rx="13" fill="#f5f3ff" stroke="#c4b5fd" class="card"/><text x="590" y="674" class="label">Android</text><text x="590" y="694" class="small">Kotlin + JNI</text>
+  <rect x="810" y="648" width="215" height="57" rx="13" fill="#f5f3ff" stroke="#c4b5fd" class="card"/><text x="832" y="674" class="label">Studio</text><text x="832" y="694" class="small">direct Rust + renderer</text>
+  <rect x="1052" y="648" width="260" height="57" rx="13" fill="#eff6ff" stroke="#93c5fd" class="card"/><text x="1074" y="674" class="label">Shared Rust runtime</text><text x="1074" y="694" class="small">engine · client · app</text>
+  <path d="M500 556 V590 H191 V648" class="edge"/><path d="M580 556 V590 H433 V648" class="edge"/><path d="M700 556 V590 H675 V648" class="edge"/><path d="M820 556 V590 H917 V648" class="edge"/><path d="M900 556 V590 H1182 V648" class="edge"/>
+
+  <rect x="230" y="772" width="940" height="78" rx="17" fill="#fffaf0" stroke="#f6c453" class="card"/>
+  <text x="700" y="800" text-anchor="middle" class="eyebrow">PLATFORM SERVICES / HOST-OWNED CONNECTIONS</text>
+  <text x="700" y="825" text-anchor="middle" class="label">Worker edge · Durable Objects · D1 · R2 · identity · catalog · trusted authority (proposed)</text>
+  <path d="M700 730 V772" class="edge-soft"/>
+  <text x="60" y="878" class="tiny">Solid = current documented path · dashed = proposed or not yet integrated · see the canonical status labels in README.md</text>
+</svg>

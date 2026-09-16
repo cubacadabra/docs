@@ -1,5 +1,11 @@
 # Verification
 
+![Verification matrix](../diagrams/verification-matrix.svg)
+
+Verification is evidence by boundary, not a single quality score. The matrix is
+deliberately conservative: shared tests, target compilation, real host loading,
+and release evidence prove different things.
+
 - [Testing strategy](testing.md) — what unit, integration, compile, host, and
   release evidence establishes.
 - [Acceptance criteria](acceptance-criteria.md) — durable failure-prevention

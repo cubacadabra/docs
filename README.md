@@ -1,11 +1,32 @@
-# Cubacadabra documentation
+# CUBACADABRA
 
-This repository is the canonical home for hand-written, cross-repository
-Cubacadabra documentation. Normative contracts live under `contracts/`;
-architecture pages describe system boundaries; decisions and proposals are
-identified by status. Source code, schemas, and tests remain the executable
-truth for implementation details, and generated API references remain with
-their generators.
+Open-source game platform, engine, and creator stack.
+
+![Cubacadabra platform architecture](diagrams/cubacadabra-platform.svg)
+
+Cubacadabra combines a custom Rust runtime, Luau game rules, portable hashed
+packages, cross-host adapters, Studio authoring, and platform services. This
+repository is the canonical home for the hand-written contracts and architecture
+that connect those pieces.
+
+## Working product evidence
+
+The images below are real captures from the current evidence set. They show
+implemented renderer and example paths; they are not a claim that every capture
+comes from one integrated release package.
+
+<table>
+  <tr>
+    <td><img src="evidence/examples/racer-lab.png" alt="Racer Lab capture"></td>
+    <td><img src="evidence/examples/racer-gameplay.png" alt="Racer gameplay capture"></td>
+    <td><img src="evidence/character/gameplay-phone.png" alt="Character runtime phone-sized capture"></td>
+  </tr>
+  <tr>
+    <td align="center"><sub>Racer Lab / game evidence</sub></td>
+    <td align="center"><sub>Example / gameplay evidence</sub></td>
+    <td align="center"><sub>Renderer / mobile-sized evidence</sub></td>
+  </tr>
+</table>
 
 ## Choose a path
 

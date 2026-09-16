@@ -1,5 +1,10 @@
 # Product
 
+![Creator lifecycle](../diagrams/creator-lifecycle.svg)
+
+The product thesis is a creator loop that stays inspectable and local while
+producing a portable package that can be verified and played across hosts.
+
 - [Vision](vision.md) — product direction and current non-promises.
 - [Principles](principles.md) — established, proposed, and superseded rules.
 - [Creator model](creator-model.md) — source ownership, clean-machine

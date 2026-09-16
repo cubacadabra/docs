@@ -1,5 +1,11 @@
 # Decisions
 
+![Architecture decision map](../diagrams/decision-map.svg)
+
+These decisions are the load-bearing constraints behind the platform map:
+inspectable authored data, game-specific Luau, shared Rust semantics where they
+remove drift, and one canonical home for cross-repository documentation.
+
 - [0001: JSON authored content](0001-json-authored-content.md)
 - [0002: Luau game rules](0002-luau-game-rules.md)
 - [0003: Shared Rust runtime semantics](0003-rust-shared-runtime.md)
