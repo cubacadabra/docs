@@ -40,6 +40,12 @@ streaming edits, and saving modified terrain are not in this contract.
 `materialArt: false` selects procedural color fallback. `hideDefaultGround`
 controls whether the legacy flat ground remains below the terrain.
 
+The native Rust builder expands the bounded `maze` declaration below into
+ordinary terrain operations, interaction zones, checkpoints, and generated
+maze effects before packaging. Its output matches the legacy Python builder
+for the supported declaration; the runtime consumes only the expanded package
+data and does not execute the authoring shorthand.
+
 ## Procedural maze declaration
 
 The builder turns a bounded `maze` declaration into deterministic terrain,

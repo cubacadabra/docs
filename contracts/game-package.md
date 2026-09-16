@@ -16,6 +16,11 @@ specified by the builder's schema/tests and must be migrated here before those
 sources are retired. Never infer a format field from a sample that the
 builder does not accept.
 
+Bounded procedural maze declarations are expanded during the native build into
+the generated manifest's ordinary terrain, interactions, checkpoints, and
+effects. The resulting package is self-contained; hosts do not need the maze
+authoring shorthand or a separate maze generator at runtime.
+
 **Creator source to host loading**
 
 ![Package anatomy](../diagrams/package-anatomy.svg)

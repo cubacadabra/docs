@@ -27,7 +27,10 @@ and remaining evidence.
 
 - The tools builder produces package format 3 and accepts SDK `0.3.0` and
   `0.4.0`; terrain requires `0.4.0`. Packages include generated Luau and
-  integrity metadata. See [package contract](contracts/game-package.md).
+  integrity metadata. The native CLI now expands Maze 101's bounded
+  procedural declaration into the same terrain/interactions/checkpoints/effects
+  shape as the legacy builder, and the generated package loads through the Rust
+  headless runtime. See [package contract](contracts/game-package.md).
 - Rust provides shared engine, client/session, application-state, and bounded
   Luau runtime foundations. Web uses generated WASM; iOS and Android use
   native bridges; Studio calls Rust directly.
@@ -43,6 +46,13 @@ and remaining evidence.
 - Engine snapshots, deterministic headless runs, bounded UI/effects/audio,
   simulation-time tasks, static terrain, package assets, and MorphPack v5
   have explicit contracts.
+
+The Maze 101 package is now a verified native-build milestone: its source
+declaration produces a self-contained terrain maze with twelve collectibles,
+four checkpoints, generated effects, and a separately hashed authority entry.
+There is not yet Cubacadabra visual capture evidence for the maze, live backend
+authority execution, durable completion rewards, or general in-world GLB prop
+instances.
 
 ## Open work
 
