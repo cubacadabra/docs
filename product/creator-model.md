@@ -28,8 +28,8 @@ account.
 ## Onboarding
 
 Keep project creation and project building distinct. Studio's New Project
-flow creates the project and embeds SDK modules without Python. Building raw
-source projects currently requires Python 3 because release artifacts include
-the Python zipapp. The clean-machine reproducibility criterion applies to the
-complete create/build/preview path and is listed in
+flow creates the project and embeds SDK modules without an external runtime.
+Building raw source projects uses the shared Rust builder in-process; the
+native CLI exposes the same library for terminal workflows. The clean-machine
+reproducibility criterion applies to the complete create/build/preview path and is listed in
 [acceptance criteria](../verification/acceptance-criteria.md).

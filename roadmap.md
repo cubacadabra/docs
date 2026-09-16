@@ -73,16 +73,15 @@ immutable package revision. Interruption tests must leave a complete old or
 new release, never a mixed set; see
 [acceptance criteria](verification/acceptance-criteria.md).
 
-### 4. Complete the native tools CLI migration
+### 4. Complete the remaining native tools command surface
 
-The Python CLI remains the current `tools` implementation, and Studio release
-artifacts still bundle `cubacadabra.pyz` and use Python 3 for raw-project
-builds. Rust workspace scaffolding now exists for the project, builder, and
-CLI surfaces, but it is not yet a compatible replacement. Finish the native
-implementation, preserve package and diagnostic behavior, update release and
-compatibility workflows, and prove Studio raw-project preview on clean macOS,
-Windows, and Linux machines without Python. See the [creator build
-toolchain](architecture/toolchain.md).
+The creator-critical Rust project and builder crates are now implemented, and
+Studio uses the builder in-process. Studio release artifacts ship a native
+`cubacadabra` builder without Python or `cubacadabra.pyz`. The Python CLI still
+provides maintainer-only upload, local-service, and Morph-release commands, and
+the compatibility harness still uses its legacy builder module. Migrate those
+workflows only where a native path is needed, while preserving the shared
+package contract and diagnostics. See the [creator build toolchain](architecture/toolchain.md).
 
 ### 5. Finish local Morph asset integration
 

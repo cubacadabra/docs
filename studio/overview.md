@@ -8,17 +8,15 @@ runtime preview features, and can import supported local Morph assets.
 
 Studio's **File → New Project** workflow creates and opens a starter project
 without an external CLI or Python installation. It writes a manifest, Luau
-entry point, embedded SDK, and asset directories. This does not build a raw
-source project. The current release packaging contains a Python zipapp and
-requires Python 3 to build raw projects.
+entry point, embedded SDK, and asset directories. Raw source projects use the
+shared Rust `cubacadabra-builder` crate in-process, so the complete create,
+open, rebuild, and preview loop is self-contained in the installed Studio
+release.
 
-The raw-project path currently invokes the shared `cubacadabra` builder, using
-`CUBACADABRA_CLI_PATH`, a bundled/adjacent executable, or the development
-checkout fallback under `../tools/src`. An in-progress Rust migration in
-`tools` is intended to replace that Python zipapp with a native `cubacadabra`
-executable. Until the migration passes clean-machine host verification, the
-Python requirement remains a current release limitation. See the [creator
-build toolchain](../architecture/toolchain.md).
+The raw-project path calls the shared Rust builder in-process. The native
+`cubacadabra` CLI in `tools` is a thin command-line frontend over the same
+library. Installed Studio releases do not require Python, `PYTHONPATH`, or a
+separately installed CLI. See the [creator build toolchain](../architecture/toolchain.md).
 
 ## Local asset workflow
 

@@ -1,6 +1,6 @@
 # Creator build toolchain
 
-**Status:** Migration in progress
+**Status:** Core Studio migration landed; command-surface migration in progress
 
 The `tools` repository owns project creation, source validation, SDK bundling,
 and portable game-package construction. The package format and creator-facing
@@ -9,34 +9,32 @@ the implementation language is not part of that contract.
 
 ## Current state
 
-The Python CLI remains the current implementation for the shared tools
-commands. Studio already creates starter projects through native Rust code,
-but its raw-project preview still invokes the shared `cubacadabra` builder. A
-release Studio package currently carries `cubacadabra.pyz`, and the host uses
-Python 3 to run it. Development checkouts can also fall back directly to
-`../tools/src` when no CLI executable is available. `CUBACADABRA_CLI_PATH`
-remains the diagnostic override for selecting a builder explicitly.
+The Rust workspace in `tools` now owns the canonical `cubacadabra-builder`,
+`cubacadabra-project`, and native `cubacadabra` CLI crates. Studio calls the
+builder library in-process. The Python implementation remains for commands
+and the compatibility harness that have not yet moved into Rust; it is not
+required by Studio or its release packaging.
 
-The migration has started in `tools` with Rust workspace scaffolding for
-`cubacadabra-project`, `cubacadabra-builder`, and the `cubacadabra` CLI binary.
-That scaffolding is not yet a replacement: the Rust crates do not currently
-provide the complete command surface or the compatibility evidence required to
-change the Studio release artifact.
+The first migrated surface is the creator-critical path: native project
+creation, source building, Luau dependency resolution, SDK bundling, package
+metadata, asset copying, hashes, and guarded transactional output. The CLI
+currently exposes `create-game` and `build-game`; maintainer-only upload,
+local-service, and morph-release commands remain queued for their own Rust
+library migrations.
 
 ## Target boundary
 
-The Studio-required project and build path should be delivered as a native
-`cubacadabra` executable built from `tools` Rust crates. Studio should resolve
-that executable from its configured override or bundled resources, build a raw
-project into a temporary package, and load the result through the existing Rust
-runtime. The Studio release must not need a Python interpreter, a Python
-zipapp, or `PYTHONPATH` for this path.
+The Studio-required project and build path is delivered by the shared Rust
+crates in `tools`. Studio builds a raw project into a temporary package and
+loads the result through the existing Rust runtime. The Studio release does
+not need a Python interpreter, a Python zipapp, or `PYTHONPATH` for this path.
 
 This is a toolchain implementation migration, not a change to game rules,
 Luau SDK semantics, package layout, package hashes, or host runtime ownership.
-Maintainer-facing commands such as uploads, local service setup, or asset
-authoring helpers may remain Python until they have their own migration plan;
-they must not be required by an installed Studio build.
+Maintainer-facing commands such as uploads, local service setup, asset
+authoring helpers, and the compatibility harness may remain Python until they
+have their own migration plan; they must not be required by an installed Studio
+build.
 
 ## Completion evidence
 

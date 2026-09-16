@@ -90,10 +90,11 @@ not currently a single atomic transaction: the two replacements can succeed
 or fail independently. See the proposed release activation criteria in
 [verification/acceptance-criteria.md](../verification/acceptance-criteria.md).
 
-Raw source package builds require Python 3 for the current release tool. The
-Studio New Project flow creates a starter project without Python; that is a
-separate operation from building the raw project. See
-[Studio workflow](../studio/overview.md).
+Raw source package builds use the shared Rust `cubacadabra-builder` crate. The
+native `cubacadabra` CLI in `tools` is the terminal frontend over that crate,
+while Studio links it in-process. Python remains only for tools commands that
+have not yet moved into Rust and the compatibility harness; it is not required
+by Studio. See [Studio workflow](../studio/overview.md).
 
 **Safe directory build replacement**
 

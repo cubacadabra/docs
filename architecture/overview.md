@@ -68,10 +68,11 @@ implementations of Cubacadabra rules. A future Desktop Player can reuse the
 native Rust boundary without reusing Studio's editor.
 
 The creator build boundary is shared across the game repositories and Studio.
-The Python tools CLI is still the current implementation, while `tools` is
-starting a Rust replacement for the project/build surface so installed Studio
-can ship a native builder without Python. See the [creator build toolchain](toolchain.md)
-for the migration boundary and required evidence.
+The Rust `tools` project/build crates are now the Studio implementation and the
+native `cubacadabra` CLI is their command-line frontend. Python remains in
+`tools` for maintainer commands and the compatibility harness that have not
+moved yet; installed Studio does not depend on it. See the [creator build
+toolchain](toolchain.md) for the migration boundary and remaining evidence.
 
 ## Important boundaries
 

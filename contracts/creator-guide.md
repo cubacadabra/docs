@@ -18,16 +18,14 @@ my-game/
 ```
 
 Use Studio's **File → New Project** to create and open a starter project
-without an external CLI or Python installation. To create from the command
-line, install/run the Python tools CLI. The current release includes a Python
-zipapp; building a raw source project requires Python 3.
+without an external CLI or Python installation. The native `cubacadabra` CLI
+in the `tools` repository uses the same Rust project and builder crates.
 
-## Build from the tools repository
+## Build from the native tools repository
 
 ```sh
-PYTHONPATH=src python3 -m cubacadabra build-game \
-  --source /path/to/my-game \
-  --output /path/to/build/package
+cargo run --release --manifest-path Cargo.toml --bin cubacadabra -- \
+  build-game --source /path/to/my-game --output /path/to/build/package
 ```
 
 Add `--zip /path/to/package.zip` when an archive is needed. Directory and ZIP
