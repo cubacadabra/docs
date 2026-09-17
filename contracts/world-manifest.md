@@ -94,6 +94,12 @@ interactions, and checkpoints. The current preview bounds mazes to 12×12 cells
 and 64 collectibles. A given seed yields the same layout; change the seed when
 authoring a new release rather than depending on runtime randomness.
 
+Maze terrain is sampled at the declared `maze.terrain.cellSize`. To keep the
+generated wall and grass-cap features representable, that value must not exceed
+`maze.wallThickness` or `1.0`; the generated cap follows it between `0.5` and
+`1.0` world units. The builder rejects incompatible combinations before a
+package is emitted.
+
 ```json
 {
   "worlds": {
@@ -114,8 +120,9 @@ authoring a new release rather than depending on runtime randomness.
 }
 ```
 
-The native maze builder also adds a tapered lower island volume, a small set of
-distant island silhouettes, and seeded decorations in quiet wall-side pockets
+The native maze builder also adds an asymmetrically tapered lower island volume,
+rounded notches in the plateau corners, a small set of distant island
+silhouettes, and seeded decorations in quiet wall-side pockets
 rather than along the solution route. It emits primary presentation bounds for
 the playable island, so those distant silhouettes add depth without changing
 Overview or Showcase framing. This is presentation content generated from the
