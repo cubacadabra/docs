@@ -36,9 +36,12 @@ completed milestones should be removed as they stop being relevant.
 - Softer engine-owned grass and earth terrain tiles
 - Maze package generation is native Rust-only
 - Maze expansion keeps generated floor/walls separate from package-owned environment art
-- Maze 101 owns authored island shells, sparse rocks/vegetation, and explicit presentation bounds
+- Maze 101 opens in a terrain-backed archipelago hub with five visible island
+  landforms, authored cliff shells and rope bridges, destination gates, palms,
+  rocks, and explicit presentation bounds
 - Maze 101 is a three-island run: Sunshore, Coral Cay, and Cloudpeak increase in
-  maze size, and the first two exits automatically route players to the next island
+  maze size, share a grass-hedge-and-sand art language, and the first two exits
+  automatically route players to the next island
 - Studio review cameras temporarily bypass gameplay distance fog
 - Shared third-person camera occlusion sweeps against terrain and solid blocks;
   forced close views drive the same local-avatar hide/fade transition as zoom
@@ -46,14 +49,13 @@ completed milestones should be removed as they stop being relevant.
 
 ## Current visual gaps
 
-- Atmosphere depth cues and per-island cloud placement still need screenshot
-  validation
-- Terrain palette needs in-Studio screenshot validation
-- Each island's shell, terrain treatment, and sparse dressing still need
-  screenshot validation and further art direction
-- Vegetation and landmark density still need screenshot-driven iteration
-- Background composition needs screenshot validation after floor and grounding fixes
-- Baseline/reference screenshot captures still need to be recorded and compared
+- The reference screenshots use a wider, higher camera than the normal shared
+  third-person gameplay camera; Studio's deterministic `Overview` and
+  `Showcase` cameras expose the intended full-island composition
+- Rope bridges and satellite islands are visual scenery until shared imported
+  mesh collision exists; progression portals remain on playable terrain
+- Vegetation variety and landmark density still need screenshot-driven iteration
+- Baseline/reference captures still need to be recorded for repeatable visual comparison
 
 ## Canonical repositories
 
