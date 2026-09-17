@@ -24,7 +24,7 @@ release in use.
 **Required transactional activation — not yet host-verified end to end**
 
 ```mermaid
-flowchart LR
+flowchart TB
     Build["Authenticated upload / build"]
     Stage["Stage complete candidate"]
     Verify["Validate descriptor and<br/>every required file"]

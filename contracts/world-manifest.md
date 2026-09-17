@@ -12,7 +12,7 @@ are in [compatibility](../quality/compatibility/versions.md).
 ## Assets and world content
 
 Worlds can declare palettes, blocks, signs, clouds, interaction zones, launch
-pads, and image billboards. Package images may be JPG, JPEG, or PNG files under
+pads, decorations, and image billboards. Package images may be JPG, JPEG, or PNG files under
 `assets.images`. A world billboard references the image asset ID and supplies
 position, width, and height. Named world materials can reference image assets
 and `tileU`/`tileV` repeat them in world units per tile; image materials are
@@ -39,6 +39,30 @@ streaming edits, and saving modified terrain are not in this contract.
 
 `materialArt: false` selects procedural color fallback. `hideDefaultGround`
 controls whether the legacy flat ground remains below the terrain.
+
+World presentation settings are authored under `world.visual`:
+
+```json
+{
+  "world": {
+    "visual": {
+      "exposure": 1.1,
+      "contrast": 1.1,
+      "saturation": 1.2,
+      "fogStart": 52,
+      "fogEnd": 120,
+      "sunDirection": [-0.45, -0.82, 0.32]
+    }
+  }
+}
+```
+
+These values are renderer presentation controls. They do not change terrain
+materials, collision, or simulation state. `decorations` are static,
+deterministically authored visual instances. The current preview kinds are
+`rock`, `palm`, `grass-clump`, `crate`, `bridge`, and `gate`; they are a
+platform-owned procedural prefab layer and are intentionally separate from
+terrain operations. Generic imported mesh prefabs remain a follow-up capability.
 
 The native Rust builder expands the bounded `maze` declaration below into
 ordinary terrain operations, interaction zones, checkpoints, and generated
@@ -72,6 +96,11 @@ authoring a new release rather than depending on runtime randomness.
   }
 }
 ```
+
+The maze builder also adds a rounded lower island volume, a small set of
+distant island silhouettes, and seeded decorations around the generated route.
+This is presentation content generated from the same maze seed, not a second
+simulation or collision authority.
 
 These are static authored capabilities; they do not provide a general
 creator-facing persistence API. For exact build behavior, use the

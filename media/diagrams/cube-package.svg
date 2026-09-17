@@ -1,8 +1,36 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 820" role="img" aria-labelledby="title desc">
-  <title id="title">Cubacadabra Cube package anatomy</title><desc id="desc">A portable Cubacadabra package contains a manifest, Luau rules, assets, and integrity metadata, built as one immutable artifact for hosts to validate.</desc>
-  <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#090c19"/><stop offset="1" stop-color="#1b1430"/></linearGradient><linearGradient id="top" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ff9a7b"/><stop offset="1" stop-color="#ff5e6d"/></linearGradient><linearGradient id="side" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#6b4bd4"/><stop offset="1" stop-color="#3a2a83"/></linearGradient><filter id="shadow"><feDropShadow dx="0" dy="16" stdDeviation="18" flood-color="#000" flood-opacity=".35"/></filter></defs>
-  <rect width="1500" height="820" rx="32" fill="url(#bg)"/><text x="72" y="76" fill="#ff846d" font-family="Inter,Arial,sans-serif" font-size="16" font-weight="700" letter-spacing="3">CONTRACTS / PACKAGE</text><text x="72" y="122" fill="#f7f7fb" font-family="Inter,Arial,sans-serif" font-size="34" font-weight="750">A game travels as a Cube.</text><text x="72" y="153" fill="#a9afd0" font-family="Inter,Arial,sans-serif" font-size="17">One immutable artifact, explicit contents, verifiable bytes.</text>
-  <g transform="translate(545 245)" filter="url(#shadow)"><path d="M210 0L470 136L210 272L0 136Z" fill="url(#top)"/><path d="M0 136L210 272V574L0 438Z" fill="#c84c67"/><path d="M210 272L470 136V438L210 574Z" fill="url(#side)"/><path d="M210 0V272M0 136L210 272L470 136" fill="none" stroke="#ffe2d9" stroke-width="3" opacity=".8"/><g font-family="Inter,Arial,sans-serif" font-size="18" font-weight="700" fill="#fff"><text x="94" y="138" transform="rotate(30 94 138)">manifest.json</text><text x="45" y="318" transform="rotate(33 45 318)">game.luau</text><text x="266" y="337" transform="rotate(-27 266 337)">assets/</text><text x="279" y="398" transform="rotate(-27 279 398)" fill="#d8cdfd">SHA-256</text></g><path d="M112 45L192 86L123 122L51 85Z" fill="#fff" opacity=".18"/></g>
-<g font-family="Inter,Arial,sans-serif"><path d="M470 293H300" fill="none" stroke="#ff836f" stroke-width="2"/><circle cx="470" cy="293" r="5" fill="#ff836f"/><text x="150" y="218" fill="#ffb19e" font-size="13" font-weight="700" letter-spacing="1.5">DECLARATION</text><text x="150" y="246" fill="#f5f3fb" font-size="18" font-weight="650">manifest.json</text><text x="150" y="273" fill="#aeb4d2" font-size="14">package identity, SDK, world, limits</text><path d="M545 550H300" fill="none" stroke="#ff836f" stroke-width="2"/><circle cx="545" cy="550" r="5" fill="#ff836f"/><text x="150" y="575" fill="#ffb19e" font-size="13" font-weight="700" letter-spacing="1.5">RULES</text><text x="150" y="603" fill="#f5f3fb" font-size="18" font-weight="650">Luau source + generated entry</text><text x="150" y="630" fill="#aeb4d2" font-size="14">game-owned behavior, kept out of the engine</text><path d="M1015 351H1200" fill="none" stroke="#9b82f1" stroke-width="2"/><circle cx="1015" cy="351" r="5" fill="#9b82f1"/><text x="1350" y="274" text-anchor="end" fill="#bcaeff" font-size="13" font-weight="700" letter-spacing="1.5">CONTENT</text><text x="1350" y="302" text-anchor="end" fill="#f5f3fb" font-size="18" font-weight="650">assets/</text><text x="1350" y="329" text-anchor="end" fill="#aeb4d2" font-size="14">images, MorphPacks, audio, world data</text><path d="M1015 546H1200" fill="none" stroke="#9b82f1" stroke-width="2"/><circle cx="1015" cy="546" r="5" fill="#9b82f1"/><text x="1350" y="575" text-anchor="end" fill="#bcaeff" font-size="13" font-weight="700" letter-spacing="1.5">INTEGRITY</text><text x="1350" y="603" text-anchor="end" fill="#f5f3fb" font-size="18" font-weight="650">hash map + exact revision</text><text x="1350" y="630" text-anchor="end" fill="#aeb4d2" font-size="14">hosts reject incomplete or unknown artifacts</text></g>
-  <text x="750" y="752" text-anchor="middle" fill="#7781ac" font-family="Inter,Arial,sans-serif" font-size="13">Orientation only; the normative byte layout lives in the package and MorphPack contracts.</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" role="img" aria-labelledby="title desc">
+  <title id="title">Cubacadabra Cube package anatomy</title>
+  <desc id="desc">A Cube is one immutable package containing its manifest, game rules, assets, and integrity metadata.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#090c19"/><stop offset="1" stop-color="#1b1430"/></linearGradient>
+    <linearGradient id="top" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ff9b7c"/><stop offset="1" stop-color="#ff5f70"/></linearGradient>
+    <linearGradient id="side" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#7954df"/><stop offset="1" stop-color="#432a9a"/></linearGradient>
+    <filter id="shadow" x="-40%" y="-40%" width="180%" height="190%"><feDropShadow dx="0" dy="16" stdDeviation="18" flood-color="#000" flood-opacity=".4"/></filter>
+    <filter id="soft"><feGaussianBlur stdDeviation="34"/></filter>
+    <style>text{font-family:Inter,Arial,sans-serif}.eyebrow{fill:#ff8a75;font-size:15px;font-weight:700;letter-spacing:2.8px}.headline{fill:#f8f8fc;font-size:36px;font-weight:750}.deck{fill:#b0b6d2;font-size:18px}.kind{font-size:14px;font-weight:700;letter-spacing:1.8px}.name{fill:#fff;font-size:19px;font-weight:700}.note{fill:#aeb5d3;font-size:15px}.face{fill:#fff;font-size:18px;font-weight:700}.footer{fill:#c8cde4;font-size:15px}@media(max-width:600px){.deck,.kind,.note,.footer{display:none}.eyebrow{font-size:19px}.headline{font-size:42px}.name,.face{font-size:27px}}</style>
+  </defs>
+  <rect width="1200" height="700" rx="30" fill="url(#bg)"/>
+  <circle cx="600" cy="390" r="245" fill="#ff5f70" opacity=".07" filter="url(#soft)"/>
+  <text x="60" y="62" class="eyebrow">CONTRACTS / PACKAGE</text><text x="60" y="108" class="headline">A game travels as a Cube.</text><text x="60" y="140" class="deck">One immutable artifact. Explicit contents. Verifiable bytes.</text>
+
+  <g font-family="Inter,Arial,sans-serif">
+    <text x="60" y="247" class="kind" fill="#ffad9a">DECLARATION</text><text x="60" y="278" class="name">manifest.json</text><text x="60" y="304" class="note">identity · SDK · world · limits</text><path d="M300 282H423" stroke="#ff826e" stroke-width="2"/><circle cx="423" cy="282" r="5" fill="#ff826e"/>
+    <text x="60" y="478" class="kind" fill="#ffad9a">RULES</text><text x="60" y="509" class="name">game.luau</text><text x="60" y="535" class="note">game-owned behavior</text><path d="M300 492H423" stroke="#ff826e" stroke-width="2"/><circle cx="423" cy="492" r="5" fill="#ff826e"/>
+    <text x="1140" y="247" text-anchor="end" class="kind" fill="#bba9ff">CONTENT</text><text x="1140" y="278" text-anchor="end" class="name">assets/</text><text x="1140" y="304" text-anchor="end" class="note">models · audio · images · worlds</text><path d="M777 282H900" stroke="#9a82f1" stroke-width="2"/><circle cx="777" cy="282" r="5" fill="#9a82f1"/>
+    <text x="1140" y="478" text-anchor="end" class="kind" fill="#bba9ff">INTEGRITY</text><text x="1140" y="509" text-anchor="end" class="name">SHA-256 map</text><text x="1140" y="535" text-anchor="end" class="note">exact files · exact revision</text><path d="M777 492H900" stroke="#9a82f1" stroke-width="2"/><circle cx="777" cy="492" r="5" fill="#9a82f1"/>
+  </g>
+
+  <g transform="translate(423 202)" filter="url(#shadow)">
+    <path d="M177 0L354 92L177 184L0 92Z" fill="url(#top)"/>
+    <path d="M0 92L177 184V390L0 298Z" fill="#c94b68"/>
+    <path d="M177 184L354 92V298L177 390Z" fill="url(#side)"/>
+    <path d="M177 0V184M0 92L177 184L354 92" fill="none" stroke="#ffe2d9" stroke-width="3" opacity=".75"/>
+    <path d="M43 43L129 87L82 112L0 70Z" fill="#fff" opacity=".17"/>
+    <text x="81" y="94" transform="rotate(27 81 94)" class="face">manifest.json</text>
+    <text x="39" y="227" transform="rotate(27 39 227)" class="face">game.luau</text>
+    <text x="230" y="236" transform="rotate(-27 230 236)" class="face">assets/</text>
+    <text x="230" y="296" transform="rotate(-27 230 296)" class="face" fill="#ded5ff">SHA-256</text>
+  </g>
+
+  <g transform="translate(324 630)"><rect width="552" height="38" rx="19" fill="#121a39" stroke="#334276"/><text x="276" y="25" text-anchor="middle" class="footer">Hosts validate the whole Cube before loading it.</text></g>
 </svg>

@@ -7,7 +7,7 @@ client-facing read and saved-appearance paths.
 **Current operator-managed catalog release and read path**
 
 ```mermaid
-flowchart LR
+flowchart TB
     Source["Source asset"]
     Compiler["Morph compiler"]
     Pack["Immutable MorphPack"]

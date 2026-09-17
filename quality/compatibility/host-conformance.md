@@ -11,21 +11,17 @@ alone are not current conformance claims.
 **One fixture, comparable semantic outcomes**
 
 ```mermaid
-flowchart LR
+flowchart TB
     Fixture["Canonical contract fixture"]
-    Native["Rust / native<br/>mlua"]
-    Web["Web<br/>WASM / JavaScript"]
-    IOS["iOS<br/>Swift / C"]
-    Android["Android<br/>JNI / Kotlin"]
-    Studio["Studio preview<br/>direct Rust"]
+    Core["Rust / native · Studio preview"]
+    Web["Web · WASM / JavaScript"]
+    Mobile["iOS / Swift · Android / Kotlin"]
     Desktop["Desktop Player<br/>macOS / Windows / Linux<br/>current"]
     Compare["Compare semantic outcomes<br/>state, events, errors, ordering"]
 
-    Fixture --> Native --> Compare
+    Fixture --> Core --> Compare
     Fixture --> Web --> Compare
-    Fixture --> IOS --> Compare
-    Fixture --> Android --> Compare
-    Fixture --> Studio --> Compare
+    Fixture --> Mobile --> Compare
     Fixture -.-> Desktop -.-> Compare
 ```
 

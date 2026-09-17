@@ -1,14 +1,30 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 820" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720" role="img" aria-labelledby="title desc">
   <title id="title">Cubacadabra repository constellation</title>
-  <desc id="desc">The Cubacadabra codebase is grouped into creator tools, shared core, host clients, services, content, and documentation rather than treated as separate product silos.</desc>
-  <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#080b18"/><stop offset="1" stop-color="#19142d"/></linearGradient><filter id="blur"><feGaussianBlur stdDeviation="20"/></filter><filter id="glow"><feGaussianBlur stdDeviation="8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
-  <rect width="1500" height="820" rx="32" fill="url(#bg)"/><circle cx="755" cy="390" r="235" fill="#ff5f6f" opacity=".09" filter="url(#blur)"/><circle cx="370" cy="220" r="180" fill="#4d74e8" opacity=".1" filter="url(#blur)"/>
-  <g stroke="#455282" stroke-width="2" opacity=".7"><path d="M294 231C475 273 527 329 631 371"/><path d="M294 593C470 557 532 489 631 434"/><path d="M1205 230C1040 267 975 326 870 372"/><path d="M1205 592C1041 554 977 492 870 436"/><path d="M751 604V703"/><path d="M751 214V310"/></g>
-  <text x="72" y="76" fill="#ff846d" font-family="Inter,Arial,sans-serif" font-size="16" font-weight="700" letter-spacing="3">CODEBASE / OWNERSHIP</text><text x="72" y="122" fill="#f7f7fb" font-family="Inter,Arial,sans-serif" font-size="34" font-weight="750">One system, many repositories.</text><text x="72" y="153" fill="#a9afd0" font-family="Inter,Arial,sans-serif" font-size="17">Follow the responsibility, then open the repository.</text>
-  <g transform="translate(630 310)"><circle cx="120" cy="120" r="116" fill="#172453" stroke="#ff776d" stroke-width="3" filter="url(#glow)"/><path d="M120 34L188 70L120 106L61 70Z" fill="#ff816e"/><path d="M61 70L120 106V187L61 151Z" fill="#c64c69"/><path d="M120 106L188 70V151L120 187Z" fill="#7051d7"/><text x="120" y="229" text-anchor="middle" fill="#fff" font-family="Inter,Arial,sans-serif" font-size="19" font-weight="700">Cubacadabra</text><text x="120" y="252" text-anchor="middle" fill="#aeb8e2" font-family="Inter,Arial,sans-serif" font-size="13">shared contracts + docs</text></g>
-  <g transform="translate(72 190)" font-family="Inter,Arial,sans-serif"><text fill="#ffb0a0" font-size="13" font-weight="700" letter-spacing="2">CREATOR</text><text y="26" fill="#fff" font-size="21" font-weight="700">make</text><g transform="translate(0 53)"><circle cx="10" cy="10" r="10" fill="#ff816e"/><text x="30" y="15" fill="#d9dbeb" font-size="16">studio</text></g><g transform="translate(0 91)"><circle cx="10" cy="10" r="10" fill="#ff816e" opacity=".75"/><text x="30" y="15" fill="#d9dbeb" font-size="16">tools</text></g><g transform="translate(0 129)"><circle cx="10" cy="10" r="10" fill="#ff816e" opacity=".5"/><text x="30" y="15" fill="#d9dbeb" font-size="16">examples</text></g></g>
-  <g transform="translate(72 562)" font-family="Inter,Arial,sans-serif"><text fill="#ffb0a0" font-size="13" font-weight="700" letter-spacing="2">CONTENT</text><text y="26" fill="#fff" font-size="21" font-weight="700">ship worlds</text><text y="67" fill="#d9dbeb" font-size="16">first-game · second-game · third-game</text></g>
-  <g transform="translate(1205 190)" font-family="Inter,Arial,sans-serif"><text fill="#a9b9ff" font-size="13" font-weight="700" letter-spacing="2">HOSTS</text><text y="26" fill="#fff" font-size="21" font-weight="700">play</text><text y="79" fill="#d9dbeb" font-size="16">web</text><text y="117" fill="#d9dbeb" font-size="16">ios_app</text><text y="155" fill="#d9dbeb" font-size="16">android_app</text><text y="193" fill="#d9dbeb" font-size="16">desktop</text></g>
-  <g transform="translate(1205 562)" font-family="Inter,Arial,sans-serif"><text fill="#e7bc7c" font-size="13" font-weight="700" letter-spacing="2">SERVICES</text><text y="26" fill="#fff" font-size="21" font-weight="700">coordinate</text><text y="67" fill="#d9dbeb" font-size="16">backend · developer</text></g>
-  <g transform="translate(545 705)" font-family="Inter,Arial,sans-serif"><rect width="410" height="58" rx="29" fill="#141d42" stroke="#5269c8" stroke-width="2"/><circle cx="30" cy="29" r="8" fill="#7e9cff"/><text x="52" y="35" fill="#e4e7f7" font-size="16" font-weight="600">rust</text><text x="114" y="35" fill="#aeb8e2" font-size="15">the shared foundation</text></g>
+  <desc id="desc">Creator tools, shared Rust core, Player hosts, services, games, and documentation form one codebase with explicit ownership boundaries.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#080b18"/><stop offset="1" stop-color="#19142d"/></linearGradient>
+    <linearGradient id="cube" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ff8d72"/><stop offset="1" stop-color="#7550df"/></linearGradient>
+    <filter id="blur"><feGaussianBlur stdDeviation="24"/></filter>
+    <filter id="glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="9" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <style>text{font-family:Inter,Arial,sans-serif}.eyebrow{fill:#ff8a75;font-size:15px;font-weight:700;letter-spacing:2.8px}.headline{fill:#f8f8fc;font-size:36px;font-weight:750}.deck{fill:#b0b6d2;font-size:18px}.group{font-size:14px;font-weight:700;letter-spacing:2px}.verb{fill:#fff;font-size:22px;font-weight:700}.repo{fill:#dce0f0;font-size:17px}.core{fill:#fff;font-size:19px;font-weight:700}.note{fill:#aeb5d3;font-size:15px}@media(max-width:600px){.deck,.note{display:none}.eyebrow{font-size:19px}.headline{font-size:42px}.group{font-size:19px}.verb,.core{font-size:27px}.repo{font-size:24px}}</style>
+  </defs>
+  <rect width="1200" height="720" rx="30" fill="url(#bg)"/>
+  <circle cx="600" cy="390" r="220" fill="#ff5f70" opacity=".09" filter="url(#blur)"/><circle cx="288" cy="225" r="155" fill="#4d74e8" opacity=".08" filter="url(#blur)"/>
+  <text x="60" y="62" class="eyebrow">CODEBASE / OWNERSHIP</text><text x="60" y="108" class="headline">One system, many repositories.</text><text x="60" y="140" class="deck">Start with the responsibility. Then open the code.</text>
+
+  <g stroke="#465382" stroke-width="2" opacity=".8"><path d="M308 278C420 300 475 332 521 361"/><path d="M308 507C424 485 476 445 522 412"/><path d="M892 278C780 300 725 332 679 361"/><path d="M892 507C776 485 724 445 678 412"/><path d="M600 482V586"/></g>
+
+  <g transform="translate(60 204)"><text class="group" fill="#ffae9d">CREATOR</text><text y="30" class="verb">make</text><circle cx="8" cy="70" r="7" fill="#ff826e"/><text x="26" y="76" class="repo">studio</text><circle cx="8" cy="104" r="7" fill="#ff826e" opacity=".75"/><text x="26" y="110" class="repo">tools</text><circle cx="8" cy="138" r="7" fill="#ff826e" opacity=".5"/><text x="26" y="144" class="repo">examples</text></g>
+  <g transform="translate(60 454)"><text class="group" fill="#ffae9d">CONTENT</text><text y="30" class="verb">ship worlds</text><text y="70" class="repo">first-game · second-game</text><text y="98" class="repo">third-game</text></g>
+
+  <g transform="translate(920 204)"><text class="group" fill="#a9b9ff">HOSTS</text><text y="30" class="verb">play</text><text y="70" class="repo">web · ios_app</text><text y="101" class="repo">android_app · desktop</text></g>
+  <g transform="translate(920 454)"><text class="group" fill="#e7bc7c">SERVICES</text><text y="30" class="verb">coordinate</text><text y="70" class="repo">backend · developer</text><text y="98" class="repo">deployed</text></g>
+
+  <g transform="translate(510 296)">
+    <circle cx="90" cy="90" r="88" fill="#172453" stroke="#ff776d" stroke-width="3" filter="url(#glow)"/>
+    <path d="M90 27L143 55L90 83L44 55Z" fill="url(#cube)"/><path d="M44 55L90 83V145L44 117Z" fill="#c64c69"/><path d="M90 83L143 55V117L90 145Z" fill="#7051d7"/>
+    <text x="90" y="178" text-anchor="middle" class="core">Cubacadabra</text><text x="90" y="201" text-anchor="middle" class="note">contracts + docs</text>
+  </g>
+
+  <g transform="translate(410 604)"><rect width="380" height="58" rx="29" fill="#141d42" stroke="#5872da" stroke-width="2"/><circle cx="31" cy="29" r="8" fill="#86a0ff"/><text x="52" y="35" class="core">rust</text><text x="102" y="35" class="note">shared runtime foundation</text></g>
 </svg>

@@ -18,12 +18,12 @@ belongs to one integrated release.
   <tr>
     <td><img src="media/evidence/examples/racer-lab.png" alt="Racer Lab creator and game capture"></td>
     <td><img src="media/evidence/examples/racer-gameplay.png" alt="Racer gameplay capture"></td>
-    <td><img src="media/evidence/character/gameplay-phone.png" alt="Character runtime capture at phone size"></td>
+    <td><img src="media/evidence/character/hero-wave.png" alt="Rendered Cubacadabra character waving"></td>
   </tr>
   <tr>
     <td align="center"><sub>Studio / creator path</sub></td>
     <td align="center"><sub>Player / gameplay</sub></td>
-    <td align="center"><sub>Player / mobile evidence</sub></td>
+    <td align="center"><sub>Morph / character runtime</sub></td>
   </tr>
 </table>
 
@@ -44,7 +44,7 @@ flowchart LR
     Source["Studio / tools<br/>JSON · Luau · GLB"] -->|validate + build| Cube["Cube package<br/>manifest · assets · hashes"]
     Cube --> Rust["Shared Rust runtime<br/>simulation · Luau · renderer"]
     Rust --> Hosts["Player hosts<br/>Web · iOS · Android · Desktop"]
-    Hosts --> Services["Platform services<br/>worlds · auth · publishing"]
+    Hosts <-->|authenticated transport| Services["Platform services<br/>worlds · auth · publishing"]
 ```
 
 The package is the portable boundary. Game-specific rules stay with the game;

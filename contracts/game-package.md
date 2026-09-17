@@ -28,6 +28,7 @@ authoring shorthand or a separate maze generator at runtime.
 ```mermaid
 flowchart LR
     subgraph Source["Creator source"]
+        direction TB
         Manifest["manifest.json"]
         Main["src/main.luau"]
         Server["src/server.luau<br/>optional"]
@@ -37,6 +38,7 @@ flowchart LR
     Builder["Builder<br/>validate, resolve, bundle"]
 
     subgraph Package["Portable game package"]
+        direction TB
         GeneratedManifest["Generated manifest"]
         Game["game.luau"]
         Authority["authority.luau<br/>optional"]
@@ -85,6 +87,13 @@ included in the package's integrity data. A local Studio catalog entry alone
 does not make an asset available to every host. Hosts validate the descriptor
 and declared content before use; failure must be explicit and must not fall
 back to a mutable “latest” asset that can mix package revisions.
+
+The builder accepts image assets under `assets.images`, WAV audio under
+`assets.audio`, and GLB/glTF model files under `assets.models`. Runtime model
+decoding and instanced world-mesh rendering are being introduced separately
+from this packaging contract; declaring a model currently guarantees that the
+bytes are validated, copied, and hashed, not that every renderer backend can
+display every glTF feature.
 
 ## Build failure guarantees
 

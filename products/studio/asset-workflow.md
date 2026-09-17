@@ -26,7 +26,7 @@ silently stored.
 ![Morph asset anatomy](../../media/diagrams/morph-character.svg)
 
 ```mermaid
-flowchart LR
+flowchart TB
     GLB["Project GLB"]
     Inspect["Inspect and validate<br/>supported rigid wearable"]
     Sidecar["Mapping sidecar<br/>source.morph.json"]
@@ -90,7 +90,7 @@ UI and its stricter body validation are added.
 **Target community publishing workflow — not yet a Studio action**
 
 ```mermaid
-flowchart LR
+flowchart TB
     Asset["Validated project-owned asset"]
     Share["Explicit Share with community<br/>action"]
     Review["Validate ownership, license,<br/>attribution, and content"]
