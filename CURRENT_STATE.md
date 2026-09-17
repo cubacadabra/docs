@@ -19,7 +19,8 @@ understanding the current project state, delete it.
 
 ## Active milestone
 
-Maze 101 visual parity with MayGo/maze-world screenshots.
+Maze 101 three-island progression and visual parity with MayGo/maze-world
+screenshots.
 
 ## Recent context worth carrying forward
 
@@ -36,6 +37,8 @@ completed milestones should be removed as they stop being relevant.
 - Maze package generation is native Rust-only
 - Maze expansion keeps generated floor/walls separate from package-owned environment art
 - Maze 101 owns authored island shells, sparse rocks/vegetation, and explicit presentation bounds
+- Maze 101 is a three-island run: Sunshore, Coral Cay, and Cloudpeak increase in
+  maze size, and the first two exits automatically route players to the next island
 - Studio review cameras temporarily bypass gameplay distance fog
 - Shared third-person camera occlusion sweeps against terrain and solid blocks;
   forced close views drive the same local-avatar hide/fade transition as zoom
@@ -43,9 +46,11 @@ completed milestones should be removed as they stop being relevant.
 
 ## Current visual gaps
 
-- Atmosphere still needs depth cues and optional clouds
+- Atmosphere depth cues and per-island cloud placement still need screenshot
+  validation
 - Terrain palette needs in-Studio screenshot validation
-- Island shells and dressing still need screenshot validation and further art direction
+- Each island's shell, terrain treatment, and sparse dressing still need
+  screenshot validation and further art direction
 - Vegetation and landmark density still need screenshot-driven iteration
 - Background composition needs screenshot validation after floor and grounding fixes
 - Baseline/reference screenshot captures still need to be recorded and compared
