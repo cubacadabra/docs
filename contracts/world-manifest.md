@@ -66,14 +66,14 @@ share indexed GLB geometry and carry independent position, scale, yaw, and tint
 values. They are visual-only in this milestone; mesh collision, texture
 materials, animation, and prefab behavior remain separate capabilities.
 
-The native Rust builder expands the bounded `maze` declaration below into
-ordinary terrain operations, interaction zones, checkpoints, decorations, and
-generated maze effects before packaging. The native path adds the art-directed
-tapered island body, distant island silhouettes, and wall-side dressing. The
-legacy Python path remains a compatibility fallback with the same gameplay
-layout but a smaller terrain footprint; it does not expand those optional
-presentation volumes. The runtime consumes only expanded package data and does
-not execute the authoring shorthand.
+The native Rust builder is the only supported expander for the bounded `maze`
+declaration below. It emits ordinary terrain operations, interaction zones,
+checkpoints, decorations, and generated maze effects before packaging. The
+native path adds the art-directed tapered island body, distant island
+silhouettes, and wall-side dressing. The retired Python builder rejects maze
+declarations rather than producing a different-looking package. The runtime
+consumes only expanded package data and does not execute the authoring
+shorthand.
 
 ## Procedural maze declaration
 

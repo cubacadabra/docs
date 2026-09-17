@@ -27,10 +27,9 @@ and remaining evidence.
 
 - The tools builder produces package format 3 and accepts SDK `0.3.0` and
   `0.4.0`; terrain requires `0.4.0`. Packages include generated Luau and
-  integrity metadata. The native CLI now expands Maze 101's bounded
-  procedural declaration into the same terrain/interactions/checkpoints/effects
-  shape as the legacy builder, and the generated package loads through the Rust
-  headless runtime. See [package contract](../contracts/game-package.md).
+  integrity metadata. The native CLI is the sole expander for Maze 101's
+  bounded procedural declaration, and the generated package loads through the
+  Rust headless runtime. See [package contract](../contracts/game-package.md).
 - Rust provides shared engine, client/session, application-state, and bounded
   Luau runtime foundations. Web uses generated WASM; iOS and Android use
   native bridges; Studio calls Rust directly.
@@ -89,11 +88,11 @@ new release, never a mixed set; see
 
 The creator-critical Rust project and builder crates are now implemented, and
 Studio uses the builder in-process. Studio release artifacts ship a native
-`cubacadabra` builder without Python or `cubacadabra.pyz`. The Python CLI still
-provides maintainer-only upload, local-service, and Morph-release commands, and
-the compatibility harness still uses its legacy builder module. Migrate those
-workflows only where a native path is needed, while preserving the shared
-package contract and diagnostics. See the [creator build toolchain](../systems/toolchain/overview.md).
+`cubacadabra` builder without Python or `cubacadabra.pyz`. The compatibility
+harness and example-upload build step now invoke that same native builder.
+Python remains only for maintainer-side authentication, local-service, and
+Morph-release commands that are not package building. See the
+[creator build toolchain](../systems/toolchain/overview.md).
 
 ### 5. Finish local Morph asset integration
 

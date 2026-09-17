@@ -37,6 +37,12 @@ end
 ```
 
 `set_open(api, boolean)` allows game rules to open or close the same nodes
-directly. `triggerId` is optional; when present, its checked state tracks the
-disclosure state. A disclosure supports 1-32 node ids. Names are limited to 64
-bytes to match the retained UI's bounded identifiers.
+directly:
+
+```luau
+objective:set_open(api, true)
+```
+
+`triggerId` is optional; when present, its checked state tracks the disclosure
+state. A disclosure supports 1-32 node ids. Names are limited to 64 bytes to
+match the retained UI's bounded identifiers.
