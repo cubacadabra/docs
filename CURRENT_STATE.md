@@ -36,6 +36,8 @@ completed milestones should be removed as they stop being relevant.
 - Softer engine-owned grass and earth terrain tiles
 - Maze package generation is native Rust-only
 - Maze expansion keeps generated floor/walls separate from package-owned environment art
+- Coplanar authored block-terrain fills use exact unions so overlapping floors
+  do not create invisible player-collision ridges
 - Maze 101 opens in a terrain-backed archipelago hub with five visible island
   landforms, authored cliff shells and rope bridges, destination gates, palms,
   rocks, and explicit presentation bounds
@@ -53,7 +55,7 @@ completed milestones should be removed as they stop being relevant.
   third-person gameplay camera; Studio's deterministic `Overview` and
   `Showcase` cameras expose the intended full-island composition
 - Maze 101's imported rope meshes remain visual-only, with package-owned
-  wood deck collision making every hub bridge traversable
+  terrain strips beneath the decks making every hub bridge traversable
 - Vegetation variety and landmark density still need screenshot-driven iteration
 - Baseline/reference captures still need to be recorded for repeatable visual comparison
 
