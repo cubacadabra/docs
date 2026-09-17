@@ -34,15 +34,15 @@ completed milestones should be removed as they stop being relevant.
 - Shared viewport sky gradient
 - Softer engine-owned grass and earth terrain tiles
 - Maze package generation is native Rust-only
-- Tapered floating-island generation
-- Seeded wall-side dressing
+- Rounded/tapered floating-island generation using a reusable ellipsoid terrain shape
+- Seeded wall-side dressing with sparse prop clusters
 
 ## Current visual gaps
 
 - Atmosphere still needs depth cues and optional clouds
 - Terrain palette needs in-Studio screenshot validation
-- Island silhouette still needs refinement
-- Sparse vegetation and landmarks
+- Island silhouette still needs screenshot validation and further art direction
+- Vegetation and landmark density still need screenshot-driven iteration
 - Background composition is too empty
 - Baseline/reference screenshot captures still need to be recorded and compared
 

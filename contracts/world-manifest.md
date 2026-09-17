@@ -29,8 +29,8 @@ presentation.
 
 ## Terrain
 
-Static terrain is an SDK `0.4.0` capability. It accepts ordered block/ball
-fills, carves, and material-paint operations with semantic materials
+Static terrain is an SDK `0.4.0` capability. It accepts ordered block, ball,
+and ellipsoid fills, carves, and material-paint operations with semantic materials
 `builtin:grass`, `builtin:ground`, `builtin:rock`, `builtin:sand`,
 `builtin:mud`, and `builtin:snow` (bare names are also accepted). Terrain art
 is engine-owned; the package does not carry duplicate textures. Terrain is
@@ -69,8 +69,8 @@ materials, animation, and prefab behavior remain separate capabilities.
 The native Rust builder is the only supported expander for the bounded `maze`
 declaration below. It emits ordinary terrain operations, interaction zones,
 checkpoints, decorations, and generated maze effects before packaging. The
-native path adds the art-directed tapered island body, distant island
-silhouettes, and wall-side dressing. The retired Python builder rejects maze
+native path adds the art-directed rounded/tapered island body, distant island
+silhouettes, and seeded wall-side dressing clusters. The retired Python builder rejects maze
 declarations rather than producing a different-looking package. The runtime
 consumes only expanded package data and does not execute the authoring
 shorthand.
