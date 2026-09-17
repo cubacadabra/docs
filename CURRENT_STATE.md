@@ -35,16 +35,16 @@ completed milestones should be removed as they stop being relevant.
 - Softer engine-owned grass and earth terrain tiles
 - Maze package generation is native Rust-only
 - Maze expansion keeps generated floor/walls separate from package-owned environment art
-- Maze 101 owns an authored visual island shell and explicit presentation bounds
+- Maze 101 owns authored island shells, sparse rocks/vegetation, and explicit presentation bounds
 - Studio review cameras temporarily bypass gameplay distance fog
 
 ## Current visual gaps
 
 - Atmosphere still needs depth cues and optional clouds
 - Terrain palette needs in-Studio screenshot validation
-- Island shell still needs screenshot validation and further art direction
+- Island shells and dressing still need screenshot validation and further art direction
 - Vegetation and landmark density still need screenshot-driven iteration
-- Background composition needs screenshot validation after island grounding fixes
+- Background composition needs screenshot validation after floor and grounding fixes
 - Baseline/reference screenshot captures still need to be recorded and compared
 
 ## Canonical repositories
