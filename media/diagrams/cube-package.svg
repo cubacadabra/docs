@@ -36,10 +36,10 @@
     <circle cx="302" cy="205" r="270" fill="url(#halo)"/>
     <ellipse cx="302" cy="358" rx="250" ry="46" fill="#050810" opacity=".72"/><ellipse cx="302" cy="344" rx="196" ry="30" fill="#6d72e8" opacity=".18"/>
     <g filter="url(#shadow)">
-      <g transform="translate(0 0)"><path d="M302 0L493 92L302 184L111 92Z" fill="url(#manifest)"/><path d="M111 92L302 184V204L111 112Z" fill="#c94d68"/><path d="M302 184L493 92V112L302 204Z" fill="#714fd3"/><text x="302" y="103" text-anchor="middle" class="face">MANIFEST</text></g>
-      <g transform="translate(0 94)"><path d="M302 0L493 92L302 184L111 92Z" fill="url(#rules)"/><path d="M111 92L302 184V204L111 112Z" fill="#9e3558"/><path d="M302 184L493 92V112L302 204Z" fill="#5c3d9c"/><text x="302" y="103" text-anchor="middle" class="face">RULES</text></g>
-      <g transform="translate(0 188)"><path d="M302 0L493 92L302 184L111 92Z" fill="url(#assets)"/><path d="M111 92L302 184V204L111 112Z" fill="#5440a3"/><path d="M302 184L493 92V112L302 204Z" fill="#3f347b"/><text x="302" y="103" text-anchor="middle" class="face">ASSETS</text></g>
-      <g transform="translate(0 282)"><path d="M302 0L493 92L302 184L111 92Z" fill="url(#hashes)"/><path d="M111 92L302 184V204L111 112Z" fill="#385199"/><path d="M302 184L493 92V112L302 204Z" fill="#2d3d75"/><text x="302" y="103" text-anchor="middle" class="face">INTEGRITY</text></g>
+      <g transform="translate(0 0)"><path d="M302 0L493 92L302 184L111 92Z" fill="url(#manifest)"/><path d="M111 92L302 184V204L111 112Z" fill="#c94d68"/><path d="M302 184L493 92V112L302 204Z" fill="#714fd3"/><text x="302" y="72" text-anchor="middle" class="face">MANIFEST</text></g>
+      <g transform="translate(0 94)"><path d="M302 0L493 92L302 184L111 92Z" fill="url(#rules)"/><path d="M111 92L302 184V204L111 112Z" fill="#9e3558"/><path d="M302 184L493 92V112L302 204Z" fill="#5c3d9c"/><text x="302" y="72" text-anchor="middle" class="face">RULES</text></g>
+      <g transform="translate(0 188)"><path d="M302 0L493 92L302 184L111 92Z" fill="url(#assets)"/><path d="M111 92L302 184V204L111 112Z" fill="#5440a3"/><path d="M302 184L493 92V112L302 204Z" fill="#3f347b"/><text x="302" y="72" text-anchor="middle" class="face">ASSETS</text></g>
+      <g transform="translate(0 282)"><path d="M302 0L493 92L302 184L111 92Z" fill="url(#hashes)"/><path d="M111 92L302 184V204L111 112Z" fill="#385199"/><path d="M302 184L493 92V112L302 204Z" fill="#2d3d75"/><text x="302" y="72" text-anchor="middle" class="face">INTEGRITY</text></g>
     </g>
     <g fill="none" stroke="#afbbde" stroke-opacity=".28" stroke-width="2"><path d="M111 92V374L302 466L493 374V92"/><path d="M302 184V466"/></g>
   </g>
