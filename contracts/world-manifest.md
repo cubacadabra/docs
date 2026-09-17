@@ -40,11 +40,16 @@ streaming edits, and saving modified terrain are not in this contract.
 `materialArt: false` selects procedural color fallback. `hideDefaultGround`
 controls whether the legacy flat ground remains below the terrain.
 
-World presentation settings are authored under `world.visual`:
+World presentation bounds are authored under `world`, while lighting and
+atmosphere controls live under `world.visual`:
 
 ```json
 {
   "world": {
+    "presentationBounds": {
+      "minimum": [-44, -9.3, -44],
+      "maximum": [44, 7, 44]
+    },
     "visual": {
       "exposure": 1.1,
       "contrast": 1.1,
@@ -57,9 +62,16 @@ World presentation settings are authored under `world.visual`:
 }
 ```
 
-These values are renderer presentation controls. They do not change terrain
-materials, collision, or simulation state. `decorations` are static,
-deterministically authored visual instances. The legacy preview kinds are
+`presentationBounds` optionally defines the primary authored subject used by
+Studio's Overview and Showcase review cameras. Each array is an inclusive
+world-space corner, with `minimum` strictly below `maximum` on all three axes.
+Background scenery can remain outside these bounds and still renders normally;
+it no longer forces the review camera to pull back. When the field is absent,
+Studio derives bounds from all authored terrain and world geometry as before.
+
+These settings are renderer presentation controls. They do not change terrain
+materials, collision, simulation state, or gameplay cameras. `decorations`
+are static, deterministically authored visual instances. The legacy preview kinds are
 `rock`, `palm`, `grass-clump`, `crate`, `bridge`, and `gate`; new content should
 prefer an imported mesh decoration with an `asset` ID. Imported mesh instances
 share indexed GLB geometry and carry independent position, scale, yaw, and tint
@@ -104,8 +116,10 @@ authoring a new release rather than depending on runtime randomness.
 
 The native maze builder also adds a tapered lower island volume, a small set of
 distant island silhouettes, and seeded decorations in quiet wall-side pockets
-rather than along the solution route. This is presentation content generated
-from the same maze seed, not a second simulation or collision authority.
+rather than along the solution route. It emits primary presentation bounds for
+the playable island, so those distant silhouettes add depth without changing
+Overview or Showcase framing. This is presentation content generated from the
+same maze seed, not a second simulation or collision authority.
 
 These are static authored capabilities; they do not provide a general
 creator-facing persistence API. For exact build behavior, use the

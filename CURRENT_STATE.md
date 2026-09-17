@@ -36,6 +36,7 @@ completed milestones should be removed as they stop being relevant.
 - Maze package generation is native Rust-only
 - Rounded/tapered floating-island generation using a reusable ellipsoid terrain shape
 - Seeded wall-side dressing with sparse prop clusters
+- Primary presentation bounds keep background scenery out of Studio review framing
 
 ## Current visual gaps
 
@@ -43,7 +44,7 @@ completed milestones should be removed as they stop being relevant.
 - Terrain palette needs in-Studio screenshot validation
 - Island silhouette still needs screenshot validation and further art direction
 - Vegetation and landmark density still need screenshot-driven iteration
-- Background composition is too empty
+- Background composition needs screenshot validation after island grounding fixes
 - Baseline/reference screenshot captures still need to be recorded and compared
 
 ## Canonical repositories
