@@ -1,111 +1,104 @@
-# CUBACADABRA
+# Cubacadabra
 
-Open-source game platform, engine, and creator stack.
+An open-source game platform where creators build once and players play
+everywhere.
 
-Cubacadabra combines a custom Rust runtime, Luau game rules, portable hashed
-packages, cross-host adapters, Studio authoring, and platform services. This
-repository is the canonical home for the hand-written contracts and architecture
-that connect those pieces.
+Cubacadabra Studio authors inspectable source. A native toolchain turns it into
+one portable, hashed Cube. Player hosts open that same package through a shared
+Rust runtime on Web, iOS, Android, and Desktop.
 
-**Build with Cubacadabra Studio. Play everywhere with Cubacadabra Player.**
+![Cubacadabra platform overview](media/diagrams/platform-overview.svg)
 
-![Cubacadabra products](diagrams/cubacadabra-products.svg)
+## See it in motion
 
-## Platform architecture
-
-![Cubacadabra platform architecture](diagrams/cubacadabra-platform.svg)
-
-## Working product evidence
-
-The images below are real captures from the current evidence set. They show
-implemented renderer and example paths; they are not a claim that every capture
-comes from one integrated release package.
+These are captures from the current evidence set—not a claim that every image
+belongs to one integrated release.
 
 <table>
   <tr>
-    <td><img src="evidence/examples/racer-lab.png" alt="Racer Lab capture"></td>
-    <td><img src="evidence/examples/racer-gameplay.png" alt="Racer gameplay capture"></td>
-    <td><img src="evidence/character/gameplay-phone.png" alt="Character runtime phone-sized capture"></td>
+    <td><img src="media/evidence/examples/racer-lab.png" alt="Racer Lab creator and game capture"></td>
+    <td><img src="media/evidence/examples/racer-gameplay.png" alt="Racer gameplay capture"></td>
+    <td><img src="media/evidence/character/gameplay-phone.png" alt="Character runtime capture at phone size"></td>
   </tr>
   <tr>
-    <td align="center"><sub>Racer Lab / game evidence</sub></td>
-    <td align="center"><sub>Example / gameplay evidence</sub></td>
-    <td align="center"><sub>Renderer / mobile-sized evidence</sub></td>
+    <td align="center"><sub>Studio / creator path</sub></td>
+    <td align="center"><sub>Player / gameplay</sub></td>
+    <td align="center"><sub>Player / mobile evidence</sub></td>
   </tr>
 </table>
 
-## Choose a path
+## Explore Cubacadabra
 
-- **Understand Cubacadabra:** [product vision](product/vision.md),
-  [principles](product/principles.md), and
-  [architecture overview](architecture/overview.md), including the proposed
-  [avatar editor boundary](architecture/avatar-editor.md).
-- **Understand products and targets:** see the
-  [Studio versus Player platform model](product/platforms.md).
-- **Build or change a platform feature:** read the relevant page in
-  [contracts](contracts/README.md), then the applicable
-  [architecture](architecture/README.md) and
-  [verification guidance](verification/README.md).
-- **Create a game:** start with the
-  [creator guide](contracts/creator-guide.md), then use the
-  [game package contract](contracts/game-package.md),
-  [Luau API](contracts/luau-api.md),
-  [world manifest](contracts/world-manifest.md), and SDK contracts in
-  [contracts/sdk](contracts/sdk/README.md).
-- **Work on Studio:** see [Studio overview](studio/overview.md),
-  [creator build toolchain](architecture/toolchain.md),
-  [asset workflow](studio/asset-workflow.md), and
-  [editing model](studio/editing-model.md).
-- **Work on backend services:** see
-  [storage](platform/backend-storage.md),
-  [Morph catalog and saved appearance](platform/morph-catalog.md),
-  [authentication](platform/authentication.md),
-  [moderation](platform/moderation.md), and
-  [publishing](platform/publishing.md).
-- **Understand a design choice:** read [decisions](decisions/README.md) and note each
-  record's status.
-- **See what remains:** read [roadmap](roadmap.md).
-- **Trace migrated material:** consult the
-  [source disposition ledger](sources.md). It records provenance and future
-  cleanup status; it is not required to understand the platform.
+| Surface | What it is | Start here |
+| --- | --- | --- |
+| **Studio** | Local creator workspace and preview host | [Studio](products/studio/README.md) |
+| **Player** | Web, iOS, Android, and Desktop end-user hosts | [Player](products/player/README.md) |
+| **Engine** | Shared Rust simulation, Luau, renderer, and session | [Runtime](systems/runtime/README.md) |
+| **Platform** | Live worlds, auth, publishing, storage, and moderation | [Backend systems](systems/backend/README.md) |
+| **Creator API** | Package, world, Luau, UI, network, and SDK contracts | [Contracts](contracts/README.md) |
+
+## Architecture in 30 seconds
+
+```mermaid
+flowchart LR
+    Source["Studio / tools<br/>JSON · Luau · GLB"] -->|validate + build| Cube["Cube package<br/>manifest · assets · hashes"]
+    Cube --> Rust["Shared Rust runtime<br/>simulation · Luau · renderer"]
+    Rust --> Hosts["Player hosts<br/>Web · iOS · Android · Desktop"]
+    Hosts --> Services["Platform services<br/>worlds · auth · publishing"]
+```
+
+The package is the portable boundary. Game-specific rules stay with the game;
+shared semantics stay in Rust; hosts own presentation, credentials, transport,
+and device integration.
+
+## The codebase
+
+![Cubacadabra repository constellation](media/diagrams/repository-constellation.svg)
+
+Start from the repository you are changing, then follow its canonical links:
+
+- [Repository map](repos/README.md) — one entry for every active sibling repository.
+- [Products](products/README.md) — browse by what a person uses.
+- [Systems](systems/README.md) — browse by what the platform does.
+
+## Choose your next step
+
+- New to Cubacadabra? Read [How Cubacadabra works](start/how-cubacadabra-works.md).
+- Building a game? Start with [Build your first Cube](start/build-your-first-cube.md).
+- Changing a host? Open the matching [repository entry](repos/README.md), then [host conformance](quality/compatibility/host-conformance.md).
+- Changing Rust? Read [runtime ownership](systems/runtime/overview.md), then [testing](quality/verification/testing.md).
+- Checking a public contract? Use [contracts](contracts/README.md) and [decisions](decisions/README.md).
+- Looking for unfinished work? See the [roadmap](reference/roadmap.md).
+
+## Current status
+
+The native builder produces package format 3 and the Maze 101 package is a
+verified native-build milestone. Rust provides shared runtime foundations;
+Studio imports and previews supported GLBs; and the service has presence plus
+ordered cooperative retained state.
+
+The major open gaps are trusted game authority, transactional release
+activation, end-to-end Morph asset wiring, full host conformance, durable
+game-owned data, shared editing, safety/performance budgets, and release
+readiness. The [roadmap](reference/roadmap.md) is the current gap list, not a
+schedule or release promise.
+
+## Engineering reference
+
+- [Contracts](contracts/README.md) are normative when marked **Status: Current contract**.
+- [Decisions](decisions/README.md) explain accepted and proposed constraints.
+- [Quality](quality/README.md) collects verification and compatibility evidence.
+- [Documentation authority](reference/README.md) explains where cross-repository truth lives.
+- [Migration sources](reference/migration-sources.md) is provenance for the completed consolidation, not a reader prerequisite.
 
 ## Documentation authority
 
-`contracts/` pages are normative when marked **Status: Current contract**.
-Each contract also carries a separate **Maturity** value (`Preview`,
-`Experimental`, or `Stable`) so maturity does not change whether the text is
-normative. Other status labels mean:
+`contracts/` pages are normative when marked **Status: Current contract**. Each
+contract also carries a separate **Maturity** value (`Preview`, `Experimental`,
+or `Stable`); maturity does not change whether the text is normative. Decisions
+explain why a boundary exists, while quality pages identify the evidence needed
+to claim implementation, integration, host verification, or release readiness.
 
-- **Implemented:** code implements the described behavior; this does not imply
-  every product path uses it.
-- **Integrated:** the relevant production path invokes the implementation.
-- **Host-verified:** evidence exercises the actual host boundary named by the
-  page. A Rust unit test or target compile alone is not host verification.
-- **Proposed:** a design or acceptance criterion for future work, not a shipped
-  behavior or commitment.
-- **Historical:** useful context only; it must not override a current contract.
-- **Owner confirmation needed:** a product principle or policy proposal that
-  has not been approved as a public promise.
-
-Claims about production availability need release evidence in addition to
-implementation and integration evidence.
-
-## Maintenance
-
-Any change to a public or cross-repository contract updates its canonical page
-here in the same piece of work. Update the owning schema/code/tests as
-appropriate, then update this repository and affected host-conformance or
-migration guidance. Do not allow an implementation-local `docs/` page or an
-old review to become a competing specification. Repository READMEs may retain
-local build, test, and release instructions and link here; they should not
-restate cross-repository contracts.
-
-The source ledger is a temporary migration record. Once sibling `docs/`
-directories have been retired, keep provenance only where it helps explain a
-decision; the canonical pages must stand on their own.
-
-Technical diagrams follow the [diagram conventions](diagrams/how.md): keep
-living architecture and flows as inline fenced `mermaid` blocks beside their
-authoritative prose, reserve SVG for deliberately designed canonical graphics,
-and use PNG for screenshots or rendered visual evidence rather than
-hand-maintained architecture.
+Cross-repository contract changes update this repository in the same piece of
+work. Implementation repositories may keep local build, test, and release
+instructions, but must link here instead of creating a competing contract.

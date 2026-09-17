@@ -21,6 +21,6 @@ without the same benefit.
 Hosts must preserve shared semantic results and structured errors. Validate the
 real bindings and loaders, not just shared modules. Rust-to-Rust Studio calls
 use direct Rust APIs, not JSON or the C ABI. See
-[app runtime](../architecture/app-runtime.md),
-[client runtime](../architecture/client-runtime.md), and
-[host conformance](../compatibility/host-conformance.md).
+[app runtime](../systems/runtime/app-runtime.md),
+[client runtime](../systems/runtime/client-runtime.md), and
+[host conformance](../quality/compatibility/host-conformance.md).

@@ -56,4 +56,4 @@ work. See the [Luau API index](luau-api.md) and the detailed
 
 Use [the package contract](game-package.md) for compatibility and authority
 metadata, [network contract](network.md) for cooperative semantics, and
-[publishing](../platform/publishing.md) for current distribution boundaries.
+[publishing](../systems/publishing/overview.md) for current distribution boundaries.

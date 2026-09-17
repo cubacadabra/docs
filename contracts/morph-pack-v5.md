@@ -12,7 +12,7 @@ compiler to guess shading.
 
 ## Binary layout
 
-![MorphPack v5 binary layout](../diagrams/morph-pack-v5-layout.svg)
+![MorphPack v5 anatomy](../media/diagrams/morph-character.svg)
 
 All scalar fields are little-endian. Existing bounded limits remain enforced.
 

@@ -20,4 +20,4 @@ need for a second representation.
 Future document/prefab work must preserve stable authored identity, object
 reference remapping, explicit asset dependencies, schema validation, and
 non-executing import regardless of encoding. See
-[assets and prefabs](../architecture/assets-and-prefabs.md).
+[assets and prefabs](../systems/assets/assets-and-prefabs.md).

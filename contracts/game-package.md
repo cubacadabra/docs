@@ -23,7 +23,7 @@ authoring shorthand or a separate maze generator at runtime.
 
 **Creator source to host loading**
 
-![Package anatomy](../diagrams/package-anatomy.svg)
+![Cube package anatomy](../media/diagrams/cube-package.svg)
 
 ```mermaid
 flowchart LR
@@ -67,7 +67,7 @@ The current tools builder supports SDK versions `0.3.0` and `0.4.0`;
 `world.terrain` requires `0.4.0`. The default project creator emits SDK
 `0.3.0` and package `formatVersion: 3`. Package format version and SDK version
 are separate compatibility axes. See
-[the version matrix](../compatibility/versions.md).
+[the version matrix](../quality/compatibility/versions.md).
 
 ## Authority entry
 
@@ -76,7 +76,7 @@ When `src/server.luau` exists, the builder automatically bundles it as
 package descriptor metadata and hashes. A declared authority entry without
 the source file is an error. This packaging behavior does not mean any
 interactive host or backend currently executes the entry; see
-[authority](../architecture/authority.md).
+[authority](../systems/authority/overview.md).
 
 ## Asset declarations
 
@@ -93,13 +93,13 @@ does not own. Directory builds stage their contents and preserve the previous
 successful directory if the new build fails. Directory plus ZIP output is
 not currently a single atomic transaction: the two replacements can succeed
 or fail independently. See the proposed release activation criteria in
-[verification/acceptance-criteria.md](../verification/acceptance-criteria.md).
+[verification/acceptance-criteria.md](../quality/verification/acceptance-criteria.md).
 
 Raw source package builds use the shared Rust `cubacadabra-builder` crate. The
 native `cubacadabra` CLI in `tools` is the terminal frontend over that crate,
 while Studio links it in-process. Python remains only for tools commands that
 have not yet moved into Rust and the compatibility harness; it is not required
-by Studio. See [Studio workflow](../studio/overview.md).
+by Studio. See [Studio workflow](../products/studio/overview.md).
 
 **Safe directory build replacement**
 

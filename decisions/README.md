@@ -1,7 +1,5 @@
 # Decisions
 
-![Architecture decision map](../diagrams/decision-map.svg)
-
 These decisions are the load-bearing constraints behind the platform map:
 inspectable authored data, game-specific Luau, shared Rust semantics where they
 remove drift, and one canonical home for cross-repository documentation.

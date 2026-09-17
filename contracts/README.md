@@ -1,13 +1,11 @@
 # Contracts
 
-![Creator to runtime pipeline](../diagrams/creator-runtime-pipeline.svg)
-
 The contract surface describes the portable handoff from creator source through
 validation and packaging to host loading. Current contracts are normative when
 marked **Status: Current contract**; their separate maturity label describes how
 settled the implementation is.
 
-![Package anatomy](../diagrams/package-anatomy.svg)
+![Cube package anatomy](../media/diagrams/cube-package.svg)
 
 Normative and versioned technical behavior:
 

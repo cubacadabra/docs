@@ -7,7 +7,7 @@
 The manifest owns package content and generic world data, not engine code.
 The current builder validates the exact accepted shape. The contract examples
 below describe current preview capabilities; package/SDK version distinctions
-are in [compatibility](../compatibility/versions.md).
+are in [compatibility](../quality/compatibility/versions.md).
 
 ## Assets and world content
 

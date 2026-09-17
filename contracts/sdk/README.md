@@ -1,6 +1,7 @@
 # SDK contracts
 
-![SDK layering map](../../diagrams/sdk-layering.svg)
+SDK modules sit above the shared runtime and are consumed by package-owned
+Luau. The module contracts below are the canonical details.
 
 The SDK is a versioned Luau helper layer over generic runtime primitives. It is
 bundled into the game package so reusable lifecycle and state patterns travel

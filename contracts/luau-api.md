@@ -52,6 +52,6 @@ Every entry into game-owned code must be subject to the runtime's execution
 budget, including module initialization, lifecycle callbacks, save/restore,
 scheduled work, and future authority handlers. A scheduler budget alone is not
 a complete sandbox budget. See the
-[acceptance criteria](../verification/acceptance-criteria.md).
+[acceptance criteria](../quality/verification/acceptance-criteria.md).
 
 This page is the index, not a replacement for the normative per-API contracts.

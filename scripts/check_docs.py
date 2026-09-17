@@ -29,7 +29,7 @@ def check_relative_links(errors: list[str]) -> None:
 
 
 def check_ledger_destinations(errors: list[str]) -> None:
-    ledger = ROOT / "sources.md"
+    ledger = ROOT / "reference" / "migration-sources.md"
     for line in ledger.read_text().splitlines():
         if not line.startswith("|"):
             continue
@@ -38,7 +38,7 @@ def check_ledger_destinations(errors: list[str]) -> None:
                 continue
             path = (ROOT / token).resolve()
             if not path.exists():
-                errors.append(f"sources.md names missing canonical destination {token}")
+                errors.append(f"reference/migration-sources.md names missing canonical destination {token}")
 
 
 def check_contract_status(errors: list[str]) -> None:

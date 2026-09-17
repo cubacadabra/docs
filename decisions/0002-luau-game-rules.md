@@ -20,4 +20,4 @@ engine. The engine should not accumulate APIs such as `capture_gate` or
 Rust may supply entities, transforms, physics facts, generic commands/events,
 state storage, validation primitives, and execution budgets. Each game's
 Luau decides what a validated action means. Current trusted execution remains
-a prototype; see [authority](../architecture/authority.md).
+a prototype; see [authority](../systems/authority/overview.md).
