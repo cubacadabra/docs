@@ -1,48 +1,77 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
   <title id="title">Cubacadabra Morph asset anatomy</title>
-  <desc id="desc">Editable body, clothing, hair, face, skeleton, and texture layers compile into one versioned MorphPack used by the catalog and runtime.</desc>
+  <desc id="desc">Editable body, hair, face, clothing, rig, and textures compile into one versioned MorphPack for the catalog and runtime.</desc>
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f8f2e9"/><stop offset="1" stop-color="#ebe7f7"/></linearGradient>
-    <linearGradient id="coat" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ff836f"/><stop offset="1" stop-color="#714fe0"/></linearGradient>
-    <linearGradient id="pack" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#18162f"/><stop offset="1" stop-color="#242044"/></linearGradient>
-    <filter id="shadow" x="-35%" y="-35%" width="170%" height="190%"><feDropShadow dx="0" dy="14" stdDeviation="15" flood-color="#303052" flood-opacity=".23"/></filter>
-    <marker id="arrow" markerWidth="12" markerHeight="12" refX="9" refY="6" orient="auto"><path d="M0 0L12 6L0 12Z" fill="#714fe0"/></marker>
-    <style>text{font-family:Inter,Arial,sans-serif}.eyebrow{fill:#6849c8;font-size:15px;font-weight:700;letter-spacing:2.8px}.headline{fill:#17152b;font-size:36px;font-weight:750}.deck{fill:#5e5b77;font-size:18px}.layer{fill:#332f4d;font-size:17px;font-weight:700}.packTitle{fill:#ff9b83;font-size:19px;font-weight:700}.packNote{fill:#aeb2d2;font-size:15px}.row{fill:#f3f1ff;font-size:16px}.action{fill:#6849c8;font-size:15px;font-weight:700}.footer{fill:#4d4964;font-size:16px}@media(max-width:600px){.deck,.packNote,.action,.footer{display:none}.eyebrow{font-size:19px}.headline{font-size:42px}.layer,.packTitle,.row{font-size:24px}}</style>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#090d16"/><stop offset=".55" stop-color="#0e1524"/><stop offset="1" stop-color="#17142d"/></linearGradient>
+    <linearGradient id="viewport" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#253252"/><stop offset=".58" stop-color="#17223a"/><stop offset="1" stop-color="#0b101b"/></linearGradient>
+    <linearGradient id="hoodie" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#9877ed"/><stop offset=".48" stop-color="#6950bd"/><stop offset="1" stop-color="#43347e"/></linearGradient>
+    <linearGradient id="skin" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#d99465"/><stop offset=".55" stop-color="#ae6543"/><stop offset="1" stop-color="#7e3f2e"/></linearGradient>
+    <linearGradient id="hair" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#76412d"/><stop offset=".48" stop-color="#3c211e"/><stop offset="1" stop-color="#190f14"/></linearGradient>
+    <linearGradient id="denim" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#27466a"/><stop offset="1" stop-color="#10243c"/></linearGradient>
+    <linearGradient id="pack" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#1c2536"/><stop offset="1" stop-color="#101522"/></linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#6f9cff"/><stop offset="1" stop-color="#6852e7"/></linearGradient>
+    <radialGradient id="stage"><stop stop-color="#7595ff" stop-opacity=".5"/><stop offset=".42" stop-color="#506bd3" stop-opacity=".18"/><stop offset="1" stop-color="#11182a" stop-opacity="0"/></radialGradient>
+    <pattern id="denimTexture" width="8" height="8" patternUnits="userSpaceOnUse"><path d="M0 8L8 0M-4 4L4 -4M4 12L12 4" stroke="#8ba3bf" stroke-opacity=".12"/></pattern>
+    <filter id="shadow" x="-50%" y="-40%" width="200%" height="220%"><feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#000" flood-opacity=".52"/></filter>
+    <filter id="glow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="10" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="9" refY="6" orient="auto"><path d="M0 0L12 6L0 12Z" fill="#7195ff"/></marker>
+    <style>
+      text{font-family:Inter,Arial,sans-serif}.eyebrow{fill:#ff8975;font-size:15px;font-weight:700;letter-spacing:2.8px}.headline{fill:#f7f8fc;font-size:37px;font-weight:750;letter-spacing:-.5px}.deck{fill:#aeb7cb;font-size:18px}.kicker{font-size:14px;font-weight:700;letter-spacing:2px}.label{fill:#fff;font-size:18px;font-weight:700}.note{fill:#9ea9bf;font-size:14px}.layer{fill:#dfe4f2;font-size:16px;font-weight:650}.packTitle{fill:#fff;font-size:22px;font-weight:700}.row{fill:#d9def0;font-size:15px}.footer{fill:#b7c1d6;font-size:15px}
+    </style>
   </defs>
-  <rect width="1200" height="720" rx="30" fill="url(#bg)"/>
-  <text x="60" y="62" class="eyebrow">ASSETS / MORPH</text><text x="60" y="108" class="headline">A person, not a pipeline.</text><text x="60" y="140" class="deck">Editable layers become one versioned character asset.</text>
 
-  <g font-family="Inter,Arial,sans-serif">
-    <text x="60" y="248" class="layer">body</text><path d="M175 243H285" stroke="#b8acdc" stroke-width="2"/>
-    <text x="60" y="326" class="layer">clothing</text><path d="M175 321H285" stroke="#b8acdc" stroke-width="2"/>
-    <text x="60" y="404" class="layer">hair + face</text><path d="M175 399H285" stroke="#b8acdc" stroke-width="2"/>
-    <text x="60" y="482" class="layer">rig + textures</text><path d="M175 477H285" stroke="#b8acdc" stroke-width="2"/>
+  <rect width="1200" height="760" rx="30" fill="url(#bg)"/>
+  <g transform="translate(60 54)"><path d="M0 11L11 0L22 11L11 22Z" fill="none" stroke="#ff7868" stroke-width="3"/><path d="M7 7L15 15M15 7L7 15" stroke="#ff7868" stroke-width="2.5" stroke-linecap="round"/><text x="40" y="17" class="eyebrow">ASSETS / MORPH</text></g>
+  <text x="60" y="117" class="headline">Build the person. Ship one asset.</text>
+  <text x="60" y="149" class="deck">Editable appearance layers compile into the same character on every host.</text>
+
+  <rect x="46" y="177" width="1108" height="510" rx="28" fill="#0d1320" stroke="#293348" stroke-width="2" filter="url(#shadow)"/>
+  <path d="M46 226H1154" stroke="#2c364b"/>
+  <g transform="translate(70 195)"><circle cx="0" cy="7" r="5" fill="#ff7e6d"/><circle cx="20" cy="7" r="5" fill="#f0b36c"/><circle cx="40" cy="7" r="5" fill="#6f8fff"/><text x="70" y="13" class="note">CHARACTER WORKSPACE</text></g>
+
+  <g transform="translate(70 247)">
+    <text class="kicker" fill="#9eb0ff">EDITABLE LAYERS</text>
+    <g transform="translate(0 42)"><circle cx="9" cy="-5" r="7" fill="#ff826e"/><text x="30" class="layer">Body</text><text x="30" y="22" class="note">proportions + skin</text></g>
+    <g transform="translate(0 112)"><circle cx="9" cy="-5" r="7" fill="#8a6de8"/><text x="30" class="layer">Hair + face</text><text x="30" y="22" class="note">identity + expression</text></g>
+    <g transform="translate(0 182)"><circle cx="9" cy="-5" r="7" fill="#7195ff"/><text x="30" class="layer">Outfit</text><text x="30" y="22" class="note">wearables + materials</text></g>
+    <g transform="translate(0 252)"><circle cx="9" cy="-5" r="7" fill="#efba76"/><text x="30" class="layer">Rig + textures</text><text x="30" y="22" class="note">motion + surface detail</text></g>
+  </g>
+  <g stroke="#566989" stroke-width="2"><path d="M251 284H300"/><path d="M251 354H300"/><path d="M251 424H300"/><path d="M251 494H300"/></g>
+
+  <g transform="translate(300 238)">
+    <rect width="325" height="382" rx="22" fill="url(#viewport)" stroke="#35435d" stroke-width="2"/>
+    <g opacity=".42"><rect x="22" y="82" width="54" height="132" rx="6" fill="#1c2943"/><rect x="244" y="50" width="58" height="164" rx="6" fill="#19253d"/><rect x="78" y="118" width="61" height="96" rx="6" fill="#273654"/><rect x="209" y="111" width="39" height="103" rx="5" fill="#2b3a59"/></g>
+    <rect x="36" y="153" width="42" height="42" rx="5" fill="#7aa1ff" opacity=".6" filter="url(#glow)"/>
+    <circle cx="163" cy="292" r="150" fill="url(#stage)"/>
+    <ellipse cx="163" cy="334" rx="112" ry="28" fill="#080b12" opacity=".72"/><ellipse cx="163" cy="323" rx="92" ry="18" fill="#536fd0" opacity=".32"/>
+
+    <g transform="translate(70 35)" filter="url(#shadow)">
+      <path d="M70 216C70 186 83 169 93 165C104 169 116 187 116 216L114 269H73Z" fill="url(#denim)"/><path d="M118 216C118 186 131 169 141 165C152 169 164 187 164 216L162 269H121Z" fill="url(#denim)"/>
+      <path d="M70 216C70 186 83 169 93 165C104 169 116 187 116 216L114 269H73ZM118 216C118 186 131 169 141 165C152 169 164 187 164 216L162 269H121Z" fill="url(#denimTexture)"/>
+      <path d="M68 264H116V283H57C54 274 59 267 68 264Z" fill="#f7f4ef"/><path d="M120 264H164L177 277C178 281 174 283 168 283H120Z" fill="#f7f4ef"/><path d="M60 275H114M123 275H172" stroke="#c9ced9" stroke-width="3"/>
+      <path d="M44 105C56 78 77 67 116 67C155 67 176 78 188 105L180 202C150 219 82 219 52 202Z" fill="url(#hoodie)"/>
+      <path d="M73 120C82 132 150 132 159 120" fill="none" stroke="#b9a5f5" stroke-width="4" opacity=".48"/><path d="M88 174H144L153 203H79Z" fill="#554193"/><path d="M116 128V172" stroke="#483679" stroke-width="3" opacity=".7"/><path d="M95 91L97 137M137 91L135 137" stroke="#f2eefc" stroke-width="4" stroke-linecap="round"/>
+      <path d="M45 110C30 122 28 160 39 181C45 192 57 187 60 175L70 121Z" fill="#795cca"/><path d="M187 110C202 122 204 160 193 181C187 192 175 187 172 175L162 121Z" fill="#5c46a4"/><circle cx="43" cy="183" r="14" fill="url(#skin)"/><circle cx="189" cy="183" r="14" fill="url(#skin)"/>
+      <circle cx="116" cy="59" r="57" fill="url(#skin)"/>
+      <path d="M59 57C60 13 84 -2 119 2C152 5 176 27 171 65C155 48 144 41 126 37C109 51 87 59 59 57Z" fill="url(#hair)"/><path d="M76 42C84 12 102 4 122 6C105 17 101 35 99 52Z" fill="#8b4d31" opacity=".75"/><path d="M123 7C151 12 166 31 168 54C151 48 137 35 123 7Z" fill="#51251f"/>
+      <ellipse cx="94" cy="61" rx="5" ry="9" fill="#120f16"/><ellipse cx="139" cy="61" rx="5" ry="9" fill="#120f16"/><path d="M95 87C105 99 128 99 139 86" fill="none" stroke="#2b1718" stroke-width="5" stroke-linecap="round"/>
+    </g>
+    <g transform="translate(270 22)"><circle r="18" fill="#111827" stroke="#50617f"/><path d="M-6 0H6M0 -6V6" stroke="#dce4f6" stroke-width="2"/></g>
   </g>
 
-  <g transform="translate(275 170)" filter="url(#shadow)">
-    <ellipse cx="150" cy="423" rx="104" ry="19" fill="#756c92" opacity=".2"/>
-    <path d="M96 164C96 126 116 105 150 105C184 105 204 126 204 164V194H96Z" fill="#4d241d"/>
-    <circle cx="150" cy="176" r="58" fill="#c99372"/>
-    <path d="M96 167C98 118 119 101 152 101C188 101 210 123 204 167C187 150 174 143 155 140C138 151 118 160 96 167Z" fill="#54271e"/>
-    <path d="M102 239C115 222 130 214 150 214C170 214 185 222 198 239L225 339C201 360 99 360 75 339Z" fill="url(#coat)"/>
-    <path d="M107 255C124 267 176 267 193 255" fill="none" stroke="#ffc4b7" stroke-width="5" opacity=".65"/>
-    <circle cx="129" cy="176" r="5" fill="#2b2137"/><circle cx="171" cy="176" r="5" fill="#2b2137"/><path d="M120 203C138 214 162 214 180 203" fill="none" stroke="#7f4c4a" stroke-width="4" stroke-linecap="round"/>
-    <path d="M98 350H137L133 414H88Z" fill="#273260"/><path d="M163 350H202L212 414H167Z" fill="#273260"/>
-    <path d="M86 408H137C143 408 146 416 139 422H80C75 416 79 409 86 408Z" fill="#34274a"/><path d="M165 408H213C220 409 224 416 218 422H160C155 416 158 409 165 408Z" fill="#34274a"/>
-    <path d="M150 117V319M119 271L150 290L181 271M117 336L150 319L184 336" fill="none" stroke="#f8dfd4" stroke-width="2" stroke-dasharray="5 7" opacity=".75"/>
+  <path d="M646 430H700" stroke="#7195ff" stroke-width="3" marker-end="url(#arrow)"/><text x="659" y="408" fill="#9cb2ff" font-family="Inter,Arial,sans-serif" font-size="14" font-weight="700">COMPILE</text>
+
+  <g transform="translate(718 247)" filter="url(#shadow)">
+    <rect width="392" height="337" rx="22" fill="url(#pack)" stroke="#364157" stroke-width="2"/>
+    <rect width="392" height="56" rx="22" fill="#1b2434"/><path d="M0 56H392" stroke="#38445a"/>
+    <path d="M26 19L38 7L50 19L38 31Z" fill="none" stroke="#ff806d" stroke-width="3"/><path d="M34 15L42 23M42 15L34 23" stroke="#ff806d" stroke-width="2"/>
+    <text x="68" y="25" class="packTitle">MorphPack v5</text><text x="68" y="45" class="note">versioned binary character</text>
+    <text x="26" y="91" class="kicker" fill="#93a8ff">PACKAGE ANATOMY</text>
+    <g transform="translate(26 113)"><rect width="340" height="42" rx="9" fill="#252e42"/><rect width="6" height="42" rx="3" fill="#ff806d"/><text x="22" y="27" class="row">header + schema</text></g>
+    <g transform="translate(26 165)"><rect width="340" height="42" rx="9" fill="#252e42"/><rect width="6" height="42" rx="3" fill="#8e71ec"/><text x="22" y="27" class="row">skeleton + body</text></g>
+    <g transform="translate(26 217)"><rect width="340" height="42" rx="9" fill="#252e42"/><rect width="6" height="42" rx="3" fill="#7195ff"/><text x="22" y="27" class="row">wearables + textures</text></g>
+    <g transform="translate(26 278)"><path d="M0 0H340" stroke="#3b465b"/><circle cx="9" cy="28" r="7" fill="#54d17a"/><text x="26" y="34" class="footer">validated once · identical everywhere</text></g>
   </g>
 
-  <path d="M530 363H625" stroke="#714fe0" stroke-width="3" marker-end="url(#arrow)"/><text x="550" y="338" class="action">compile</text>
-
-  <g transform="translate(648 210)" filter="url(#shadow)">
-    <rect width="360" height="320" rx="22" fill="url(#pack)"/>
-    <path d="M0 58H360" stroke="#464369" stroke-width="2"/><circle cx="25" cy="29" r="7" fill="#ff836f"/><circle cx="49" cy="29" r="7" fill="#e7b76f"/><circle cx="73" cy="29" r="7" fill="#758af0"/>
-    <text x="25" y="100" class="packTitle">MORPHPACK v5</text><text x="25" y="127" class="packNote">one versioned binary asset</text>
-    <g font-family="Inter,Arial,sans-serif"><rect x="25" y="157" width="310" height="40" rx="8" fill="#292747"/><text x="42" y="183" class="row">header + schema</text><rect x="25" y="207" width="310" height="40" rx="8" fill="#292747"/><text x="42" y="233" class="row">skeleton + body</text><rect x="25" y="257" width="310" height="40" rx="8" fill="#342952"/><text x="42" y="283" class="row">wearables + textures</text></g>
-  </g>
-
-  <path d="M1008 363H1061" stroke="#714fe0" stroke-width="3" marker-end="url(#arrow)"/>
-  <g transform="translate(1084 363)"><circle r="55" fill="#fff" opacity=".78" stroke="#b9aed9" stroke-width="2"/><path d="M-22 -4L0 -16L22 -4L0 8Z" fill="#ff836f"/><path d="M-22 -4L0 8V31L-22 19Z" fill="#c75270"/><path d="M0 8L22 -4V19L0 31Z" fill="#714fe0"/><text y="79" text-anchor="middle" fill="#332f4d" font-family="Inter,Arial,sans-serif" font-size="16" font-weight="700">catalog + runtime</text></g>
-
-  <g transform="translate(60 641)"><rect width="1080" height="44" rx="22" fill="#fff" opacity=".72" stroke="#d0c9df"/><text x="540" y="28" text-anchor="middle" class="footer">Safe import in Studio · exact bytes in the Cube · the same character on every host</text></g>
+  <g transform="translate(70 642)"><path d="M0 0H1040" stroke="#2b3549"/><text y="27" class="footer">STUDIO</text><path d="M78 22H154" stroke="#52698f" stroke-width="2" marker-end="url(#arrow)"/><text x="176" y="27" class="footer">CUBE PACKAGE</text><path d="M303 22H379" stroke="#52698f" stroke-width="2" marker-end="url(#arrow)"/><text x="401" y="27" class="footer">WEB · iOS · ANDROID · DESKTOP</text></g>
 </svg>

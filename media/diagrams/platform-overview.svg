@@ -2,28 +2,29 @@
   <title id="title">Cubacadabra platform overview</title>
   <desc id="desc">Studio builds a portable Cube. A shared Rust foundation opens the same Cube in browser, mobile, and desktop Players, with platform services below.</desc>
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#080b18"/><stop offset=".56" stop-color="#11152d"/><stop offset="1" stop-color="#1b1230"/></linearGradient>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#090d16"/><stop offset=".56" stop-color="#0e1524"/><stop offset="1" stop-color="#17142d"/></linearGradient>
+    <linearGradient id="workspace" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#151d2c"/><stop offset="1" stop-color="#0c121f"/></linearGradient>
     <linearGradient id="cubeTop" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ff9a79"/><stop offset="1" stop-color="#ff5e70"/></linearGradient>
     <linearGradient id="cubeSide" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#865de8"/><stop offset="1" stop-color="#5633b5"/></linearGradient>
     <linearGradient id="horizon" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#ff826e" stop-opacity="0"/><stop offset=".2" stop-color="#ff826e"/><stop offset=".8" stop-color="#8c76ef"/><stop offset="1" stop-color="#8c76ef" stop-opacity="0"/></linearGradient>
     <filter id="cubeGlow" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="20" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
     <filter id="soft"><feGaussianBlur stdDeviation="34"/></filter>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="190%"><feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#000" flood-opacity=".48"/></filter>
     <marker id="arrow" markerWidth="12" markerHeight="12" refX="9" refY="6" orient="auto"><path d="M0 0L12 6L0 12Z" fill="#ff826e"/></marker>
     <style>
-      text{font-family:Inter,Arial,sans-serif}.eyebrow{fill:#ff8a75;font-size:15px;font-weight:700;letter-spacing:2.8px}.headline{fill:#f8f8fc;font-size:38px;font-weight:750}.deck{fill:#b0b6d2;font-size:18px}.label{fill:#fff;font-size:18px;font-weight:700}.note{fill:#a9b0d0;font-size:15px}.caption{fill:#d6daec;font-size:16px;font-weight:600}.action{fill:#ffb2a2;font-size:15px;font-weight:700}.service{fill:#f5ce98;font-size:16px;font-weight:700}@media(max-width:600px){.deck,.note,.caption,.action{display:none}.eyebrow{font-size:19px}.headline{font-size:42px}.label,.service{font-size:25px}}
+      text{font-family:Inter,Arial,sans-serif}.eyebrow{fill:#ff8975;font-size:15px;font-weight:700;letter-spacing:2.8px}.headline{fill:#f7f8fc;font-size:37px;font-weight:750;letter-spacing:-.5px}.deck{fill:#aeb7cb;font-size:18px}.label{fill:#fff;font-size:18px;font-weight:700}.note{fill:#9ea9bf;font-size:14px}.caption{fill:#d6dced;font-size:15px;font-weight:600}.action{fill:#ffad9f;font-size:14px;font-weight:700;letter-spacing:.5px}.service{fill:#f5ce98;font-size:16px;font-weight:700}
     </style>
   </defs>
 
   <rect width="1200" height="760" rx="30" fill="url(#bg)"/>
-  <circle cx="570" cy="355" r="230" fill="#ff5f70" opacity=".08" filter="url(#soft)"/>
-  <circle cx="980" cy="210" r="190" fill="#6763ef" opacity=".09" filter="url(#soft)"/>
-  <g fill="#fff" opacity=".35"><circle cx="86" cy="184" r="2"/><circle cx="1102" cy="102" r="2"/><circle cx="1140" cy="520" r="1.5"/><circle cx="386" cy="642" r="1.5"/></g>
+  <g transform="translate(60 54)"><path d="M0 11L11 0L22 11L11 22Z" fill="none" stroke="#ff7868" stroke-width="3"/><path d="M7 7L15 15M15 7L7 15" stroke="#ff7868" stroke-width="2.5" stroke-linecap="round"/><text x="40" y="17" class="eyebrow">CUBACADABRA / PLATFORM</text></g>
+  <text x="60" y="117" class="headline">One package. Every host.</text>
+  <text x="60" y="149" class="deck">Studio authors the world. The Cube carries it. Player makes it real.</text>
+  <rect x="46" y="177" width="1108" height="530" rx="28" fill="url(#workspace)" stroke="#293348" stroke-width="2" filter="url(#shadow)"/>
+  <circle cx="570" cy="372" r="230" fill="#ff5f70" opacity=".08" filter="url(#soft)"/><circle cx="980" cy="270" r="190" fill="#6763ef" opacity=".08" filter="url(#soft)"/>
+  <path d="M46 226H1154" stroke="#2c364b"/><g transform="translate(70 195)"><circle cx="0" cy="7" r="5" fill="#ff7e6d"/><circle cx="20" cy="7" r="5" fill="#f0b36c"/><circle cx="40" cy="7" r="5" fill="#6f8fff"/><text x="70" y="13" class="note">PLATFORM WORKSPACE</text></g>
 
-  <text x="60" y="62" class="eyebrow">CUBACADABRA / PLATFORM</text>
-  <text x="60" y="108" class="headline">One package. Every host.</text>
-  <text x="60" y="141" class="deck">Studio authors the world. The Cube carries it. Player makes it real.</text>
-
-  <g transform="translate(60 230)">
+  <g transform="translate(60 260)">
     <text y="-26" class="label">Studio</text><text y="-3" class="note">author locally</text>
     <rect y="22" width="282" height="188" rx="18" fill="#171d38" stroke="#48527f" stroke-width="2"/>
     <rect x="15" y="37" width="252" height="122" rx="10" fill="#0b1022"/>
@@ -35,9 +36,9 @@
     <text x="2" y="244" class="caption">JSON · Luau · GLB</text>
   </g>
 
-  <path d="M365 338H446" fill="none" stroke="#ff826e" stroke-width="3" marker-end="url(#arrow)"/><text x="374" y="316" class="action">build</text>
+  <path d="M365 368H446" fill="none" stroke="#ff826e" stroke-width="3" marker-end="url(#arrow)"/><text x="374" y="346" class="action">BUILD</text>
 
-  <g transform="translate(470 229)">
+  <g transform="translate(470 259)">
     <text x="90" y="-25" text-anchor="middle" class="label">The Cube</text><text x="90" y="-2" text-anchor="middle" class="note">portable + hashed</text>
     <g transform="translate(0 27)" filter="url(#cubeGlow)">
       <path d="M90 0L180 47L90 94L13 47Z" fill="url(#cubeTop)"/><path d="M13 47L90 94V205L13 158Z" fill="#ce4d68"/><path d="M90 94L180 47V158L90 205Z" fill="url(#cubeSide)"/>
@@ -46,9 +47,9 @@
     <text x="96" y="268" text-anchor="middle" class="caption">rules · assets · hashes</text>
   </g>
 
-  <path d="M672 338H716" fill="none" stroke="#ff826e" stroke-width="3" marker-end="url(#arrow)"/><text x="676" y="316" class="action">open</text>
+  <path d="M672 368H696" fill="none" stroke="#ff826e" stroke-width="3" marker-end="url(#arrow)"/><text x="669" y="346" class="action">OPEN</text>
 
-  <g transform="translate(735 203)">
+  <g transform="translate(715 233)">
     <text y="0" class="label">Player</text><text y="23" class="note">native hosts, shared semantics</text>
     <g transform="translate(0 68)"><rect width="132" height="98" rx="12" fill="#10162e" stroke="#6c7bd2" stroke-width="2"/><rect x="10" y="10" width="112" height="66" rx="6" fill="#17255b"/><path d="M10 61L42 41L70 55L94 29L122 50V76H10Z" fill="#4d75d2"/><circle cx="70" cy="38" r="7" fill="#ff826e"/><rect x="50" y="85" width="32" height="4" rx="2" fill="#626c9b"/><text x="66" y="126" text-anchor="middle" class="caption">Web</text></g>
     <g transform="translate(158 50)"><rect width="62" height="126" rx="14" fill="#10162e" stroke="#9876ec" stroke-width="2"/><rect x="7" y="15" width="48" height="94" rx="7" fill="#2a3267"/><path d="M7 83L25 66L39 75L55 54V109H7Z" fill="#5968cb"/><circle cx="31" cy="54" r="6" fill="#ff826e"/><rect x="24" y="7" width="15" height="3" rx="2" fill="#6b74a0"/><text x="31" y="151" text-anchor="middle" class="caption">iOS</text></g>
@@ -56,13 +57,13 @@
     <g transform="translate(330 68)"><rect width="132" height="98" rx="12" fill="#10162e" stroke="#806cda" stroke-width="2"/><rect x="10" y="10" width="112" height="66" rx="6" fill="#211d50"/><path d="M10 61L37 43L63 55L91 29L122 49V76H10Z" fill="#7654d6"/><circle cx="65" cy="38" r="7" fill="#ff826e"/><path d="M-7 104H139L149 112H-17Z" fill="#383d67"/><text x="66" y="134" text-anchor="middle" class="caption">Desktop</text></g>
   </g>
 
-  <g transform="translate(185 540)">
+  <g transform="translate(185 558)">
     <rect width="830" height="90" rx="22" fill="#121d43" stroke="#5576df" stroke-width="2"/><rect x="22" y="20" width="7" height="50" rx="4" fill="#ff826e"/>
     <text x="49" y="42" class="label">Shared Rust foundation</text><text x="49" y="67" class="note">simulation · Luau · rendering · client session · app state</text>
     <text x="790" y="43" text-anchor="end" fill="#91a6ff" font-family="Inter,Arial,sans-serif" font-size="15" font-weight="700">ONE SEMANTIC CORE</text><text x="790" y="67" text-anchor="end" class="note">same Cube, same rules</text>
   </g>
-  <path d="M600 540V492" fill="none" stroke="#7187e9" stroke-width="2" stroke-dasharray="6 7"/>
+  <path d="M600 558V528" fill="none" stroke="#7187e9" stroke-width="2" stroke-dasharray="6 7"/>
 
-  <rect x="58" y="688" width="1084" height="2" fill="url(#horizon)"/><circle cx="78" cy="721" r="8" fill="#efb166"/>
-  <text x="98" y="727" class="service">Platform services</text><text x="262" y="727" class="note">live worlds · identity · publishing · storage · moderation</text>
+  <rect x="70" y="662" width="1060" height="2" fill="url(#horizon)"/><circle cx="88" cy="687" r="7" fill="#efb166"/>
+  <text x="107" y="693" class="service">Platform services</text><text x="268" y="693" class="note">live worlds · identity · publishing · storage · moderation</text>
 </svg>

@@ -1,27 +1,69 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 680" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720" role="img" aria-labelledby="title desc">
   <title id="title">Cubacadabra creator lifecycle</title>
-  <desc id="desc">A creator authors local source, builds and verifies a Cube, previews it in Player, and explicitly publishes a release.</desc>
+  <desc id="desc">A creator authors source in Studio, builds and verifies a Cube, previews the same artifact in Player, and explicitly publishes a release.</desc>
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#080b18"/><stop offset="1" stop-color="#19142e"/></linearGradient>
-    <linearGradient id="cube" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ff8d72"/><stop offset="1" stop-color="#7550df"/></linearGradient>
-    <filter id="glow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="12" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-    <marker id="arrow" markerWidth="12" markerHeight="12" refX="9" refY="6" orient="auto"><path d="M0 0L12 6L0 12Z" fill="#ff826e"/></marker>
-    <style>text{font-family:Inter,Arial,sans-serif}.eyebrow{fill:#ff8a75;font-size:15px;font-weight:700;letter-spacing:2.8px}.headline{fill:#f8f8fc;font-size:36px;font-weight:750}.deck{fill:#b0b6d2;font-size:18px}.phase{fill:#fff;font-size:18px;font-weight:700}.note{fill:#aeb5d3;font-size:15px}.verb{fill:#ffb2a2;font-size:15px;font-weight:700}.footer{fill:#c8cde4;font-size:16px}@media(max-width:600px){.deck,.note,.verb,.footer{display:none}.eyebrow{font-size:19px}.headline{font-size:42px}.phase{font-size:28px}}</style>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#090d16"/><stop offset=".56" stop-color="#0e1524"/><stop offset="1" stop-color="#17142d"/></linearGradient>
+    <linearGradient id="workspace" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#151d2c"/><stop offset="1" stop-color="#0c121f"/></linearGradient>
+    <linearGradient id="coral" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ff9b7a"/><stop offset="1" stop-color="#ff5f6e"/></linearGradient>
+    <linearGradient id="violet" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#8aa5ff"/><stop offset="1" stop-color="#7252e2"/></linearGradient>
+    <linearGradient id="track" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#ff7c6d"/><stop offset=".48" stop-color="#7d82ef"/><stop offset="1" stop-color="#efb46d"/></linearGradient>
+    <radialGradient id="halo"><stop stop-color="#6f8fff" stop-opacity=".35"/><stop offset="1" stop-color="#101827" stop-opacity="0"/></radialGradient>
+    <filter id="shadow" x="-50%" y="-50%" width="200%" height="220%"><feDropShadow dx="0" dy="16" stdDeviation="16" flood-color="#000" flood-opacity=".5"/></filter>
+    <filter id="glow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="9" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <marker id="arrow" markerWidth="11" markerHeight="11" refX="9" refY="5.5" orient="auto"><path d="M0 0L11 5.5L0 11Z" fill="#7f8df3"/></marker>
+    <style>
+      text{font-family:Inter,Arial,sans-serif}.eyebrow{fill:#ff8975;font-size:15px;font-weight:700;letter-spacing:2.8px}.headline{fill:#f7f8fc;font-size:37px;font-weight:750;letter-spacing:-.5px}.deck{fill:#aeb7cb;font-size:18px}.kicker{font-size:14px;font-weight:700;letter-spacing:2px}.phase{fill:#fff;font-size:20px;font-weight:700}.note{fill:#9ea9bf;font-size:14px}.verb{fill:#b8c5ff;font-size:13px;font-weight:700;letter-spacing:1.2px}.principle{fill:#c8cfdf;font-size:14px;font-weight:600}
+    </style>
   </defs>
-  <rect width="1200" height="680" rx="30" fill="url(#bg)"/>
-  <text x="60" y="62" class="eyebrow">CREATOR LOOP</text><text x="60" y="108" class="headline">Make locally. Test honestly. Share a Cube.</text><text x="60" y="140" class="deck">One artifact moves from editable source to every Player host.</text>
-  <path d="M147 345C318 190 882 190 1053 345C882 500 318 500 147 345Z" fill="none" stroke="#353b68" stroke-width="2" stroke-dasharray="8 11"/>
+  <rect width="1200" height="720" rx="30" fill="url(#bg)"/>
+  <g transform="translate(60 54)"><path d="M0 11L11 0L22 11L11 22Z" fill="none" stroke="#ff7868" stroke-width="3"/><path d="M7 7L15 15M15 7L7 15" stroke="#ff7868" stroke-width="2.5" stroke-linecap="round"/><text x="40" y="17" class="eyebrow">CREATOR LOOP</text></g>
+  <text x="60" y="117" class="headline">Make locally. Test honestly. Share a Cube.</text>
+  <text x="60" y="149" class="deck">One artifact moves through the whole creator journey.</text>
 
-  <g transform="translate(62 250)"><circle cx="85" cy="85" r="84" fill="#152348" stroke="#ff826e" stroke-width="3" filter="url(#glow)"/><rect x="39" y="43" width="92" height="62" rx="8" fill="#0b1025" stroke="#ff9c83" stroke-width="3"/><path d="M49 90L75 69L96 84L122 63" fill="none" stroke="#7188ef" stroke-width="5"/><text x="85" y="136" text-anchor="middle" class="phase">AUTHOR</text><text x="85" y="160" text-anchor="middle" class="note">Studio + source</text></g>
-  <path d="M246 335H335" stroke="#ff826e" stroke-width="3" marker-end="url(#arrow)"/><text x="272" y="310" class="verb">build</text>
+  <rect x="46" y="177" width="1108" height="480" rx="28" fill="url(#workspace)" stroke="#293348" stroke-width="2" filter="url(#shadow)"/>
+  <path d="M46 226H1154" stroke="#2c364b"/>
+  <g transform="translate(70 195)"><circle cx="0" cy="7" r="5" fill="#ff7e6d"/><circle cx="20" cy="7" r="5" fill="#f0b36c"/><circle cx="40" cy="7" r="5" fill="#6f8fff"/><text x="70" y="13" class="note">SOURCE TO RELEASE</text></g>
+  <ellipse cx="600" cy="385" rx="520" ry="205" fill="url(#halo)" opacity=".32"/>
+  <path d="M174 382H1026" stroke="url(#track)" stroke-width="3" opacity=".72"/>
 
-  <g transform="translate(344 250)"><circle cx="85" cy="85" r="84" fill="#182452" stroke="#7188ea" stroke-width="3"/><path d="M49 64L85 45L121 64L85 83Z" fill="url(#cube)"/><path d="M49 64L85 83V122L49 103Z" fill="#d35468"/><path d="M85 83L121 64V103L85 122Z" fill="#7658db"/><path d="M57 134H113" stroke="#a7b6ff" stroke-width="4"/><text x="85" y="157" text-anchor="middle" class="phase">VERIFY</text><text x="85" y="181" text-anchor="middle" class="note">package + hashes</text></g>
-  <path d="M528 335H617" stroke="#ff826e" stroke-width="3" marker-end="url(#arrow)"/><text x="547" y="310" class="verb">preview</text>
+  <g transform="translate(118 264)" filter="url(#shadow)">
+    <ellipse cx="58" cy="128" rx="72" ry="17" fill="#070a11" opacity=".72"/>
+    <rect width="116" height="88" rx="13" fill="#111827" stroke="#ff7d6c" stroke-width="2"/>
+    <rect x="10" y="10" width="96" height="62" rx="7" fill="#1d2a49"/>
+    <path d="M10 56L36 38L61 51L83 27L106 46V72H10Z" fill="#3d5481"/>
+    <path d="M23 55L41 40L61 52L83 31" fill="none" stroke="#ff826e" stroke-width="3"/>
+    <rect x="39" y="97" width="38" height="7" rx="4" fill="#687699"/>
+  </g>
+  <g transform="translate(92 444)"><text class="kicker" fill="#ff9a88">01 / AUTHOR</text><text y="35" class="phase">Studio + source</text><text y="62" class="note">JSON · Luau · GLB</text></g>
 
-  <g transform="translate(626 250)"><circle cx="85" cy="85" r="84" fill="#19204b" stroke="#9a79e9" stroke-width="3"/><rect x="44" y="48" width="82" height="61" rx="9" fill="#303570"/><path d="M44 96L70 76L92 87L126 67V109H44Z" fill="#6f8dee"/><circle cx="90" cy="72" r="7" fill="#ff826e"/><text x="85" y="136" text-anchor="middle" class="phase">PLAY</text><text x="85" y="160" text-anchor="middle" class="note">shared runtime</text></g>
-  <path d="M810 335H899" stroke="#ff826e" stroke-width="3" marker-end="url(#arrow)"/><text x="827" y="310" class="verb">publish</text>
+  <path d="M252 382H345" stroke="#7f8df3" stroke-width="2" marker-end="url(#arrow)"/><text x="276" y="362" class="verb">BUILD</text>
+  <g transform="translate(366 272)" filter="url(#shadow)">
+    <ellipse cx="58" cy="120" rx="70" ry="17" fill="#070a11" opacity=".72"/>
+    <path d="M58 0L115 30L58 60L8 30Z" fill="url(#coral)"/><path d="M8 30L58 60V118L8 88Z" fill="#cb4d68"/><path d="M58 60L115 30V88L58 118Z" fill="url(#violet)"/><path d="M58 0V60M8 30L58 60L115 30" fill="none" stroke="#ffe1d8" stroke-width="2" opacity=".7"/>
+    <path d="M-13 16L0 22M-5 3L5 12M123 16L116 22M121 2L112 11" stroke="#8ca2ff" stroke-width="2" stroke-linecap="round"/>
+  </g>
+  <g transform="translate(342 444)"><text class="kicker" fill="#9eb0ff">02 / VERIFY</text><text y="35" class="phase">Portable Cube</text><text y="62" class="note">validated + hashed</text></g>
 
-  <g transform="translate(908 250)"><circle cx="85" cy="85" r="84" fill="#1b2147" stroke="#e6b56e" stroke-width="3"/><path d="M52 84C52 62 67 49 85 49C103 49 118 62 118 84V114H52Z" fill="#e8b66f"/><circle cx="85" cy="79" r="16" fill="#ffe1b2"/><path d="M41 121H129" stroke="#ff826e" stroke-width="5" stroke-linecap="round"/><text x="85" y="149" text-anchor="middle" class="phase">SHARE</text><text x="85" y="173" text-anchor="middle" class="note">explicit release</text></g>
+  <path d="M500 382H593" stroke="#7f8df3" stroke-width="2" marker-end="url(#arrow)"/><text x="518" y="362" class="verb">PREVIEW</text>
+  <g transform="translate(614 264)" filter="url(#shadow)">
+    <ellipse cx="58" cy="128" rx="72" ry="17" fill="#070a11" opacity=".72"/>
+    <rect width="116" height="88" rx="13" fill="#111827" stroke="#7d8df0" stroke-width="2"/>
+    <rect x="10" y="10" width="96" height="62" rx="7" fill="#24305f"/>
+    <path d="M10 58L34 42L58 53L78 30L106 47V72H10Z" fill="#5f72d1"/>
+    <circle cx="61" cy="36" r="7" fill="#ff806d"/>
+    <rect x="39" y="97" width="38" height="7" rx="4" fill="#687699"/>
+  </g>
+  <g transform="translate(590 444)"><text class="kicker" fill="#9eb0ff">03 / PLAY</text><text y="35" class="phase">Real runtime</text><text y="62" class="note">same package + rules</text></g>
 
-  <g transform="translate(60 584)"><rect width="1080" height="48" rx="24" fill="#121a39" stroke="#334276"/><text x="540" y="30" text-anchor="middle" class="footer">Inspectable source · reproducible output · explicit release evidence</text></g>
+  <path d="M748 382H841" stroke="#7f8df3" stroke-width="2" marker-end="url(#arrow)"/><text x="765" y="362" class="verb">PUBLISH</text>
+  <g transform="translate(872 264)" filter="url(#shadow)">
+    <ellipse cx="58" cy="128" rx="72" ry="17" fill="#070a11" opacity=".72"/>
+    <path d="M19 76C19 46 36 24 58 24C80 24 97 46 97 76V95H19Z" fill="#eab36c"/>
+    <circle cx="58" cy="61" r="19" fill="#ffe1b2"/>
+    <path d="M6 102H110" stroke="#ff826e" stroke-width="6" stroke-linecap="round" filter="url(#glow)"/>
+    <path d="M58 0V13M28 10L37 20M88 10L79 20" stroke="#f4ca8f" stroke-width="3" stroke-linecap="round"/>
+  </g>
+  <g transform="translate(848 444)"><text class="kicker" fill="#efc17d">04 / SHARE</text><text y="35" class="phase">Explicit release</text><text y="62" class="note">evidence + activation</text></g>
+
+  <g transform="translate(70 588)"><path d="M0 0H1060" stroke="#2b3549"/><text y="32" class="principle">SOURCE STAYS INSPECTABLE</text><text x="425" y="32" class="principle">OUTPUT STAYS REPRODUCIBLE</text><text x="846" y="32" class="principle">RELEASE STAYS EXPLICIT</text></g>
 </svg>

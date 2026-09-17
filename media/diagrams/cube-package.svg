@@ -1,36 +1,48 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720" role="img" aria-labelledby="title desc">
   <title id="title">Cubacadabra Cube package anatomy</title>
-  <desc id="desc">A Cube is one immutable package containing its manifest, game rules, assets, and integrity metadata.</desc>
+  <desc id="desc">A Cube encloses a manifest, game rules, declared assets, and an integrity map as one immutable package that hosts validate before loading.</desc>
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#090c19"/><stop offset="1" stop-color="#1b1430"/></linearGradient>
-    <linearGradient id="top" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ff9b7c"/><stop offset="1" stop-color="#ff5f70"/></linearGradient>
-    <linearGradient id="side" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#7954df"/><stop offset="1" stop-color="#432a9a"/></linearGradient>
-    <filter id="shadow" x="-40%" y="-40%" width="180%" height="190%"><feDropShadow dx="0" dy="16" stdDeviation="18" flood-color="#000" flood-opacity=".4"/></filter>
-    <filter id="soft"><feGaussianBlur stdDeviation="34"/></filter>
-    <style>text{font-family:Inter,Arial,sans-serif}.eyebrow{fill:#ff8a75;font-size:15px;font-weight:700;letter-spacing:2.8px}.headline{fill:#f8f8fc;font-size:36px;font-weight:750}.deck{fill:#b0b6d2;font-size:18px}.kind{font-size:14px;font-weight:700;letter-spacing:1.8px}.name{fill:#fff;font-size:19px;font-weight:700}.note{fill:#aeb5d3;font-size:15px}.face{fill:#fff;font-size:18px;font-weight:700}.footer{fill:#c8cde4;font-size:15px}@media(max-width:600px){.deck,.kind,.note,.footer{display:none}.eyebrow{font-size:19px}.headline{font-size:42px}.name,.face{font-size:27px}}</style>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#090d16"/><stop offset=".56" stop-color="#0e1524"/><stop offset="1" stop-color="#17142d"/></linearGradient>
+    <linearGradient id="workspace" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#151d2c"/><stop offset="1" stop-color="#0c121f"/></linearGradient>
+    <linearGradient id="manifest" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ffa184"/><stop offset="1" stop-color="#ff6671"/></linearGradient>
+    <linearGradient id="rules" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#e86b82"/><stop offset="1" stop-color="#bd4769"/></linearGradient>
+    <linearGradient id="assets" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#8a71ec"/><stop offset="1" stop-color="#5f46bf"/></linearGradient>
+    <linearGradient id="hashes" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#668cf2"/><stop offset="1" stop-color="#3e58aa"/></linearGradient>
+    <radialGradient id="halo"><stop stop-color="#7668ed" stop-opacity=".35"/><stop offset=".56" stop-color="#ff6a6f" stop-opacity=".1"/><stop offset="1" stop-color="#111827" stop-opacity="0"/></radialGradient>
+    <filter id="shadow" x="-50%" y="-50%" width="200%" height="220%"><feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#000" flood-opacity=".52"/></filter>
+    <filter id="glow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="10" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <style>
+      text{font-family:Inter,Arial,sans-serif}.eyebrow{fill:#ff8975;font-size:15px;font-weight:700;letter-spacing:2.8px}.headline{fill:#f7f8fc;font-size:37px;font-weight:750;letter-spacing:-.5px}.deck{fill:#aeb7cb;font-size:18px}.kicker{font-size:14px;font-weight:700;letter-spacing:2px}.name{fill:#fff;font-size:19px;font-weight:700}.note{fill:#9ea9bf;font-size:14px}.face{fill:#fff;font-size:16px;font-weight:700}.footer{fill:#b8c1d5;font-size:14px;font-weight:600}
+    </style>
   </defs>
-  <rect width="1200" height="700" rx="30" fill="url(#bg)"/>
-  <circle cx="600" cy="390" r="245" fill="#ff5f70" opacity=".07" filter="url(#soft)"/>
-  <text x="60" y="62" class="eyebrow">CONTRACTS / PACKAGE</text><text x="60" y="108" class="headline">A game travels as a Cube.</text><text x="60" y="140" class="deck">One immutable artifact. Explicit contents. Verifiable bytes.</text>
+  <rect width="1200" height="720" rx="30" fill="url(#bg)"/>
+  <g transform="translate(60 54)"><path d="M0 11L11 0L22 11L11 22Z" fill="none" stroke="#ff7868" stroke-width="3"/><path d="M7 7L15 15M15 7L7 15" stroke="#ff7868" stroke-width="2.5" stroke-linecap="round"/><text x="40" y="17" class="eyebrow">CONTRACTS / PACKAGE</text></g>
+  <text x="60" y="117" class="headline">The whole game travels together.</text>
+  <text x="60" y="149" class="deck">One immutable Cube. Four explicit layers. No mutable surprises.</text>
 
-  <g font-family="Inter,Arial,sans-serif">
-    <text x="60" y="247" class="kind" fill="#ffad9a">DECLARATION</text><text x="60" y="278" class="name">manifest.json</text><text x="60" y="304" class="note">identity · SDK · world · limits</text><path d="M300 282H423" stroke="#ff826e" stroke-width="2"/><circle cx="423" cy="282" r="5" fill="#ff826e"/>
-    <text x="60" y="478" class="kind" fill="#ffad9a">RULES</text><text x="60" y="509" class="name">game.luau</text><text x="60" y="535" class="note">game-owned behavior</text><path d="M300 492H423" stroke="#ff826e" stroke-width="2"/><circle cx="423" cy="492" r="5" fill="#ff826e"/>
-    <text x="1140" y="247" text-anchor="end" class="kind" fill="#bba9ff">CONTENT</text><text x="1140" y="278" text-anchor="end" class="name">assets/</text><text x="1140" y="304" text-anchor="end" class="note">models · audio · images · worlds</text><path d="M777 282H900" stroke="#9a82f1" stroke-width="2"/><circle cx="777" cy="282" r="5" fill="#9a82f1"/>
-    <text x="1140" y="478" text-anchor="end" class="kind" fill="#bba9ff">INTEGRITY</text><text x="1140" y="509" text-anchor="end" class="name">SHA-256 map</text><text x="1140" y="535" text-anchor="end" class="note">exact files · exact revision</text><path d="M777 492H900" stroke="#9a82f1" stroke-width="2"/><circle cx="777" cy="492" r="5" fill="#9a82f1"/>
+  <rect x="46" y="177" width="1108" height="480" rx="28" fill="url(#workspace)" stroke="#293348" stroke-width="2" filter="url(#shadow)"/>
+  <path d="M46 226H1154" stroke="#2c364b"/>
+  <g transform="translate(70 195)"><circle cx="0" cy="7" r="5" fill="#ff7e6d"/><circle cx="20" cy="7" r="5" fill="#f0b36c"/><circle cx="40" cy="7" r="5" fill="#6f8fff"/><text x="70" y="13" class="note">PACKAGE INSPECTOR</text></g>
+
+  <g transform="translate(78 258)">
+    <text class="kicker" fill="#9eb0ff">CUBE CONTENTS</text>
+    <g transform="translate(0 42)"><rect width="310" height="62" rx="12" fill="#182132" stroke="#364258"/><rect width="6" height="62" rx="3" fill="#ff806d"/><text x="24" y="27" class="name">manifest.json</text><text x="24" y="49" class="note">identity · SDK · world · limits</text></g>
+    <g transform="translate(0 116)"><rect width="310" height="62" rx="12" fill="#182132" stroke="#364258"/><rect width="6" height="62" rx="3" fill="#d65776"/><text x="24" y="27" class="name">game.luau</text><text x="24" y="49" class="note">game-owned rules</text></g>
+    <g transform="translate(0 190)"><rect width="310" height="62" rx="12" fill="#182132" stroke="#364258"/><rect width="6" height="62" rx="3" fill="#8268e1"/><text x="24" y="27" class="name">assets/</text><text x="24" y="49" class="note">models · images · audio · world data</text></g>
+    <g transform="translate(0 264)"><rect width="310" height="62" rx="12" fill="#182132" stroke="#364258"/><rect width="6" height="62" rx="3" fill="#668cf2"/><text x="24" y="27" class="name">SHA-256 map</text><text x="24" y="49" class="note">exact files · exact revision</text></g>
   </g>
 
-  <g transform="translate(423 202)" filter="url(#shadow)">
-    <path d="M177 0L354 92L177 184L0 92Z" fill="url(#top)"/>
-    <path d="M0 92L177 184V390L0 298Z" fill="#c94b68"/>
-    <path d="M177 184L354 92V298L177 390Z" fill="url(#side)"/>
-    <path d="M177 0V184M0 92L177 184L354 92" fill="none" stroke="#ffe2d9" stroke-width="3" opacity=".75"/>
-    <path d="M43 43L129 87L82 112L0 70Z" fill="#fff" opacity=".17"/>
-    <text x="81" y="94" transform="rotate(27 81 94)" class="face">manifest.json</text>
-    <text x="39" y="227" transform="rotate(27 39 227)" class="face">game.luau</text>
-    <text x="230" y="236" transform="rotate(-27 230 236)" class="face">assets/</text>
-    <text x="230" y="296" transform="rotate(-27 230 296)" class="face" fill="#ded5ff">SHA-256</text>
+  <g transform="translate(465 238) scale(.82)">
+    <circle cx="302" cy="205" r="270" fill="url(#halo)"/>
+    <ellipse cx="302" cy="358" rx="250" ry="46" fill="#050810" opacity=".72"/><ellipse cx="302" cy="344" rx="196" ry="30" fill="#6d72e8" opacity=".18"/>
+    <g filter="url(#shadow)">
+      <g transform="translate(0 0)"><path d="M302 0L493 92L302 184L111 92Z" fill="url(#manifest)"/><path d="M111 92L302 184V204L111 112Z" fill="#c94d68"/><path d="M302 184L493 92V112L302 204Z" fill="#714fd3"/><text x="302" y="103" text-anchor="middle" class="face">MANIFEST</text></g>
+      <g transform="translate(0 94)"><path d="M302 0L493 92L302 184L111 92Z" fill="url(#rules)"/><path d="M111 92L302 184V204L111 112Z" fill="#9e3558"/><path d="M302 184L493 92V112L302 204Z" fill="#5c3d9c"/><text x="302" y="103" text-anchor="middle" class="face">RULES</text></g>
+      <g transform="translate(0 188)"><path d="M302 0L493 92L302 184L111 92Z" fill="url(#assets)"/><path d="M111 92L302 184V204L111 112Z" fill="#5440a3"/><path d="M302 184L493 92V112L302 204Z" fill="#3f347b"/><text x="302" y="103" text-anchor="middle" class="face">ASSETS</text></g>
+      <g transform="translate(0 282)"><path d="M302 0L493 92L302 184L111 92Z" fill="url(#hashes)"/><path d="M111 92L302 184V204L111 112Z" fill="#385199"/><path d="M302 184L493 92V112L302 204Z" fill="#2d3d75"/><text x="302" y="103" text-anchor="middle" class="face">INTEGRITY</text></g>
+    </g>
+    <g fill="none" stroke="#afbbde" stroke-opacity=".28" stroke-width="2"><path d="M111 92V374L302 466L493 374V92"/><path d="M302 184V466"/></g>
   </g>
 
-  <g transform="translate(324 630)"><rect width="552" height="38" rx="19" fill="#121a39" stroke="#334276"/><text x="276" y="25" text-anchor="middle" class="footer">Hosts validate the whole Cube before loading it.</text></g>
+  <g transform="translate(78 606)"><circle cx="7" cy="0" r="7" fill="#54d17a"/><text x="24" y="5" class="footer">HOSTS VALIDATE THE COMPLETE CUBE BEFORE LOADING IT</text></g>
 </svg>

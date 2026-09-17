@@ -89,11 +89,11 @@ and declared content before use; failure must be explicit and must not fall
 back to a mutable “latest” asset that can mix package revisions.
 
 The builder accepts image assets under `assets.images`, WAV audio under
-`assets.audio`, and GLB/glTF model files under `assets.models`. Runtime model
-decoding and instanced world-mesh rendering are being introduced separately
-from this packaging contract; declaring a model currently guarantees that the
-bytes are validated, copied, and hashed, not that every renderer backend can
-display every glTF feature.
+`assets.audio`, and embedded GLB model files under `assets.models`. Native and
+browser hosts load declared GLBs before the first frame and register them with
+the shared indexed, instanced world-mesh renderer. The current runtime accepts
+embedded binary buffers and static position/normal/UV geometry; external glTF
+references, textures, animation, and mesh collision are not yet supported.
 
 ## Build failure guarantees
 

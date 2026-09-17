@@ -12,7 +12,7 @@ are in [compatibility](../quality/compatibility/versions.md).
 ## Assets and world content
 
 Worlds can declare palettes, blocks, signs, clouds, interaction zones, launch
-pads, decorations, and image billboards. Package images may be JPG, JPEG, or PNG files under
+pads, decorations, imported mesh instances, and image billboards. Package images may be JPG, JPEG, or PNG files under
 `assets.images`. A world billboard references the image asset ID and supplies
 position, width, and height. Named world materials can reference image assets
 and `tileU`/`tileV` repeat them in world units per tile; image materials are
@@ -59,10 +59,12 @@ World presentation settings are authored under `world.visual`:
 
 These values are renderer presentation controls. They do not change terrain
 materials, collision, or simulation state. `decorations` are static,
-deterministically authored visual instances. The current preview kinds are
-`rock`, `palm`, `grass-clump`, `crate`, `bridge`, and `gate`; they are a
-platform-owned procedural prefab layer and are intentionally separate from
-terrain operations. Generic imported mesh prefabs remain a follow-up capability.
+deterministically authored visual instances. The legacy preview kinds are
+`rock`, `palm`, `grass-clump`, `crate`, `bridge`, and `gate`; new content should
+prefer an imported mesh decoration with an `asset` ID. Imported mesh instances
+share indexed GLB geometry and carry independent position, scale, yaw, and tint
+values. They are visual-only in this milestone; mesh collision, texture
+materials, animation, and prefab behavior remain separate capabilities.
 
 The native Rust builder expands the bounded `maze` declaration below into
 ordinary terrain operations, interaction zones, checkpoints, and generated
