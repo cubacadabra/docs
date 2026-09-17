@@ -48,6 +48,11 @@ messages. It deliberately does not contain GPU resources, sockets, UI gesture
 captures, remote-player presentation state, caches, or Lua VM/coroutine
 internals.
 
+Within the camera state, `targetDistance` is the player's requested zoom and
+remains unchanged when world geometry obstructs the view. `distance` is the
+effective resolved distance after smoothing and camera occlusion; local-avatar
+hiding and fading use that resolved value.
+
 ## Game-owned state
 
 Meaningful game state belongs to the game. A Luau package may implement:

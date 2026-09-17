@@ -37,6 +37,9 @@ completed milestones should be removed as they stop being relevant.
 - Maze expansion keeps generated floor/walls separate from package-owned environment art
 - Maze 101 owns authored island shells, sparse rocks/vegetation, and explicit presentation bounds
 - Studio review cameras temporarily bypass gameplay distance fog
+- Shared third-person camera occlusion sweeps against terrain and solid blocks;
+  forced close views drive the same local-avatar hide/fade transition as zoom
+- Maze 101 corridors use the playable 8-by-7 cell-to-wall proportions
 
 ## Current visual gaps
 
