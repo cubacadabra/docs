@@ -30,15 +30,17 @@ completed milestones should be removed as they stop being relevant.
 - GLB world-mesh host parity across Studio, Web, Desktop, iOS, and Android
 - Shared directional shadow mapping
 - Shadow stabilization and flicker fix
-- Deterministic Studio review cameras (`Gameplay`, `Overview`, `Island`)
+- Deterministic Studio review cameras (`Gameplay`, `Overview`, `Showcase`)
+- Shared viewport sky gradient
+- Softer engine-owned grass and earth terrain tiles
 - Maze package generation is native Rust-only
 - Tapered floating-island generation
 - Seeded wall-side dressing
 
 ## Current visual gaps
 
-- Flat sky and weak atmosphere
-- Terrain is too orange and saturated
+- Atmosphere still needs depth cues and optional clouds
+- Terrain palette needs in-Studio screenshot validation
 - Island silhouette still needs refinement
 - Sparse vegetation and landmarks
 - Background composition is too empty
