@@ -49,10 +49,12 @@ and remaining evidence.
 
 The Maze 101 package is now a verified native-build milestone: its source
 declaration produces a self-contained terrain maze with twelve collectibles,
-four checkpoints, generated effects, and a separately hashed authority entry.
-There is not yet Cubacadabra visual capture evidence for the maze, live backend
-authority execution, durable completion rewards, or general in-world GLB prop
-instances.
+four checkpoints, generated effects, a tapered floating-island presentation,
+and a separately hashed authority entry. The shared renderer and all supported
+hosts now have the embedded static GLB world-mesh path, including indexed
+instancing and directional shadows. There is not yet Cubacadabra visual
+capture evidence for the Maze 101 package itself, live backend authority
+execution, or durable completion rewards.
 
 ## Open work
 

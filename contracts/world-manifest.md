@@ -67,10 +67,13 @@ values. They are visual-only in this milestone; mesh collision, texture
 materials, animation, and prefab behavior remain separate capabilities.
 
 The native Rust builder expands the bounded `maze` declaration below into
-ordinary terrain operations, interaction zones, checkpoints, and generated
-maze effects before packaging. Its output matches the legacy Python builder
-for the supported declaration; the runtime consumes only the expanded package
-data and does not execute the authoring shorthand.
+ordinary terrain operations, interaction zones, checkpoints, decorations, and
+generated maze effects before packaging. The native path adds the art-directed
+tapered island body, distant island silhouettes, and wall-side dressing. The
+legacy Python path remains a compatibility fallback with the same gameplay
+layout but a smaller terrain footprint; it does not expand those optional
+presentation volumes. The runtime consumes only expanded package data and does
+not execute the authoring shorthand.
 
 ## Procedural maze declaration
 
@@ -99,10 +102,10 @@ authoring a new release rather than depending on runtime randomness.
 }
 ```
 
-The maze builder also adds a rounded lower island volume, a small set of
-distant island silhouettes, and seeded decorations around the generated route.
-This is presentation content generated from the same maze seed, not a second
-simulation or collision authority.
+The native maze builder also adds a tapered lower island volume, a small set of
+distant island silhouettes, and seeded decorations in quiet wall-side pockets
+rather than along the solution route. This is presentation content generated
+from the same maze seed, not a second simulation or collision authority.
 
 These are static authored capabilities; they do not provide a general
 creator-facing persistence API. For exact build behavior, use the

@@ -104,6 +104,10 @@ player-centered orthographic shadow map and applies a small percentage-closer
 filter to receivers; shadow coverage and quality are runtime presentation
 settings, not package-authored state. Hosts must keep this path available when
 they register world meshes, but packages do not need to declare shadow assets.
+The supported world-mesh subset currently covers embedded static GLB geometry
+with indexed positions, normals, UVs, basic color/tint, and instancing; node
+animation, mesh collision, external glTF resources, and full
+material-texture support remain separate capabilities.
 
 ## Build failure guarantees
 
