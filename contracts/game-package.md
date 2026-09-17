@@ -98,6 +98,13 @@ and mesh collision are not yet supported. The cross-repository
 `tools/scripts/check_world_model_hosts.py` check guards this host-registration
 contract.
 
+Opaque world geometry, terrain, imported world meshes, and Morph characters
+share the engine's directional shadow path. The current renderer builds a
+player-centered orthographic shadow map and applies a small percentage-closer
+filter to receivers; shadow coverage and quality are runtime presentation
+settings, not package-authored state. Hosts must keep this path available when
+they register world meshes, but packages do not need to declare shadow assets.
+
 ## Build failure guarantees
 
 The builder rejects source/output overlap and refuses to replace an output it
