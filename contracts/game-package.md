@@ -89,11 +89,14 @@ and declared content before use; failure must be explicit and must not fall
 back to a mutable “latest” asset that can mix package revisions.
 
 The builder accepts image assets under `assets.images`, WAV audio under
-`assets.audio`, and embedded GLB model files under `assets.models`. Native and
-browser hosts load declared GLBs before the first frame and register them with
-the shared indexed, instanced world-mesh renderer. The current runtime accepts
-embedded binary buffers and static position/normal/UV geometry; external glTF
-references, textures, animation, and mesh collision are not yet supported.
+`assets.audio`, and embedded GLB model files under `assets.models`. Desktop,
+Studio, iOS, Android, and browser hosts load declared GLBs before the first
+frame and register them with the shared indexed, instanced world-mesh
+renderer. The current runtime accepts embedded binary buffers and static
+position/normal/UV geometry; external glTF references, textures, animation,
+and mesh collision are not yet supported. The cross-repository
+`tools/scripts/check_world_model_hosts.py` check guards this host-registration
+contract.
 
 ## Build failure guarantees
 
