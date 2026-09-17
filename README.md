@@ -63,6 +63,7 @@ Start from the repository you are changing, then follow its canonical links:
 
 ## Choose your next step
 
+- Continuing current work? Read [Current state](CURRENT_STATE.md).
 - New to Cubacadabra? Read [How Cubacadabra works](start/how-cubacadabra-works.md).
 - Building a game? Start with [Build your first Cube](start/build-your-first-cube.md).
 - Changing a host? Open the matching [repository entry](repos/README.md), then [host conformance](quality/compatibility/host-conformance.md).
@@ -72,10 +73,11 @@ Start from the repository you are changing, then follow its canonical links:
 
 ## Current status
 
-The native builder produces package format 3 and the Maze 101 package is a
-verified native-build milestone. Rust provides shared runtime foundations;
-Studio imports and previews supported GLBs; and the service has presence plus
-ordered cooperative retained state.
+The [current state snapshot](CURRENT_STATE.md) records the active visual
+milestone and the latest completed work. The native builder produces package
+format 3 and the Maze 101 package is a verified native-build milestone. Rust
+provides shared runtime foundations; Studio imports and previews supported GLBs;
+and the service has presence plus ordered cooperative retained state.
 
 The major open gaps are trusted game authority, transactional release
 activation, end-to-end Morph asset wiring, full host conformance, durable
