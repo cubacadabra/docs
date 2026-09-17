@@ -35,6 +35,7 @@ completed milestones should be removed as they stop being relevant.
 - Shared viewport sky gradient
 - Softer engine-owned grass and earth terrain tiles
 - Maze package generation is native Rust-only
+- Game scripts can read the host `DEBUG`/`RELEASE` build mode for development-only controls
 - Maze expansion keeps generated floor/walls separate from package-owned environment art
 - Coplanar authored block-terrain fills use exact unions so overlapping floors
   do not create invisible player-collision ridges

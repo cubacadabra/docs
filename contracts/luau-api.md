@@ -30,6 +30,11 @@ types for pickups, gates, doors, or checkpoints.
 The public API is versioned through `manifest.sdkVersion`. The detailed
 contracts are split by behavior:
 
+Game code can read `api.build_mode`, which is either `"DEBUG"` or `"RELEASE"`
+and reflects the host runtime's compile profile. It is read-only; use it only
+to expose development conveniences such as test controls. Release builds must
+not rely on debug-only behavior being available.
+
 - [Game lifecycle callbacks and event shapes](lifecycle.md).
 - [World and manifest capabilities](world-manifest.md).
 - [Retained in-game UI](ui.md), including document limits and pointer ABI.
