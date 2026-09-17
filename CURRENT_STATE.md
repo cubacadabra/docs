@@ -52,8 +52,8 @@ completed milestones should be removed as they stop being relevant.
 - The reference screenshots use a wider, higher camera than the normal shared
   third-person gameplay camera; Studio's deterministic `Overview` and
   `Showcase` cameras expose the intended full-island composition
-- Rope bridges and satellite islands are visual scenery until shared imported
-  mesh collision exists; progression portals remain on playable terrain
+- Maze 101's imported rope meshes remain visual-only, with package-owned
+  wood deck collision making every hub bridge traversable
 - Vegetation variety and landmark density still need screenshot-driven iteration
 - Baseline/reference captures still need to be recorded for repeatable visual comparison
 
