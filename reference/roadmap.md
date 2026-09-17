@@ -48,7 +48,7 @@ and remaining evidence.
 
 The Maze 101 package is now a verified native-build milestone: its source
 declaration produces a self-contained terrain maze with twelve collectibles,
-four checkpoints, generated effects, a tapered floating-island presentation,
+four checkpoints, generated effects, a package-owned authored island shell,
 and a separately hashed authority entry. The shared renderer and all supported
 hosts now have the embedded static GLB world-mesh path, including indexed
 instancing and directional shadows. There is not yet Cubacadabra visual

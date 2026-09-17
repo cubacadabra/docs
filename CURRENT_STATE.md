@@ -34,15 +34,15 @@ completed milestones should be removed as they stop being relevant.
 - Shared viewport sky gradient
 - Softer engine-owned grass and earth terrain tiles
 - Maze package generation is native Rust-only
-- Rounded/tapered floating-island generation using a reusable ellipsoid terrain shape
-- Seeded wall-side dressing with sparse prop clusters
-- Primary presentation bounds keep background scenery out of Studio review framing
+- Maze expansion keeps generated floor/walls separate from package-owned environment art
+- Maze 101 owns an authored visual island shell and explicit presentation bounds
+- Studio review cameras temporarily bypass gameplay distance fog
 
 ## Current visual gaps
 
 - Atmosphere still needs depth cues and optional clouds
 - Terrain palette needs in-Studio screenshot validation
-- Island silhouette still needs screenshot validation and further art direction
+- Island shell still needs screenshot validation and further art direction
 - Vegetation and landmark density still need screenshot-driven iteration
 - Background composition needs screenshot validation after island grounding fixes
 - Baseline/reference screenshot captures still need to be recorded and compared

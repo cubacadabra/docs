@@ -79,13 +79,14 @@ values. They are visual-only in this milestone; mesh collision, texture
 materials, animation, and prefab behavior remain separate capabilities.
 
 The native Rust builder is the only supported expander for the bounded `maze`
-declaration below. It emits ordinary terrain operations, interaction zones,
-checkpoints, decorations, and generated maze effects before packaging. The
-native path adds the art-directed rounded/tapered island body, distant island
-silhouettes, and seeded wall-side dressing clusters. The retired Python builder rejects maze
-declarations rather than producing a different-looking package. The runtime
-consumes only expanded package data and does not execute the authoring
-shorthand.
+declaration below. It emits the playable maze floor and walls, interaction
+zones, checkpoints, generic start/finish landmarks, and generated maze effects
+before packaging. It does not create an environment or choose an art direction:
+an example that needs an authored island, props, or landmarks declares those as
+ordinary package terrain, decorations, or assets. The retired Python builder
+rejects maze declarations rather than producing a different-looking package.
+The runtime consumes only expanded package data and does not execute the
+authoring shorthand.
 
 ## Procedural maze declaration
 
@@ -95,9 +96,8 @@ and 64 collectibles. A given seed yields the same layout; change the seed when
 authoring a new release rather than depending on runtime randomness.
 
 Maze terrain is sampled at the declared `maze.terrain.cellSize`. To keep the
-generated wall and grass-cap features representable, that value must not exceed
-`maze.wallThickness` or `1.0`; the generated cap follows it between `0.5` and
-`1.0` world units. The builder rejects incompatible combinations before a
+generated floor and wall features representable, that value must not exceed
+`maze.wallThickness`. The builder rejects incompatible combinations before a
 package is emitted.
 
 ```json
@@ -120,13 +120,12 @@ package is emitted.
 }
 ```
 
-The native maze builder also adds an asymmetrically tapered lower island volume,
-rounded notches in the plateau corners, a small set of distant island
-silhouettes, and seeded decorations in quiet wall-side pockets
-rather than along the solution route. It emits primary presentation bounds for
-the playable island, so those distant silhouettes add depth without changing
-Overview or Showcase framing. This is presentation content generated from the
-same maze seed, not a second simulation or collision authority.
+The native maze builder keeps the maze floor and wall geometry separate from
+environment presentation. A package may add a visual-only imported mesh shell
+or other authored scenery around the generated maze while leaving generated
+terrain as the gameplay collision surface. If review cameras should frame a
+specific subject, the package owns `world.presentationBounds` explicitly;
+background scenery does not need to affect that framing.
 
 These are static authored capabilities; they do not provide a general
 creator-facing persistence API. For exact build behavior, use the
