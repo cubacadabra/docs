@@ -18,6 +18,14 @@ A raw project may include `studio.json` with a `previewWorld` and
 preview preferences: Studio validates the world, applies it to the temporary
 runtime manifest, and leaves the authored shipping launch destination intact.
 
+Overview and Showcase start by framing the world's presentation bounds and
+support left-drag orbit, right- or middle-drag pan, and wheel/pinch zoom.
+Clicking the selected preset again reframes the world. Navigation works while
+the preview is stopped and does not change gameplay camera state or snapshots.
+All embedded preview views fill the editor viewport; Gameplay keeps the player
+camera. This does not change the letterboxing policy of standalone player hosts.
+These renderer entry points and camera state are gated by `studio-ui`.
+
 The raw-project path calls the shared Rust builder in-process. The native
 `cubacadabra` CLI in `tools` is a thin command-line frontend over the same
 library. Installed Studio releases do not require Python, `PYTHONPATH`, or a

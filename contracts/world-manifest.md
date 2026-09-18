@@ -32,10 +32,13 @@ presentation.
 Static terrain is an SDK `0.4.0` capability. It accepts ordered block, ball,
 and ellipsoid fills, carves, and material-paint operations with semantic materials
 `builtin:grass`, `builtin:ground`, `builtin:rock`, `builtin:sand`,
-`builtin:mud`, and `builtin:snow` (bare names are also accepted). Terrain art
+`builtin:mud`, `builtin:snow`, and `builtin:leafygrass` (bare names are also accepted). Terrain art
 is engine-owned; the package does not carry duplicate textures. Terrain is
 static package content, chunked and bounded at load. Luau terrain editing,
 streaming edits, and saving modified terrain are not in this contract.
+
+`leafygrass` uses grass surface detail on every face, including vertical walls;
+`grass` retains its grass-top/soil-side treatment. Both reuse engine-owned art.
 
 `materialArt: false` selects procedural color fallback. `hideDefaultGround`
 controls whether the legacy flat ground remains below the terrain.
@@ -79,12 +82,30 @@ values. A mesh decoration may also set `material` to a named world material;
 that material's image is sampled through the package image atlas using the
 GLB's UVs. When `COLOR_0` is present, its normalized RGB/alpha value multiplies
 the instance tint, allowing one baked source mesh to preserve authored part
-colors. GLB primitives may also carry named glTF materials. The shared renderer
-maps recognized material names such as `Grass`, `Slate`, `Sand`, and `Snow` to
-its engine-owned terrain material layers and uses the glTF base-color factor as
-the material tint; unknown names remain valid and use that factor without a
-built-in texture. Meshes remain visual-only: mesh collision, animation, and
-prefab behavior are separate capabilities.
+colors. GLB primitives may explicitly opt into engine-owned terrain surface
+detail with a `builtin:` material name: `builtin:grass`, `builtin:ground`,
+`builtin:rock`, `builtin:sand`, `builtin:mud`, `builtin:snow`, or
+`builtin:leafygrass` (the terrain
+alias `builtin:dirt` also selects ground). Ordinary artist names such as
+`Grass`, `Slate`, or `Sand`, other namespaces, and unknown names do not opt in.
+The glTF base-color factor still multiplies vertex color and instance tint;
+an explicitly assigned package image material takes precedence over built-in
+surface detail. The GPU material selector is an integer with flat interpolation.
+Two-sided world-mesh faces use the visible face's normal for lighting.
+
+The reference importer emits white `[1, 1, 1, 1]` base-color factors, preserves
+source Color3 in `COLOR_0`, and records the source material name in
+`material.extras.robloxMaterial`. Its mappings are import approximations:
+Grass → grass; LeafyGrass → leafygrass; Ground/Brick → ground; Slate/stone/concrete/metals → rock;
+Sand → sand; Wood/WoodPlanks → mud; Snow/Ice → snow. They are not additional
+renderer aliases or promises of matching Roblox surface appearance.
+
+This replaces the short-lived unnamespaced material-name experiment. Re-export
+reference GLBs with the updated tool and rebuild packages to opt into textures;
+old GLBs still load, but ordinary names no longer activate terrain textures.
+The maze-101 source GLB is regenerated with this change. Published immutable
+assets must receive new content identities. Meshes remain visual-only: mesh
+collision, animation, and prefab behavior are separate capabilities.
 
 The native Rust builder is the only supported expander for the bounded `maze`
 declaration below. It emits the playable maze floor and walls, interaction
@@ -106,7 +127,8 @@ authoring a new release rather than depending on runtime randomness.
 Maze terrain is sampled at the declared `maze.terrain.cellSize`. To keep the
 generated floor and wall features representable, that value must not exceed
 `maze.wallThickness`. The builder rejects incompatible combinations before a
-package is emitted.
+package is emitted. Generated walls overlap the floor by one terrain cell to
+avoid gaps in the sampled surface, without changing their authored top height.
 
 ```json
 {
