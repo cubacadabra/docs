@@ -34,6 +34,8 @@ completed milestones should be removed as they stop being relevant.
 - Deterministic Studio review cameras (`Gameplay`, `Overview`, `Showcase`)
 - Shared viewport sky gradient
 - Softer engine-owned grass and earth terrain tiles
+- Engine-owned palm and grass-clump decorations use tapered, palette-aware
+  silhouettes instead of rectangular leaf blocks
 - Maze package generation is native Rust-only
 - Game scripts can read the host `DEBUG`/`RELEASE` build mode for development-only controls
 - DEBUG game scripts can request local player teleports for fast preview checks; RELEASE omits that API
@@ -46,6 +48,9 @@ completed milestones should be removed as they stop being relevant.
 - Maze 101 is a three-island run: Sunshore, Coral Cay, and Cloudpeak increase in
   maze size, share a grass-hedge-and-sand art language, and the first two exits
   automatically route players to the next island
+- Maze 101 uses a compact top-center run HUD, denser screenshot-driven
+  vegetation and rock dressing, explicit difficulty landmarks, and authored
+  rope bridges with sagging decks and rails
 - Studio review cameras temporarily bypass gameplay distance fog
 - Shared third-person camera occlusion sweeps against terrain and solid blocks;
   forced close views drive the same local-avatar hide/fade transition as zoom
@@ -58,7 +63,6 @@ completed milestones should be removed as they stop being relevant.
   `Showcase` cameras expose the intended full-island composition
 - Maze 101's imported rope meshes remain visual-only, with package-owned
   terrain strips beneath the decks making every hub bridge traversable
-- Vegetation variety and landmark density still need screenshot-driven iteration
 - Baseline/reference captures still need to be recorded for repeatable visual comparison
 
 ## Canonical repositories
