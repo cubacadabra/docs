@@ -1,7 +1,7 @@
 # `cubacadabra/tools`
 
 **Owns:** the native Rust project and package builder, creator CLI, validation,
-and package diagnostics.
+package diagnostics, and development-only source-reference import tools.
 
 **Does not own:** runtime semantics, host presentation, or backend publishing.
 

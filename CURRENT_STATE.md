@@ -56,6 +56,10 @@ completed milestones should be removed as they stop being relevant.
 - Shared third-person camera occlusion sweeps against terrain and solid blocks;
   forced close views drive the same local-avatar hide/fade transition as zoom
 - Maze 101 corridors use the playable 8-by-7 cell-to-wall proportions
+- The native tools CLI can deterministically extract Maze World's Roblox XML
+  place data into a static reference-scene JSON with authored hierarchy,
+  geometry transforms, materials, mesh/texture references, lights, cameras,
+  text, spawn areas, project lighting/post effects, bounds, and source hashes
 
 ## Current visual gaps
 
@@ -65,6 +69,8 @@ completed milestones should be removed as they stop being relevant.
 - Maze 101's imported rope meshes remain visual-only, with package-owned
   terrain strips beneath the decks making every hub bridge traversable
 - Baseline/reference captures still need to be recorded for repeatable visual comparison
+- The reference-scene importer records Roblox smooth-terrain blobs but does not
+  yet decode their voxels or adapt the intermediate scene to the shared renderer
 
 ## Canonical repositories
 
