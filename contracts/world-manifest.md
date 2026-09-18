@@ -75,8 +75,10 @@ are static, deterministically authored visual instances. The legacy preview kind
 `rock`, `palm`, `grass-clump`, `crate`, `bridge`, and `gate`; new content should
 prefer an imported mesh decoration with an `asset` ID. Imported mesh instances
 share indexed GLB geometry and carry independent position, scale, yaw, and tint
-values. They are visual-only in this milestone; mesh collision, texture
-materials, animation, and prefab behavior remain separate capabilities.
+values. A mesh decoration may also set `material` to a named world material;
+that material's image is sampled through the package image atlas using the
+GLB's UVs. Meshes remain visual-only: mesh collision, animation, and prefab
+behavior are separate capabilities.
 
 The native Rust builder is the only supported expander for the bounded `maze`
 declaration below. It emits the playable maze floor and walls, interaction

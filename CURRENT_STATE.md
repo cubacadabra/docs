@@ -48,9 +48,10 @@ completed milestones should be removed as they stop being relevant.
 - Maze 101 is a three-island run: Sunshore, Coral Cay, and Cloudpeak increase in
   maze size, share a grass-hedge-and-sand art language, and the first two exits
   automatically route players to the next island
-- Maze 101 uses a compact top-center run HUD, denser screenshot-driven
-  vegetation and rock dressing, explicit difficulty landmarks, and authored
-  rope bridges with sagging decks and rails
+- Maze 101 removes authoring grids from every shipped world, uses a two-line
+  top-center objective/timer HUD, keeps mobile controls out of Studio DEBUG
+  captures, and has denser vegetation, explicit difficulty landmarks, and
+  authored rope bridges with sagging decks and rails
 - Studio review cameras temporarily bypass gameplay distance fog
 - Shared third-person camera occlusion sweeps against terrain and solid blocks;
   forced close views drive the same local-avatar hide/fade transition as zoom
@@ -58,9 +59,9 @@ completed milestones should be removed as they stop being relevant.
 
 ## Current visual gaps
 
-- The reference screenshots use a wider, higher camera than the normal shared
-  third-person gameplay camera; Studio's deterministic `Overview` and
-  `Showcase` cameras expose the intended full-island composition
+- The reference screenshots still need a fresh Studio capture after the
+  tightened review-camera framing and grid/UI cleanup; headless proof cannot
+  validate final pixels or creator-host overlay composition
 - Maze 101's imported rope meshes remain visual-only, with package-owned
   terrain strips beneath the decks making every hub bridge traversable
 - Baseline/reference captures still need to be recorded for repeatable visual comparison
