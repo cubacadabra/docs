@@ -1,6 +1,6 @@
 # Cubacadabra Current State
 
-Last updated: 2026-09-17
+Last updated: 2026-09-18
 
 This is the short, current snapshot of Cubacadabra. It complements the
 normative contracts, decisions, and roadmap; it is not a tutorial, architecture
@@ -36,6 +36,7 @@ completed milestones should be removed as they stop being relevant.
 - Softer engine-owned grass and earth terrain tiles
 - Maze package generation is native Rust-only
 - Game scripts can read the host `DEBUG`/`RELEASE` build mode for development-only controls
+- DEBUG game scripts can request local player teleports for fast preview checks; RELEASE omits that API
 - Maze expansion keeps generated floor/walls separate from package-owned environment art
 - Coplanar authored block-terrain fills use exact unions so overlapping floors
   do not create invisible player-collision ridges

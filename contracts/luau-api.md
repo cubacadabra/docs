@@ -35,6 +35,10 @@ and reflects the host runtime's compile profile. It is read-only; use it only
 to expose development conveniences such as test controls. Release builds must
 not rely on debug-only behavior being available.
 
+DEBUG runtimes additionally expose `api.debug:teleport_to(world_id, position,
+yaw)` for local development cheats. The API is absent from RELEASE runtimes
+and must never be required by normal game logic.
+
 - [Game lifecycle callbacks and event shapes](lifecycle.md).
 - [World and manifest capabilities](world-manifest.md).
 - [Retained in-game UI](ui.md), including document limits and pointer ABI.
