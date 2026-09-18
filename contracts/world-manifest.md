@@ -79,8 +79,12 @@ values. A mesh decoration may also set `material` to a named world material;
 that material's image is sampled through the package image atlas using the
 GLB's UVs. When `COLOR_0` is present, its normalized RGB/alpha value multiplies
 the instance tint, allowing one baked source mesh to preserve authored part
-colors. Meshes remain visual-only: mesh collision, animation, and prefab
-behavior are separate capabilities.
+colors. GLB primitives may also carry named glTF materials. The shared renderer
+maps recognized material names such as `Grass`, `Slate`, `Sand`, and `Snow` to
+its engine-owned terrain material layers and uses the glTF base-color factor as
+the material tint; unknown names remain valid and use that factor without a
+built-in texture. Meshes remain visual-only: mesh collision, animation, and
+prefab behavior are separate capabilities.
 
 The native Rust builder is the only supported expander for the bounded `maze`
 declaration below. It emits the playable maze floor and walls, interaction
