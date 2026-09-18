@@ -60,6 +60,10 @@ completed milestones should be removed as they stop being relevant.
   place data into a static reference-scene JSON with authored hierarchy,
   geometry transforms, materials, mesh/texture references, lights, cameras,
   text, spawn areas, project lighting/post effects, bounds, and source hashes
+- A development-only Rust capture command consumes that reference scene and
+  produces a real PNG plus a machine-readable approximation report; its first
+  pass renders the 1,323 visible Main Island BaseParts/WedgeParts from their
+  source transforms, dimensions, colors, and project lighting
 
 ## Current visual gaps
 
@@ -68,9 +72,12 @@ completed milestones should be removed as they stop being relevant.
   validate final pixels or creator-host overlay composition
 - Maze 101's imported rope meshes remain visual-only, with package-owned
   terrain strips beneath the decks making every hub bridge traversable
-- Baseline/reference captures still need to be recorded for repeatable visual comparison
+- The first source-derived Maze World PNG can now be regenerated, but a fixed
+  golden camera, checked-in target metadata, and automatic image diff are not
+  established yet
 - The reference-scene importer records Roblox smooth-terrain blobs but does not
-  yet decode their voxels or adapt the intermediate scene to the shared renderer
+  yet decode their voxels; external meshes, textures, local lights, shadows,
+  skyboxes, and Roblox post effects remain explicit capture-report gaps
 
 ## Canonical repositories
 
