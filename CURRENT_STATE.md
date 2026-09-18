@@ -64,6 +64,10 @@ completed milestones should be removed as they stop being relevant.
   produces a real PNG plus a machine-readable approximation report; its first
   pass renders the 1,323 visible Main Island BaseParts/WedgeParts from their
   source transforms, dimensions, colors, and project lighting
+- The tools adapter can bake a selected reference hierarchy into a compact GLB
+  with source transforms and vertex colors; Maze 101 now previews that asset as
+  `maze-world-reference` through Studio and the normal shared renderer while
+  retaining `easy-room` as its shipping launch destination
 
 ## Current visual gaps
 

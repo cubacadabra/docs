@@ -93,7 +93,8 @@ The builder accepts image assets under `assets.images`, WAV audio under
 Studio, iOS, Android, and browser hosts load declared GLBs before the first
 frame and register them with the shared indexed, instanced world-mesh
 renderer. The current runtime accepts embedded binary buffers and static
-position/normal/UV geometry. A mesh decoration can reference a named world
+position/normal/UV geometry plus optional normalized `COLOR_0` vertex colors.
+A mesh decoration can reference a named world
 material, allowing its UVs to sample a package image atlas; external glTF
 references, embedded glTF image extraction, animation, and mesh collision
 are not yet supported. The cross-repository
@@ -107,8 +108,8 @@ filter to receivers; shadow coverage and quality are runtime presentation
 settings, not package-authored state. Hosts must keep this path available when
 they register world meshes, but packages do not need to declare shadow assets.
 The supported world-mesh subset currently covers embedded static GLB geometry
-with indexed positions, normals, UVs, package-atlas albedo, basic color/tint,
-and instancing; node animation, mesh collision, external glTF resources, and
+with indexed positions, normals, UVs, optional vertex colors, package-atlas
+albedo, basic color/tint, and instancing; node animation, mesh collision, external glTF resources, and
 embedded glTF material extraction remain separate capabilities.
 
 ## Build failure guarantees

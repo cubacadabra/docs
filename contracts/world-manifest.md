@@ -77,7 +77,9 @@ prefer an imported mesh decoration with an `asset` ID. Imported mesh instances
 share indexed GLB geometry and carry independent position, scale, yaw, and tint
 values. A mesh decoration may also set `material` to a named world material;
 that material's image is sampled through the package image atlas using the
-GLB's UVs. Meshes remain visual-only: mesh collision, animation, and prefab
+GLB's UVs. When `COLOR_0` is present, its normalized RGB/alpha value multiplies
+the instance tint, allowing one baked source mesh to preserve authored part
+colors. Meshes remain visual-only: mesh collision, animation, and prefab
 behavior are separate capabilities.
 
 The native Rust builder is the only supported expander for the bounded `maze`
