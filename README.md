@@ -9,23 +9,9 @@ Rust runtime on Web, iOS, Android, and Desktop.
 
 ![Cubacadabra platform overview](media/diagrams/platform-overview.svg)
 
-## See it in motion
+## Bring your existing game
 
-These are captures from the current evidence set—not a claim that every image
-belongs to one integrated release.
-
-<table>
-  <tr>
-    <td><img src="media/evidence/examples/racer-lab.png" alt="Racer Lab creator and game capture"></td>
-    <td><img src="media/evidence/examples/racer-gameplay.png" alt="Racer gameplay capture"></td>
-    <td><img src="media/evidence/character/hero-wave.png" alt="Rendered Cubacadabra character waving"></td>
-  </tr>
-  <tr>
-    <td align="center"><sub>Studio / creator path</sub></td>
-    <td align="center"><sub>Player / gameplay</sub></td>
-    <td align="center"><sub>Morph / character runtime</sub></td>
-  </tr>
-</table>
+<img src="media/roblox-cubacadabra-migration.png" alt="roblox-cubacadabra-migration.png">
 
 ## Explore Cubacadabra
 
