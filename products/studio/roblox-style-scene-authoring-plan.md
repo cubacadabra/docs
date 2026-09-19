@@ -31,7 +31,7 @@ The reference Vegas scene contains enough scale to expose the problem:
 
 | Evidence | What it tells us |
 | --- | --- |
-| `other-examples/vegas.json` | 68,873 source instances, 17,420 geometry records, 10,566 `Part`s, 3,025 `Model`s, and 2,041 `Folder`s. Each geometry record has a source `path` and `parentPath`. |
+| `other-examples/vegas.json` | 68,873 source instances, 17,420 geometry records, 12,275 non-transparent geometry records, 10,566 `Part`s, 4,412 `MeshPart`s, 3,025 `Model`s, 2,041 `Folder`s, 1,825 `UnionOperation`s, 610 lights, 135 textures, and 3,676 text objects. Each geometry record has a source `path` and `parentPath`. |
 | `other-examples/vegas.rbxlx` | The full source instance hierarchy, including non-geometric folders, models, services, scripts, UI, lights, and properties. |
 | `examples/vegas-101/manifest.json` | The current Cubacadabra package has one `vegas-floor` world, three top-level mesh decorations, five signs, seven interactions, and no blocks. |
 | Current Studio shell | `SceneNode` is already recursive and selectable, but it is synthesized from a small set of typed manifest arrays. IDs are collection/index paths such as `world/vegas-floor/signs/2`. |
@@ -42,6 +42,51 @@ itself, a complete Explorer source. It does not carry every non-geometric
 instance as a tree record. The importer must use the `.rbxlx` source when full
 hierarchy fidelity is required, while keeping `vegas.json` as the normalized
 geometry/reference evidence and parity input.
+
+### The current Vegas render is an exporter-fidelity problem too
+
+The current import/export bridge is a good temporary runtime boundary:
+
+```text
+vegas.rbxlx
+    -> import-roblox-reference
+    -> vegas.json                         [reference/evidence]
+    -> export-reference-mesh
+       -> vegas_map.glb / vegas_tables.glb / vegas_slots.glb
+       -> vegas-collision.json
+    -> vegas-101 manifest
+    -> normal Cubacadabra runtime
+```
+
+`vegas-101` is correctly simple after compilation: three mesh decorations,
+five signs, seven interaction zones, and one collision file. The source place
+does not need to remain a live runtime object graph. However, the current
+`export-reference-mesh` path discards substantial source fidelity before the
+runtime ever sees the scene:
+
+| Source feature in the three Vegas export prefixes | Current result |
+| --- | --- |
+| 16,443 source geometry instances | Selected for the three exported areas |
+| 4,417 instances with a source `meshId` | Box approximation when no mesh overrides are supplied |
+| 1,798 `UnionOperation`s | Box approximation |
+| Approximately 1,780 non-block `Part.Shape` values | Box approximation because shape is recorded but not exported |
+| 564 `CylinderMesh` uses | Box approximation |
+| MeshPart texture IDs, Decals, and textures | Captured by the reference importer but not emitted as textured GLB surfaces |
+| 610 source lights | Captured but not emitted into the three GLBs |
+| 3,676 text instances | Captured but not emitted into the three GLBs |
+
+The current GLB writer emits `POSITION`, `NORMAL`, and `COLOR_0`, but not
+`TEXCOORD_0`, images, samplers, or base-color textures. This is why the
+reference casino carpet and other textured surfaces cannot be reproduced by
+this exporter, regardless of how polished Studio's tree is. The material
+mapping is also intentionally coarse for the current reference workflow:
+metal and concrete become built-in rock, wood becomes built-in mud, and brick
+becomes built-in ground. That remains an import approximation, not a runtime
+material rule, but it is too lossy for a fidelity-oriented Vegas scene.
+
+Studio hierarchy authoring and source-render fidelity are separate workstreams.
+Both are needed, but improving the tree cannot compensate for geometry,
+texture, union, shape, lighting, or text data discarded by the exporter.
 
 ## Product shape
 
@@ -103,7 +148,7 @@ terrain, while imported GLBs are visual-only and collision is supplied as a
 separate baked asset. That contract should remain the runtime boundary.
 
 For a Roblox import or a similarly detailed source asset, tools should produce
-a creator-only, normalized scene graph with:
+a project-owned, normalized scene graph with:
 
 - a stable node ID and source path;
 - display name and source class (`Folder`, `Model`, `Part`, `MeshPart`, etc.);
@@ -119,18 +164,92 @@ provide parity checks for transforms, bounds, materials, visibility, and
 collision selection. Duplicate names are normal; identity must never depend on
 the display name alone.
 
-The preferred first implementation is a project-owned authoring sidecar (for
-example, `studio.scene.json`) or an equivalent builder-owned source document.
-It is not a player package contract and must not be loaded by player hosts.
-The builder expands the supported subset into the existing manifest/asset/
-collision outputs. If the graph later becomes a portable package capability,
-that is a separate versioned contract decision with producer, builder, Rust,
-and host evidence; it must not happen implicitly as part of the tree UI.
+The native authoring scene is a project format, not a Studio-specific format:
+
+```text
+manifest.json       game and package configuration
+scene.json          canonical editable world and source graph
+src/                Luau source
+assets/             source assets and compiler inputs
+studio.json         editor-only state such as previewWorld and reviewCamera
+```
+
+`scene.json` is the canonical editable world. Studio is one editor of it;
+Codex, the CLI, scripts, other editors, and future web tooling must be able to
+read and write the same format. `manifest.json` remains the package/config
+boundary used by current projects, while the builder compiles the supported
+`scene.json` subset into the existing manifest, asset, and collision outputs.
+Existing projects may use a compatibility adapter during migration; Studio
+must not silently create a second source of truth.
+
+`scene.json` is not a player package contract and must not be loaded by player
+hosts. If a rich scene graph later becomes a portable package capability, that
+is a separate versioned contract decision with producer, builder, Rust, host,
+and compatibility evidence. It must not happen implicitly as part of the tree
+UI.
+
+### Native `NodeRecord` identity and compilation status
+
+The authoring graph should establish `NodeRecord` before the Explorer UI is
+expanded. Source paths such as
+`Model:Casino[1]/Folder:Furniture[1]/Part:Part[7]` are useful provenance, but
+they are not editor identity: renaming, reparenting, or inserting an identical
+sibling changes the path. Every record therefore needs an editor ID that
+survives those operations:
+
+```json
+{
+  "id": "01K...",
+  "sourcePath": "Workspace:Workspace[1]/Model:Casino[1]/Part:Part[7]",
+  "sourceKey": "rbx:part:source-guid-or-import-key",
+  "sourceClass": "Part",
+  "name": "Part",
+  "parent": "01J...",
+  "children": [],
+  "transform": {
+    "position": [0, 0, 0],
+    "rotation": [0, 0, 0, 1],
+    "scale": [1, 1, 1],
+    "pivot": [0, 0, 0]
+  },
+  "representation": "primitive",
+  "compile": {
+    "capability": "editable",
+    "status": "compiled",
+    "diagnostics": []
+  }
+}
+```
+
+The exact serialized ID algorithm is an implementation decision, but the
+semantics are fixed: a newly created duplicate gets a new ID; rename and
+reparent preserve the ID; `sourcePath` is provenance only. IDs must be stable
+across save/reload and deterministic import must not accidentally regenerate
+them.
+
+Every node also needs explicit representation and compile status. At minimum,
+the representation vocabulary should distinguish `group`, `primitive`,
+`meshInstance`, `light`, `surface`, `baked`, and `unsupported`. Capability and
+status should explain what Studio can do and what the builder will emit, for
+example:
+
+| Source node | Capability | Compile result |
+| --- | --- | --- |
+| Normal `Part` | `editable` | `primitive` |
+| Supported mesh instance | `editable` or `replaceable` | `meshInstance` |
+| `UnionOperation` before union support | `readOnly` | bounding-box approximation, with a warning |
+| Roblox script | `sourceOnly` | not executed by the scene compiler |
+| Source light | `preserved` | runtime light when supported, otherwise explicit pending status |
+| Grouped static chair | `editable` as a group | optimized baked mesh plus picking metadata |
+
+Studio must be able to show this status in the tree and Inspector. A build
+that approximates or drops source data should report it; a successful export
+must not imply visual parity.
 
 This keeps ownership clear:
 
 - `tools` owns source import, normalization, stable IDs, geometry export, and
-  conversion diagnostics;
+  conversion diagnostics, and scene compilation;
 - `studio` owns tree, selection, gizmos, inspector, edit transactions, and
   preview integration;
 - `rust` owns portable runtime/rendering semantics only when the existing
@@ -157,6 +276,68 @@ inspected, while only supported primitive/instance nodes are directly
 editable. A read-only node must say why: “mesh is baked as one asset,”
 “collision is generated output,” or “property is not supported.” This is more
 trustworthy than exposing a Part row that cannot affect the package.
+
+The normal authoring tree should not show all 68,873 source instances as equal
+peers. Poses, `CFrameValue`s, keyframes, attachments, constraints, scripts,
+GUI internals, and similar source details remain available in the import index
+and provenance layer, but the default tree should prioritize:
+
+```text
+World
+  Buildings / Models
+  Parts
+  Meshes
+  Lights
+  Surfaces / Signs
+  Interactions
+  Gameplay objects
+```
+
+Add a **Show Source Internals** mode for the complete imported hierarchy. This
+keeps normal authoring useful while preserving forensic access to every source
+object.
+
+### Authoring graph versus final scene compiler
+
+`export-reference-mesh` should remain a reference baking tool. It is useful for
+the current Vegas bridge, but grouping thousands of source objects into one GLB
+by material loses the relationship between a triangle and its authoring node.
+It should not become the final scene compiler by accretion.
+
+The future compiler should be allowed to turn a rich graph such as:
+
+```text
+Casino
+  Room
+    Table 1
+      top
+      base
+      stools
+    Table 2
+      top
+      base
+      stools
+```
+
+into an optimized runtime representation such as:
+
+```text
+static chunk A
+static chunk B
+shared table mesh × 12
+shared stool mesh × 48
+local lights
+collision chunk A
+collision chunk B
+```
+
+The authoring IDs must survive compilation through an editor-only picking and
+diagnostic map. At minimum it should map compiled chunks, instances, and
+pickable bounds back to one or more `NodeRecord` IDs, with a deterministic
+tie-breaker for merged geometry. This lets Studio click a baked scene and
+select the original source object without making each source object a live
+runtime entity. The map may be a Studio-side derived artifact or optional
+debug metadata; it must not become mandatory player runtime state.
 
 ## Viewport interaction plan
 
@@ -259,13 +440,21 @@ Save behavior must be explicit:
 
 ### Phase 0 — establish the contract seam and benchmark
 
-- Add the plan and an explicit decision record for the creator-only scene graph
-  versus runtime manifest boundary.
+- Add an explicit decision record for `scene.json` as the project-owned
+  authoring format, separate from `manifest.json`, `studio.json`, and compiled
+  package output.
+- Define and test the native `NodeRecord` contract, stable-ID behavior, source
+  provenance, representation vocabulary, capability, and compile status before
+  building more Explorer UI.
 - Add a small Vegas fixture containing nested folders/models, repeated `Part`
   names, one imported mesh, one read-only/baked node, and one supported
   primitive.
-- Extend importer diagnostics so the fixture reports source hierarchy counts,
-  geometry parity, unsupported properties, and stable IDs.
+- Add a native authoring import command, initially named `import-roblox-scene`,
+  that creates/updates `scene.json` from the full source hierarchy. Keep
+  `import-roblox-reference` as the exhaustive reference/evidence importer.
+- Extend importer and exporter diagnostics so the fixture reports source
+  hierarchy counts, geometry parity, unsupported properties, approximations,
+  unresolved mesh references, and stable IDs.
 - Define selection, transform, save, undo, and rebuild telemetry-free test
   scenarios before changing the UI.
 
@@ -300,22 +489,55 @@ fixture, search reveals ancestor context, and selection survives rebuild.
 
 ### Phase 3 — source hierarchy and imported Vegas tree
 
-- Add the normalized source graph produced from `vegas.rbxlx`, with `vegas.json`
-  geometry attached by source path.
+- Add the normalized source graph produced from `vegas.rbxlx` to `scene.json`,
+  with `vegas.json` geometry attached by source path and stable IDs assigned to
+  records rather than derived from paths.
 - Display folders, models, parts, mesh parts, lights, and UI under an imported
   source root with type icons and provenance.
 - Add source-path search and “focus in source” navigation.
 - Expose supported `Part` properties in the Inspector; keep baked mesh and
   unsupported classes read-only with diagnostics.
-- Add the explicit builder adapter from editable source nodes to package
-  decorations, primitives, collision, and assets.
+- Add the explicit builder adapter from editable source nodes to the current
+  package decorations, primitives, collision, and assets.
+- Add **Show Source Internals** for source nodes that are preserved for
+  provenance but not shown as equal peers in the normal authoring tree.
 
 **Exit gate:** a creator can find a named Vegas `Part`, see its parent chain,
   inspect its source properties, and either edit it successfully or understand
   exactly why it is read-only. The generated package remains valid and the
   existing Vegas gameplay loop still runs.
 
-### Phase 4 — full transform and hierarchy authoring
+### Phase 4 — source fidelity and compiled scene pipeline
+
+This phase runs in parallel with the Studio tree work. It is not a prerequisite
+for making the Explorer interaction model useful, but it is necessary for
+judging Vegas against the Roblox reference screenshot.
+
+- Keep `export-reference-mesh` as a bounded reference baking tool and improve
+  its diagnostics immediately: unresolved mesh IDs, approximated unions,
+  unsupported shapes, missing textures/UVs, dropped lights, and dropped text.
+- Resolve the 27 unique Vegas mesh IDs used by the three export prefixes rather
+  than treating 4,417 mesh-bearing instances as 4,417 unique assets.
+- Add real primitive-shape export for supported `Part.Shape` and
+  `CylinderMesh` cases, and add a measured path for `UnionOperation` rather
+  than silently boxing it.
+- Preserve UVs, textures, Decals, and material provenance where the native
+  renderer can support them. Do not turn Roblox material names into new global
+  runtime aliases; retain source material identity and use an explicit
+  conversion policy.
+- Define the compact runtime outputs for static batching, repeated mesh
+  instancing, spatial render chunks, collision chunks, local lights, text, and
+  editor picking metadata.
+- Build from `scene.json` through a native scene compiler. Do not use the
+  material-grouped GLB from `export-reference-mesh` as the final authoring
+  representation.
+
+**Exit gate:** a compiled Vegas slice reports every approximation and dropped
+  feature, preserves real meshes/shapes/textures for the supported subset, and
+  produces a compact runtime scene plus a Studio-only map back to `NodeRecord`
+  IDs. The player/runtime does not receive one live entity per source object.
+
+### Phase 5 — full transform and hierarchy authoring
 
 - Add Rotate, Scale, combined Transform, local/world axes, angle snapping, and
   numeric drag readouts.
@@ -349,6 +571,14 @@ fixture, search reveals ancestor context, and selection survives rebuild.
 - Import counts match the source fixture and `vegas.json` geometry summary.
 - A sample of `Part`, `MeshPart`, `Model`, and `Folder` paths retains parent,
   name, occurrence, transform, and source provenance.
+- Export diagnostics report unresolved mesh references, approximated unions and
+  shapes, missing UVs/textures, dropped lights, and dropped text rather than
+  presenting a lossy export as complete.
+- Supported primitive shapes, real mesh references, UVs/textures, local lights,
+  text, and unions are each tested against the source reference or explicitly
+  marked unsupported.
+- The compiled picking map selects the correct `NodeRecord` from a baked or
+  instanced render representation.
 - Exported visual and collision results are compared against the existing
   `vegas-101` package and its reference collision documents.
 - The source `vegas.json` remains an evidence/reference artifact; generated
@@ -378,23 +608,43 @@ updated on scene changes rather than scanned recursively every frame. Large
 meshes remain asset-level render data; the editor must not turn every triangle
 into a live runtime entity.
 
-## Decisions to make before implementation
+## Decisions resolved by this plan
 
-1. Is `studio.scene.json` the project-owned authoring sidecar, or should the
-   richer graph be embedded in the source manifest and expanded by the builder?
-2. Which source classes are editable in the first imported-scene milestone?
+1. `scene.json` is the project-owned canonical authoring format. It is not
+   `studio.scene.json`, and it is separate from `manifest.json` package/config
+   data and `studio.json` editor preferences.
+2. The authoring graph and compiled runtime are different representations.
+   The runtime must not receive one live entity per source object. Static
+   batching, repeated-mesh instancing, spatial chunks, collision chunks, and
+   compact lighting/text output are builder decisions.
+3. `NodeRecord.id` is editor identity; `sourcePath` is provenance. Rename,
+   reparent, and save/reload preserve IDs; duplicate creates a new ID.
+4. Every node exposes an explicit representation, capability, compile status,
+   and diagnostics. Unsupported or approximate output is visible to creators.
+5. `import-roblox-reference` remains the exhaustive reference/evidence path.
+   A separate native authoring import creates/updates `scene.json`.
+6. `export-reference-mesh` remains a temporary/reference baking tool. The
+   final scene compiler owns optimized output and an editor-only mapping back
+   to authoring IDs.
+7. The default tree prioritizes useful authoring objects. Complete source
+   internals remain available through **Show Source Internals**.
+
+## Remaining implementation decisions
+
+1. Which source classes are editable in the first imported-scene milestone?
    The recommended minimum is `Folder`, `Model`, primitive `Part`, and a
-   supported mesh instance, with lights/UI/scripts initially read-only.
-3. Does reparenting/transforming an imported Part produce individual runtime
-   geometry, an exported grouped GLB, or a separate supported primitive?
-4. What is the stable-ID policy when the source hierarchy is renamed or two
-   source files are merged?
-5. Which operations belong in the shared Rust mutation feed, and which remain
-   Studio-owned source-document operations?
-6. What are the node-count, mesh-size, collision-triangle, and interaction
-   latency budgets for imported projects?
+   supported mesh instance, with lights/UI/scripts initially read-only or
+   source-only.
+2. Does reparenting or transforming an imported Part compile as an individual
+   primitive, an instanced mesh, or part of a rebuilt grouped asset?
+3. What exact ID generation and merge policy handles imports, source refreshes,
+   renamed source nodes, and two source files being combined?
+4. Which operations belong in the shared Rust mutation feed, and which remain
+   project-format operations owned by tools and Studio?
+5. What are the node-count, mesh-size, collision-triangle, texture, lighting,
+   text, and interaction-latency budgets for imported projects?
 
-The first implementation should resolve these decisions with the small Vegas
-fixture, not with the full 68k-instance place. Once the seam is proven, the
-full Vegas hierarchy becomes a scale and fidelity validation case rather than
-the first source of truth for the editor architecture.
+The first implementation should resolve the remaining decisions with the
+small Vegas fixture, not with the full 68k-instance place. Once the seam is
+proven, the full Vegas hierarchy becomes a scale and fidelity validation case
+rather than the first source of truth for the editor architecture.
