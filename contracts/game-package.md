@@ -65,10 +65,17 @@ presence does not imply that an interactive host or backend executes it.
 
 ## Version distinction
 
-The current tools builder supports SDK versions `0.3.0` and `0.4.0`;
-`world.terrain` requires `0.4.0`. The default project creator emits SDK
-`0.3.0` and package `formatVersion: 3`. Package format version and SDK version
-are separate compatibility axes. See
+The current runtime and native tools builder support SDK versions `0.3.0`,
+`0.4.0`, and `0.5.0`; `world.terrain` requires `0.4.0` or `0.5.0`.
+Static triangle collision, `world.camera`, and
+`world.physics.horizontalBounds` require an explicit `sdkVersion` of `0.5.0`
+so older engines cannot silently ignore their semantics. The default project
+creator emits SDK `0.3.0` and package `formatVersion: 3`. Package format
+version and SDK version are separate compatibility axes. Static triangle
+collision also has its own required `collision.formatVersion`; format 1 is
+accepted when the package SDK is `0.5.0`. The retired Python builder
+intentionally rejects SDK `0.5.0`; use the native builder for current packages.
+See
 [the version matrix](../quality/compatibility/versions.md).
 
 ## Authority entry
@@ -96,8 +103,13 @@ renderer. The current runtime accepts embedded binary buffers and static
 position/normal/UV geometry plus optional normalized `COLOR_0` vertex colors.
 A mesh decoration can reference a named world
 material, allowing its UVs to sample a package image atlas; external glTF
-references, embedded glTF image extraction, animation, and mesh collision
-are not yet supported. The cross-repository
+references, embedded glTF image extraction, animation, and mesh-collision
+inference are not supported. A world can instead carry bounded format-1 static
+collision triangles as ordinary manifest data. Those triangles are already in
+world coordinates and are consumed directly by the shared runtime, independent
+of whether a host initializes a renderer or registers the corresponding GLB.
+See the [world manifest contract](world-manifest.md#static-triangle-collision).
+The cross-repository
 `tools/scripts/check_world_model_hosts.py` check guards this host-registration
 contract.
 
@@ -109,8 +121,11 @@ settings, not package-authored state. Hosts must keep this path available when
 they register world meshes, but packages do not need to declare shadow assets.
 The supported world-mesh subset currently covers embedded static GLB geometry
 with indexed positions, normals, UVs, optional vertex colors, package-atlas
-albedo, basic color/tint, and instancing; node animation, mesh collision, external glTF resources, and
-embedded glTF material extraction remain separate capabilities.
+albedo, basic color/tint, and instancing; node animation, mesh collision,
+external glTF resources, and embedded glTF material extraction remain separate
+capabilities. “Mesh collision” here means deriving physics from GLB content;
+explicitly authored portable triangle collision is a separate manifest
+capability.
 
 ## Build failure guarantees
 

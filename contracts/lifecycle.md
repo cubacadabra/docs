@@ -28,6 +28,17 @@ elapsed seconds. The runtime execution budget and callback error behavior are
 part of the [Luau API](luau-api.md) and
 [task scheduler contract](tasks.md).
 
+## World transition timing
+
+`api.world:enter(world_id)` is a deferred script request. The runtime validates
+the ID against the immutable world list from the loaded package, then consumes
+at most one valid request after the current callback/tick finishes. Entry uses
+the destination world's authored spawn and resets movement state safely. The
+runtime emits the ordinary world/session transition notification and queues a
+`player` `spawn` event for a later callback; it never calls a spawn callback
+recursively from inside `world:enter`. A rejected ID raises a script error and
+leaves the active world and player state unchanged.
+
 ## Event shapes
 
 - **Interaction:** `id`, `phase` (`enter` or `exit`), `players`, and the

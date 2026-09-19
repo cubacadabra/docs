@@ -35,6 +35,30 @@ and reflects the host runtime's compile profile. It is read-only; use it only
 to expose development conveniences such as test controls. Release builds must
 not rely on debug-only behavior being available.
 
+## Package-world travel
+
+The generic `api.world` travel API was introduced in SDK `0.5.0`. Bindings may
+remain present in older test contexts, but published package content using this
+contract should declare SDK `0.5.0`.
+
+Game code can inspect and request travel among worlds already declared by the
+loaded package:
+
+```luau
+local current_world = api.world:get_id()
+api.world:enter("maze")
+```
+
+`world:get_id()` returns the active package world ID. `world:enter(world_id)`
+accepts only an existing, non-empty package world ID and queues entry at that
+world's authored spawn; it does not accept arbitrary coordinates. Empty or
+unknown IDs raise a script error and do not change runtime state. A request is
+consumed after the current script callback/tick returns, so entering a world
+cannot recursively invoke its spawn callback. World entry uses the same
+generic world/session notifications and input/velocity reset behavior as a
+portal transition. The API is available with the same semantics in DEBUG and
+RELEASE and through native and WASM Luau bindings.
+
 DEBUG runtimes additionally expose `api.debug:teleport_to(world_id, position,
 yaw)` for local development cheats. The API is absent from RELEASE runtimes
 and must never be required by normal game logic.
