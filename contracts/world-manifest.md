@@ -135,7 +135,9 @@ are static, deterministically authored visual instances. The legacy preview kind
 `rock`, `palm`, `grass-clump`, `crate`, `bridge`, and `gate`; new content should
 prefer an imported mesh decoration with an `asset` ID. Imported mesh instances
 share indexed GLB geometry and carry independent position, scale, yaw, and tint
-values. A mesh decoration may also set `material` to a named world material;
+values. `scale` remains the legacy uniform value; authoring compilers may also
+emit optional `scale3: [x, y, z]` for non-uniform mesh scaling, with missing
+axes falling back to `scale`. A mesh decoration may also set `material` to a named world material;
 that material's image is sampled through the package image atlas using the
 GLB's UVs. When `COLOR_0` is present, its normalized RGB/alpha value multiplies
 the instance tint, allowing one baked source mesh to preserve authored part
