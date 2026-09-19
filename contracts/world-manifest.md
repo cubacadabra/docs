@@ -54,16 +54,50 @@ atmosphere controls live under `world.visual`:
       "maximum": [44, 7, 44]
     },
     "visual": {
-      "exposure": 1.1,
-      "contrast": 1.1,
-      "saturation": 1.2,
+      "colorCorrection": {
+        "brightness": 0.12,
+        "contrast": 0.20,
+        "saturation": 0.60
+      },
+      "daylight": {
+        "timeOfDay": 6.5,
+        "geographicLatitude": 45,
+        "brightness": 2,
+        "outdoorAmbient": [0.5, 0.5, 0.5],
+        "shadowSoftness": 0.5
+      },
+      "sunRays": { "intensity": 0.058, "spread": 0.463 },
       "fogStart": 52,
-      "fogEnd": 120,
-      "sunDirection": [-0.45, -0.82, 0.32]
+      "fogEnd": 120
     }
   }
 }
 ```
+
+`colorCorrection` applies once to the completed 3D scene, before UI. Its
+`brightness` is additive; `contrast` and `saturation` are deltas from the
+neutral value, so zero for all three fields is identity. `sunRays` is a bounded
+radial-scattering pass from the visible sun: `intensity` and `spread` both lie
+in 0 through 1, and zero intensity bypasses its work. It is rendered after
+color correction and before UI. Bloom and blur are not part of this contract.
+
+`daylight` is optional portable directional-environment data. `timeOfDay` is
+local decimal hours in the half-open range 0 through 24, `geographicLatitude`
+is degrees (-89 through 89), `brightness` is 0 through 4, each
+`outdoorAmbient` component is 0 through 1, and `shadowSoftness` is 0 through
+1. The runtime derives a deterministic equinox sun direction from time and
+latitude; when `daylight` is present it overrides the legacy `sunDirection`.
+The existing 3×3 shadow filter expands its radius as softness increases rather
+than adding a second shadow map.
+
+`exposure`, `contrast`, `saturation`, and `sunDirection` remain accepted for
+existing SDK 0.5 packages. In the absence of `colorCorrection`, the first
+three are mapped to the scene pass as legacy multipliers relative to neutral;
+new packages should use `colorCorrection`. In the absence of `daylight`,
+`sunDirection` continues to provide the directional light. These presentation
+controls do not alter simulation or the gameplay camera.
+
+`colorCorrection`, `daylight`, and `sunRays` require manifest SDK `0.5.0`.
 
 `presentationBounds` optionally defines the primary authored subject used by
 Studio's Overview and Showcase review cameras. Each array is an inclusive
