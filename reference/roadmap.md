@@ -147,6 +147,35 @@ can be claimed. This includes authenticated soak and malformed-message tests,
 host and accessibility conformance, permissions, observability, and measured
 performance budgets.
 
+### 11. Measure and optimize compiled runtime packages
+
+The Vegas package is a useful proof that the source/runtime boundary is working:
+the native build emits a small runtime-only archive, omits the imported Roblox
+hierarchy and other authoring-only files, resolves source collision into the
+runtime manifest, and leaves no source-index references for hosts to interpret.
+Keep this as a regression fixture and make package-content checks verify the same
+properties for future imported worlds. The `assets/` convention must remain
+strict: it contains material intended to ship, while `imports/`, `reference/`,
+`scene.json`, and `src/` remain authoring inputs.
+
+The remaining optimization is runtime representation, not source cleanup. A
+large baked collision mesh can make `manifest.json` expensive to parse and hold
+in memory even when the archive compresses well. Measure package startup,
+manifest parse time, and peak memory on representative imported worlds, then
+evaluate a separately versioned derived collision asset or another compact world
+representation, for example:
+
+```text
+manifest.json
+assets/collision/vegas-floor.collision
+```
+
+with a manifest reference to that asset. Any such change must preserve the
+text-first authoring source, explicit package hashes, bounded validation,
+backward compatibility, and real host-loader evidence. It is not a reason to
+ship `scene.json`, source shards, Roblox provenance, or authoring collision
+documents to player hosts.
+
 ## Open decisions
 
 - Whether a general-purpose scene/prefab encoding needs a binary form. JSON is
