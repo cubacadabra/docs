@@ -16,6 +16,12 @@ specified by the builder's schema/tests and must be migrated here before those
 sources are retired. Never infer a format field from a sample that the
 builder does not accept.
 
+The backend upload boundary currently accepts ZIP archives up to 25 MiB, with
+at most 256 extracted files, 64 MiB per extracted file, and 96 MiB total
+uncompressed content. `manifest.json` may be up to 64 MiB within those bounds.
+These limits bound service-side extraction and are independent of host download
+or runtime memory budgets.
+
 Bounded procedural maze declarations are expanded during the native build into
 the generated manifest's ordinary terrain, interactions, checkpoints, and
 effects. The resulting package is self-contained; hosts do not need the maze
@@ -66,15 +72,19 @@ presence does not imply that an interactive host or backend executes it.
 ## Version distinction
 
 The current runtime and native tools builder support SDK versions `0.3.0`,
-`0.4.0`, and `0.5.0`; `world.terrain` requires `0.4.0` or `0.5.0`.
+`0.4.0`, `0.5.0`, and `0.6.0`; `world.terrain` requires `0.4.0`, `0.5.0`, or
+`0.6.0`.
 Static triangle collision, `world.camera`, and
-`world.physics.horizontalBounds` require an explicit `sdkVersion` of `0.5.0`
+`world.physics.horizontalBounds` require an explicit `sdkVersion` of `0.5.0` or
+`0.6.0`
 so older engines cannot silently ignore their semantics. The default project
 creator emits SDK `0.3.0` and package `formatVersion: 3`. Package format
 version and SDK version are separate compatibility axes. Static triangle
 collision also has its own required `collision.formatVersion`; format 1 is
-accepted when the package SDK is `0.5.0`. The retired Python builder
-intentionally rejects SDK `0.5.0`; use the native builder for current packages.
+accepted when the package SDK is `0.5.0` or `0.6.0`. Non-uniform mesh scaling
+uses `scale3` and requires SDK `0.6.0`. The retired Python builder
+intentionally rejects current native capabilities; use the native builder for
+current packages.
 See
 [the version matrix](../quality/compatibility/versions.md).
 

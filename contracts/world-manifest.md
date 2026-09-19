@@ -136,8 +136,10 @@ are static, deterministically authored visual instances. The legacy preview kind
 prefer an imported mesh decoration with an `asset` ID. Imported mesh instances
 share indexed GLB geometry and carry independent position, scale, yaw, and tint
 values. `scale` remains the legacy uniform value; authoring compilers may also
-emit optional `scale3: [x, y, z]` for non-uniform mesh scaling, with missing
-axes falling back to `scale`. A mesh decoration may also set `material` to a named world material;
+emit `scale3: [x, y, z]` for non-uniform mesh scaling. `scale3` must contain
+exactly three finite positive values and requires manifest SDK `0.6.0`; older
+runtimes must reject packages that use it rather than silently falling back to
+uniform scaling. A mesh decoration may also set `material` to a named world material;
 that material's image is sampled through the package image atlas using the
 GLB's UVs. When `COLOR_0` is present, its normalized RGB/alpha value multiplies
 the instance tint, allowing one baked source mesh to preserve authored part
@@ -200,8 +202,9 @@ vertices. Creator tooling must bake source transforms and scaling into these
 coordinates. Collision does not reference a model asset and hosts must not
 load, inspect, or reinterpret GLB geometry to produce it.
 
-Static collision and `world.physics.horizontalBounds` are SDK `0.5.0`
-capabilities. Packages using either field must declare `sdkVersion: "0.5.0"`.
+Static collision and `world.physics.horizontalBounds` are SDK `0.5.0` and
+`0.6.0` capabilities. Packages using either field must declare
+`sdkVersion: "0.5.0"` or `"0.6.0"`.
 
 In creator source manifests only, `collision: {"source":
 "reference/hub-collision.json"}` may replace the inline object. The Rust

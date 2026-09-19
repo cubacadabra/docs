@@ -496,9 +496,17 @@ The first working slice now covers one extracted Vegas chair: after stopping
 Preview, select **Chair — Roulette Player 3** in the Scene tree, choose Resize,
 and drag its corner handles for X/Z size or the top-edge handle for height.
 The same non-uniform scale is editable numerically in the Inspector and is
-compiled back into the mesh decoration. The rest of the imported Vegas source
-remains intentionally read-only until source hierarchy import and picking
-metadata are available.
+compiled back into the mesh decoration. The extracted chair is deliberately
+visual-only until instance-local collision is available; it must not be added
+to the world-space baked collision file. Viewport drags are transient and
+commit one source transaction on release. The rest of the imported Vegas
+source remains intentionally read-only until source hierarchy import and
+picking metadata are available.
+
+The Phase 2 contract also rejects unsupported parent/shear compositions,
+suppresses manipulation handles for locked baked assets, and gates non-uniform
+runtime mesh scale behind SDK `0.6.0`. These constraints keep the first
+editable object honest while the full source hierarchy remains future work.
 
 **Exit gate:** in Vegas or the fixture, a creator can select a supported object
   from either surface, drag it, undo it, save it, rebuild, and observe the same
