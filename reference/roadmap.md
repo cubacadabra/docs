@@ -119,7 +119,8 @@ The generic `DataModel` currently supplies a stable entity graph and ordered
 mutation feed; it is not yet a Luau `Instance` surface or connected to every
 consumer. Manual Studio edits, Luau, and future AI edits should converge on
 shared validation, changes, preview, undo, and hot reload. See the proposed
-[editing model](../products/studio/editing-model.md).
+[editing model](../products/studio/editing-model.md) and the proposed
+[large-world scene authoring plan](../products/studio/roblox-style-scene-authoring-plan.md).
 
 ### 8. Set measured service, safety, and performance budgets
 
