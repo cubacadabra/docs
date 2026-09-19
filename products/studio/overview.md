@@ -26,6 +26,11 @@ All embedded preview views fill the editor viewport; Gameplay keeps the player
 camera. This does not change the letterboxing policy of standalone player hosts.
 These renderer entry points and camera state are gated by `studio-ui`.
 
+Selecting a placeable scene object brings the local preview character near that
+object and turns the Gameplay camera toward it. This works while Play is
+running and while the preview is stopped; it only changes the in-memory preview
+state and does not change authored spawn data.
+
 The raw-project path calls the shared Rust builder in-process. The native
 `cubacadabra` CLI in `tools` is a thin command-line frontend over the same
 library. Installed Studio releases do not require Python, `PYTHONPATH`, or a
