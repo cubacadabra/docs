@@ -165,21 +165,66 @@ provide parity checks for transforms, bounds, materials, visibility, and
 collision selection. Duplicate names are normal; identity must never depend on
 the display name alone.
 
-The native authoring scene is a project format, not a Studio-specific format:
+The native authoring scene is a project format, not a Studio-specific format.
+The format is text-first and sharded so that a large imported project remains
+reviewable and editable in Git:
 
 ```text
 manifest.json       game and package configuration
-scene.json          canonical editable world and source graph
+scene.json          small root/index document for the canonical scene dataset
+scene/nodes/        sharded native NodeRecord files
+imports/            sharded source/provenance datasets, grouped by importer
 src/                Luau source
 assets/             source assets and compiler inputs
 studio.json         editor-only state such as previewWorld and reviewCamera
 ```
 
-`scene.json` is the canonical editable world. Studio is one editor of it;
-Codex, the CLI, scripts, other editors, and future web tooling must be able to
-read and write the same format. `manifest.json` remains the package/config
-boundary used by current projects, while the builder compiles the supported
-`scene.json` subset into the existing manifest, asset, and collision outputs.
+`scene.json` is the root document for the canonical editable world. It declares
+the format version, roots, and node stores; it does not require every
+`NodeRecord` to be physically embedded in one JSON document. Studio is one
+editor of the dataset; Codex, the CLI, scripts, other editors, and future web
+tooling must be able to read and write the same files. `manifest.json` remains
+the package/config boundary used by current projects, while the builder
+compiles the supported authoring dataset into the existing manifest, asset,
+and collision outputs.
+
+The first native storage contract is sharded JSON rather than a binary scene
+format. A root document may look like:
+
+```json
+{
+  "formatVersion": 2,
+  "worldId": "vegas",
+  "roots": ["01K..."],
+  "nodeStore": {
+    "kind": "sharded-json",
+    "path": "scene/nodes"
+  },
+  "imports": [
+    { "kind": "roblox", "path": "imports/roblox/vegas/index.json" }
+  ]
+}
+```
+
+Shards should target 2–3 MiB and have an absolute 4 MiB ceiling. They must be
+selected by stable ID prefixes rather than sequential record ranges, so adding
+or editing one node does not renumber every later file. A bucket that exceeds
+the target is split by the next ID prefix only; unchanged buckets retain their
+paths. Each generated dataset must list its shard paths and byte sizes in its
+index, and the writer/CI must fail rather than silently emit an oversized JSON
+file.
+
+Imported source records should store a stable ID, parent ID, source segment,
+class/name, and only the local data needed by the inspector. Full source paths
+are reconstructed by following parents; repeating `path` and `parentPath` on
+every descendant is explicitly not part of the native representation.
+
+`imports/<kind>/<name>/index.json` is the provenance boundary for an imported
+dataset. It may contain sibling `nodes/`, `geometry/`, `lights/`, `textures/`,
+and `diagnostics.json` stores. Conversion tools and Studio should consume this
+same normalized dataset rather than generating overlapping monolithic JSON
+copies. A disposable local cache may be added later for load performance, but
+it must never become the canonical project format.
 Existing projects may use a compatibility adapter during migration; Studio
 must not silently create a second source of truth.
 
@@ -459,6 +504,9 @@ Save behavior must be explicit:
 - Add a native authoring import command, initially named `import-roblox-scene`,
   that creates/updates `scene.json` from the full source hierarchy. Keep
   `import-roblox-reference` as the exhaustive reference/evidence importer.
+- Define the sharded JSON storage contract before writing a full imported
+  hierarchy: stable-ID prefix buckets, 2–3 MiB targets, a 4 MiB hard ceiling,
+  deterministic shard manifests, and parent-ID/source-segment records.
 - Enforce the shared local-file, non-downloader, provenance, and non-executing
   import boundary described in the [toolchain import policy](../../systems/toolchain/overview.md#local-roblox-project-import-boundary).
 - Extend importer and exporter diagnostics so the fixture reports source
@@ -533,17 +581,21 @@ editable object honest while the full source hierarchy remains future work.
   existing Vegas gameplay loop still runs.
 
 The first import milestone implements this boundary in two layers:
-`import-roblox-reference` preserves all normalized source instance records in
-the reference artifact, and `import-roblox-scene` writes a complete
-deterministic `source-hierarchy.json` index plus a bounded read-only source tree
-in `scene.json`. The default tree depth is intentionally limited until
-Studio's source-internals view is virtualized. Geometry exporters also emit
-local GLB bounds sidecars; manifest model declarations may carry those generated
-bounds so Studio can size handles without hand-authored `render.bounds` values.
+`import-roblox-reference` normalizes source instances and specialized geometry
+facts, and `import-roblox-scene` writes a deterministic sharded import dataset
+(`imports/roblox/<name>/index.json` plus `nodes/` shards) and a bounded
+read-only source tree in `scene.json`. The default tree depth is intentionally
+limited until Studio's source-internals view is virtualized. The reference
+dataset and the Studio import should share one normalized representation rather
+than copying every source instance into a second monolithic index. Geometry
+exporters also emit local GLB bounds sidecars; manifest model declarations may
+carry those generated bounds so Studio can size handles without hand-authored
+`render.bounds` values.
 
-The source index uses SHA-256-derived IDs from source paths, keeps duplicate
-names distinct, and records geometry counts by source path. It is an
-inspection/provenance index, not a runtime entity list. Imported source nodes
+The source dataset uses SHA-256-derived IDs from source paths, keeps duplicate
+names distinct, records geometry counts by source ID, and reconstructs source
+paths through parent IDs and local source segments. It is an
+inspection/provenance dataset, not a runtime entity list. Imported source nodes
 remain locked until a native representation and an explicit builder adapter
 exist for their properties.
 
@@ -650,9 +702,10 @@ into a live runtime entity.
 
 ## Decisions resolved by this plan
 
-1. `scene.json` is the project-owned canonical authoring format. It is not
-   `studio.scene.json`, and it is separate from `manifest.json` package/config
-   data and `studio.json` editor preferences.
+1. The project-owned canonical authoring format is a versioned text dataset
+   rooted at `scene.json`; large node and import stores are sharded JSON, not a
+   binary scene blob. It is not `studio.scene.json`, and it is separate from
+   `manifest.json` package/config data and `studio.json` editor preferences.
 2. The authoring graph and compiled runtime are different representations.
    The runtime must not receive one live entity per source object. Static
    batching, repeated-mesh instancing, spatial chunks, collision chunks, and
@@ -661,8 +714,10 @@ into a live runtime entity.
    reparent, and save/reload preserve IDs; duplicate creates a new ID.
 4. Every node exposes an explicit representation, capability, compile status,
    and diagnostics. Unsupported or approximate output is visible to creators.
-5. `import-roblox-reference` remains the exhaustive reference/evidence path.
-   A separate native authoring import creates/updates `scene.json`.
+5. `import-roblox-reference` remains the exhaustive reference/evidence path,
+   but its normalized source dataset is shared with the native authoring import
+   rather than copied into a second path-heavy hierarchy file. The native
+   authoring import creates/updates the `scene.json` root and sharded stores.
 6. `export-reference-mesh` remains a temporary/reference baking tool. The
    final scene compiler owns optimized output and an editor-only mapping back
    to authoring IDs.
