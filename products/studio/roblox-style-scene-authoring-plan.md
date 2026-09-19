@@ -188,6 +188,12 @@ is a separate versioned contract decision with producer, builder, Rust, host,
 and compatibility evidence. It must not happen implicitly as part of the tree
 UI.
 
+The shared legal and provenance boundary for `.rbxl`/`.rbxlx` importing lives
+in the [toolchain import policy](../../systems/toolchain/overview.md#local-roblox-project-import-boundary).
+Studio must surface the native importer's ownership affirmation, provenance
+classifications, placeholders, omissions, and conversion diagnostics rather
+than reinterpret them locally.
+
 ### Native `NodeRecord` identity and compilation status
 
 The authoring graph should establish `NodeRecord` before the Explorer UI is
@@ -452,6 +458,8 @@ Save behavior must be explicit:
 - Add a native authoring import command, initially named `import-roblox-scene`,
   that creates/updates `scene.json` from the full source hierarchy. Keep
   `import-roblox-reference` as the exhaustive reference/evidence importer.
+- Enforce the shared local-file, non-downloader, provenance, and non-executing
+  import boundary described in the [toolchain import policy](../../systems/toolchain/overview.md#local-roblox-project-import-boundary).
 - Extend importer and exporter diagnostics so the fixture reports source
   hierarchy counts, geometry parity, unsupported properties, approximations,
   unresolved mesh references, and stable IDs.
