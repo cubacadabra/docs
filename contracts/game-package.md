@@ -123,6 +123,12 @@ The cross-repository
 `tools/scripts/check_world_model_hosts.py` check guards this host-registration
 contract.
 
+Model asset declarations may also include authoring-only `bounds: [x, y, z]`
+metadata. These are local GLB dimensions produced by the source importer and
+used by Studio for selection and resize handles; runtime mesh decorations do
+not consume this field. Importers should derive it from emitted GLB vertices or
+the generated `*.bounds.json` sidecar rather than hand-entering dimensions.
+
 Opaque world geometry, terrain, imported world meshes, and Morph characters
 share the engine's directional shadow path. The current renderer builds a
 player-centered orthographic shadow map and applies a small percentage-closer

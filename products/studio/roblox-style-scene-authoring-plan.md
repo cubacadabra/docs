@@ -532,6 +532,21 @@ editable object honest while the full source hierarchy remains future work.
   exactly why it is read-only. The generated package remains valid and the
   existing Vegas gameplay loop still runs.
 
+The first import milestone implements this boundary in two layers:
+`import-roblox-reference` preserves all normalized source instance records in
+the reference artifact, and `import-roblox-scene` writes a complete
+deterministic `source-hierarchy.json` index plus a bounded read-only source tree
+in `scene.json`. The default tree depth is intentionally limited until
+Studio's source-internals view is virtualized. Geometry exporters also emit
+local GLB bounds sidecars; manifest model declarations may carry those generated
+bounds so Studio can size handles without hand-authored `render.bounds` values.
+
+The source index uses SHA-256-derived IDs from source paths, keeps duplicate
+names distinct, and records geometry counts by source path. It is an
+inspection/provenance index, not a runtime entity list. Imported source nodes
+remain locked until a native representation and an explicit builder adapter
+exist for their properties.
+
 ### Phase 4 — source fidelity and compiled scene pipeline
 
 This phase runs in parallel with the Studio tree work. It is not a prerequisite

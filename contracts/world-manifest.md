@@ -27,6 +27,13 @@ Keep state schemas and interaction IDs stable within a package version. Use
 small semantic IDs that form the bridge between manifest, Luau, and retained
 presentation.
 
+Model entries under `assets.models` may carry authoring-only `bounds: [x, y, z]`
+metadata. The dimensions are the positive local-space bounds of the declared
+GLB and are used by Studio for picking and resize affordances; the runtime
+decoration contract does not consume them. Source importers should generate
+this field from exported vertices (normally alongside a `*.bounds.json`
+sidecar), not ask creators to estimate it manually.
+
 ## Terrain
 
 Static terrain is an SDK `0.4.0`/`0.5.0` capability. It accepts ordered block, ball,
