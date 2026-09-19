@@ -176,6 +176,13 @@ backward compatibility, and real host-loader evidence. It is not a reason to
 ship `scene.json`, source shards, Roblox provenance, or authoring collision
 documents to player hosts.
 
+Apply the same discipline to large visual assets: GLB is the current runtime
+visual container, but large worlds should eventually be split into independently
+loadable and cullable chunks based on measured budgets. Keep the asset reference
+and world semantics neutral so a future optimized mesh representation can
+replace GLB without changing the authoring model or game API. See the
+[runtime visual asset guidance](../systems/assets/assets-and-prefabs.md#glb-as-the-current-runtime-visual-asset).
+
 ## Open decisions
 
 - Whether a general-purpose scene/prefab encoding needs a binary form. JSON is

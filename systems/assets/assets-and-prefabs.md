@@ -14,6 +14,60 @@ rebuildable from its checked-in source and pinned dependencies on a clean
 supported creator machine; private cloud IDs or an author's local cache cannot
 be required for that build.
 
+## GLB as the current runtime visual asset
+
+GLB is the current runtime mesh container for Cubacadabra. It is an open,
+inspectable asset format that gives hosts a common representation for visual
+geometry without making the renderer depend on the source author's scene
+structure. It is not the Cubacadabra world model.
+
+Keep the responsibilities separated:
+
+```text
+Cubacadabra authoring project
+scene.json · imports/ · Luau · source assets
+                |
+                | build
+                v
+Cubacadabra runtime semantics       Runtime visual assets
+manifest.json · game.luau           declared GLB files
+```
+
+GLB describes what an asset looks like: mesh geometry, material groups,
+vertex data, and related visual resources supported by the package contract.
+The manifest and Luau describe what content means and does: world semantics,
+signs, interactions, spawn points, camera and lighting settings, and game
+behavior. The authoring scene and import datasets retain editable hierarchy,
+source identity, provenance, and diagnostics. Do not put gameplay identity,
+network ownership, scripts, source hierarchy, or authoring provenance into GLB
+merely because the renderer consumes it.
+
+The builder may later transform a declared GLB into a Cubacadabra-optimized
+derived representation—for example, with platform-native vertex layouts,
+compressed attributes, meshlets, LODs, or precomputed culling data—without
+changing the authoring model or game semantics. Package references should
+therefore identify the declared visual asset, not make the current GLB byte
+layout an engine-wide abstraction. Any replacement remains a versioned,
+content-addressed runtime asset with explicit host-loader and compatibility
+evidence.
+
+### Runtime mesh granularity
+
+The first Vegas exports demonstrate the useful end of the tradeoff: thousands
+of source objects can become a small number of efficient visual meshes while
+the richer source hierarchy remains available to Studio. That does not mean a
+whole city or world should become one indivisible GLB. Large visual assets must
+eventually be partitionable into independently loadable and cullable chunks,
+whether the chunks are authored explicitly or generated spatially by the
+builder. Chunking budgets should be based on measured load time, memory,
+submission cost, visibility, and streaming behavior rather than on the number
+of source objects.
+
+The runtime must not recover gameplay objects by walking GLB nodes. If an
+individual door, light, interaction, or script needs identity or behavior, it
+must be represented by the authoring/runtime semantic model and compiled into
+the appropriate manifest, Luau, or host-owned data.
+
 ## Requirements for a future prefab/document format
 
 These are durable design constraints, not a selected encoding:
