@@ -165,6 +165,45 @@ provide parity checks for transforms, bounds, materials, visibility, and
 collision selection. Duplicate names are normal; identity must never depend on
 the display name alone.
 
+### Source hierarchy versus compiled runtime
+
+The imported source graph and the player package intentionally preserve
+different kinds of information. The source graph describes the scene as an
+authoring dataset: objects, names, classes, parent relationships, stable
+source IDs, transforms, provenance, and diagnostics. The compiler reduces that
+dataset to the smallest runtime representations that preserve what the game
+needs:
+
+```text
+Roblox/source hierarchy
+68,873 source instances in the Vegas reference
+        |
+        +-- visual geometry ------> flattened GLB meshes
+        +-- collision geometry ---> runtime collision data
+        +-- runtime meaning ------> manifest data
+        |                           signs, spawn, interactions,
+        |                           lighting, bounds, and camera
+        +-- game behavior ---------> game.luau
+        +-- source-only detail ----> retained only in the authoring project
+                                    names, Roblox classes, hierarchy,
+                                    source IDs, and provenance
+```
+
+The Vegas package makes this reduction concrete: four visual GLBs preserve
+roughly 135,000 rendered triangles while each large exported scene mesh is
+represented by one mesh node with a small number of material groups, rather
+than thousands of runtime entities. Its 50,780 collision triangles remain
+available to physics, currently inline in the compiled manifest, while the
+source collision document remains authoring-only. Signs, interactions, spawn,
+presentation bounds, lighting, fog, and camera settings remain manifest data
+because they carry runtime meaning that geometry alone cannot express.
+
+This is a deliberate lossy boundary. A shipped package must not be expected to
+reconstruct the full editable imported scene; Studio uses the project-owned
+`scene.json` and `imports/` datasets for that source-level understanding. The
+runtime compiler may flatten, batch, instance, or spatially partition content
+without making those implementation details part of the authoring model.
+
 The native authoring scene is a project format, not a Studio-specific format.
 The format is text-first and sharded so that a large imported project remains
 reviewable and editable in Git:
