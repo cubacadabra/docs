@@ -35,8 +35,12 @@ flowchart LR
     Feed --> Consumers
 ```
 
-Only the generic `DataModel` graph and bounded mutation feed are implemented
-foundations today. The complete cross-source editing transaction is proposed.
+The project-owned `cubacadabra-scene` crate is now the canonical source model
+for authoring nodes, transforms, components, validation, and world/local
+transform math. Studio and the builder consume that model directly; the
+builder no longer owns the scene types. Studio still has a transitional
+source-string history and preview overlay, which are the next migration steps
+toward command-sized transactions and live editor rendering.
 
 ## Acceptance scenario
 

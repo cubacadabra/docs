@@ -9,9 +9,11 @@ the implementation language is not part of that contract.
 
 ## Current state
 
-The Rust workspace in `tools` now owns the canonical `cubacadabra-builder`,
-`cubacadabra-project`, and native `cubacadabra` CLI crates. Studio calls the
-builder library in-process. The Python implementation remains for commands
+The Rust workspace in `tools` now owns the canonical `cubacadabra-scene`,
+`cubacadabra-builder`, `cubacadabra-project`, and native `cubacadabra` CLI
+crates. `cubacadabra-scene` owns the editable authoring model; the builder
+consumes it to produce runtime package content. Studio calls the builder
+library in-process and depends on the scene model directly. The Python implementation remains for commands
 and the compatibility harness that have not yet moved into Rust; it is not
 required by Studio or its release packaging.
 
