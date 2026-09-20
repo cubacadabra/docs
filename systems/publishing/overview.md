@@ -7,6 +7,15 @@ package files, lists latest versions, and serves files to clients. The tools
 also include maintainer-oriented upload workflows. This is a basic release
 path, not a complete creator release-management system.
 
+### Upload entitlement
+
+The `/cubes/upload` boundary requires an authenticated user with an active
+developer plan: Creator Pro ($20/month) or Studio ($99/month). The backend
+checks the current Stripe subscription before reading or storing the archive;
+the browser is not an authorization boundary. Free-plan requests receive
+`403` with `error: "uploads_not_allowed_in_free_plan"` and the message
+`"Uploads are not allowed in the free plan."`.
+
 An upload being accepted does not establish a full draft → validate → stage →
 publish flow, immutable user-selected version, rollback, visibility/access
 rules, moderation review, discovery, or package diagnostics. Those remain

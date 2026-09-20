@@ -574,6 +574,156 @@ Add a **Show Source Internals** mode for the complete imported hierarchy. This
 keeps normal authoring useful while preserving forensic access to every source
 object.
 
+### Promotion is the migration path
+
+The goal of import is not to make every source row unlocked. The durable goal
+is:
+
+> Every meaningful Roblox thing should either have a native, editable
+> Cubacadabra representation or be clearly treated as source/reference data.
+
+An imported row being locked is therefore not, by itself, a failure. It is a
+temporary or intentional capability state. The importer should not pretend
+that a source object is an editable scene object when the builder has no native
+representation for its geometry, behavior, or properties.
+
+The current importer already demonstrates this transition. Ordinary imported
+nodes initially carry an explicit reason such as:
+
+```text
+Imported source node has no editable native representation yet
+```
+
+The chair pipeline then promotes a source subtree into a native node with
+preserved provenance:
+
+```text
+representation = editable-imported-instance
+render mesh    = vegas-chair-N
+locked         = false
+source         = roblox
+source path    = Workspace:...
+```
+
+That is the general mechanism for imported-scene migration. The native node
+retains where it came from without requiring the runtime or the authoring tree
+to treat the original Roblox object model as Cubacadabra's type system.
+
+#### Translate meaning, not just class names
+
+The next useful promotion after chairs is ordinary geometry. A Roblox `Part`
+such as `OuterRing` should eventually become a native primitive or render node
+with its transform, size, material/color, and collision. It should then be
+possible to select it, move it, resize it, rotate it, and have its collision
+follow the same authoring transform. `DirtTrack` objects should follow the same
+path when their source data is a supported `Part`, `MeshPart`, or `Model`.
+
+The mapping is conceptual rather than a new Roblox-shaped native hierarchy:
+
+| Roblox source class or concept | Native Cubacadabra representation |
+| --- | --- |
+| `Part` | Primitive or supported render node |
+| `MeshPart` | Reusable mesh instance |
+| `Model` | Group or asset instance |
+| `SpawnLocation` | Spawn object/component |
+| `PointLight`, `SpotLight`, `SurfaceLight` | Native light component |
+| `Decal`, `Texture` | Surface/material data |
+| `Seat` | Seat or interaction component |
+| Trigger `Part` or zone | Editable trigger volume |
+| Teleport marker or logic | Portal/teleport component plus game logic |
+| `Script`, `LocalScript`, `ModuleScript` | Luau migration candidate, not scene geometry |
+| `Folder` | Organizational group when it has authoring value |
+
+This lets the importer preserve source provenance while translating useful
+meaning into native components. A `Trigger` should not remain a list of locked
+parts forever if its meaning can be represented as a movable, resizable
+translucent trigger volume. Likewise, a `SpawnLocation` should become a
+spawn, and a light should become a light. These are authoring concepts, not
+requests to reproduce Roblox classes in the runtime.
+
+The same distinction applies to game-specific source such as a blackjack
+table. The table, chairs, trigger volume, dealer position, and lights may be
+editable scene objects. Names such as `AlreadySplit`, `Bust`, `Hit`,
+`DealerBlackjack`, and `Player1NoCredits` are more likely scripts, events,
+values, folders, or state/configuration records. Their destination may be
+Luau, game state, events, editable properties, or source-only provenance. They
+should not become draggable objects with transform handles merely because they
+appear in the imported hierarchy.
+
+#### Separate the useful scene from source archaeology
+
+The default Studio tree should distinguish the native authoring scene from the
+complete imported source dataset:
+
+```text
+Scene
+  Vegas Floor
+    Environment
+    Furniture
+      Vegas Chair 1
+      Vegas Chair 2
+    Tables
+    Triggers
+    Lights
+    Spawns
+
+Imported Source
+  Roblox
+    Workspace
+      Games
+        ...
+```
+
+The native `Scene` tree should contain the useful editable game. `Imported
+Source` should retain the original hierarchy, including `RemoteEvent`,
+`BindableEvent`, value objects, scripts, GUI internals, and other implementation
+artifacts for migration and debugging. Source-only records remain inspectable
+through **Show Source Internals**, but they should not make the normal Scene
+tree look like a wall of locked objects.
+
+#### Promotion can be explicit
+
+The importer does not need to explode every geometry record into a native node
+on the first pass. It can retain an efficient baked representation and promote
+objects as their authoring value becomes clear. The existing chair promotion
+provides the sequence:
+
+```text
+identify source instances
+  -> fingerprint repeated geometry
+  -> create or reuse local-space assets
+  -> retain each instance transform
+  -> exclude promoted instances from the baked mesh
+  -> create native authoring nodes with source links
+  -> select the promoted node
+```
+
+Studio can expose the same operation for a supported source object as **Make
+Editable**. The operation must locate or extract the source geometry, reuse an
+asset when possible, remove the promoted content from the baked
+representation, create the native node, preserve the source link, and select
+the result. A failed promotion must leave the baked representation and source
+data unchanged while reporting the unsupported property or missing asset.
+
+Import presets can make the tradeoff explicit:
+
+```text
+Optimized       Keep most supported geometry baked
+Balanced        Promote common furniture, lights, spawns, and gameplay objects
+Fully editable  Promote all supported geometry and authoring concepts
+```
+
+`Balanced` is the sensible default for a large Vegas world. It preserves load
+and editor performance while making the objects a creator is likely to move,
+resize, or configure available as native nodes. Promotion status and source
+links must remain deterministic so the result is reviewable in Git and can be
+reproduced by the CLI.
+
+Success should not be measured by driving the locked count to zero. The better
+metric is whether every object a game developer reasonably expects to
+manipulate has a native representation, while everything else is clearly
+labeled source/reference data and stays out of the way.
+
 ### Authoring graph versus final scene compiler
 
 `export-reference-mesh` should remain a reference baking tool. It is useful for
