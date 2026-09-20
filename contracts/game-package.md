@@ -154,7 +154,9 @@ not consume this field. Importers should derive it from emitted GLB vertices or
 the generated `*.bounds.json` sidecar rather than hand-entering dimensions.
 
 Opaque world geometry, terrain, imported world meshes, and Morph characters
-share the engine's directional shadow path. The current renderer builds a
+share the engine's directional shadow path. Primitive blocks may set
+`castShadow: false` to remain visible without contributing to the shadow map;
+the field defaults to `true` for compatibility. The current renderer builds a
 player-centered orthographic shadow map and applies a small percentage-closer
 filter to receivers; shadow coverage and quality are runtime presentation
 settings, not package-authored state. Hosts must keep this path available when

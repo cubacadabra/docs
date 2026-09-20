@@ -23,7 +23,10 @@ whether the block is included in player and camera obstacle queries; it
 defaults to `true` for backward compatibility. A block may use a named package
 image material or an explicitly namespaced engine material such as
 `builtin:rock`, `builtin:mud`, or `builtin:ground`. The block color remains the
-visual tint for either material form.
+visual tint for either material form. The optional `castShadow` field controls
+whether the block contributes geometry to the directional shadow map; it also
+defaults to `true`. A block with `castShadow: false` remains visible, receives
+lighting and shadows normally, and is omitted only from the shadow-caster pass.
 
 The manifest's `effects` value may contain an inline effect library or
 `{ "source": "effects.json" }`; the builder validates the relative path and

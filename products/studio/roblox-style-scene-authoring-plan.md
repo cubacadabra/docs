@@ -33,7 +33,7 @@ The reference Vegas scene contains enough scale to expose the problem:
 | --- | --- |
 | `other-examples/vegas.json` | 68,873 source instances, 17,420 geometry records, 12,275 non-transparent geometry records, 10,566 `Part`s, 4,412 `MeshPart`s, 3,025 `Model`s, 2,041 `Folder`s, 1,825 `UnionOperation`s, 610 lights, 135 textures, and 3,676 text objects. Each geometry record has a source `path` and `parentPath`. |
 | `other-examples/vegas.rbxlx` | The full source instance hierarchy, including non-geometric folders, models, services, scripts, UI, lights, and properties. |
-| `examples/vegas-101/manifest.json` | The current Cubacadabra package has one `vegas-floor` world, three baked environment meshes plus 245 promoted editable chairs backed by eight reusable chair assets, five signs, seven interactions, and no blocks. |
+| `examples/vegas-101/manifest.json` | The current Cubacadabra package has one `vegas-floor` world, three baked environment meshes, 245 promoted editable chairs backed by eight reusable chair assets, 1,864 promoted Workspace Part primitives, five signs, and seven interactions. |
 | Current Studio shell | `SceneNode` is recursive and selectable, with authoring-scene nodes using stable imported IDs while runtime-only fallback content still comes from typed manifest arrays. |
 | Current viewport | Selection and limited X/Z Move/Resize already work for projected placeable objects. The viewport is still primarily a runtime preview; it is not a general authoring surface with a transform gizmo. |
 
@@ -688,7 +688,9 @@ on the first pass. It can retain an efficient baked representation and promote
 objects as their authoring value becomes clear. The current ordinary-Part
 milestone now provides a bounded automatic promotion path: anchored, ordinary
 block Parts with axis-aligned rotations and no unsupported mesh, transparency,
-or reflectance behavior become native box primitives. Dynamic Parts, non-block
+or reflectance behavior become native box primitives. `CastShadow` is
+preserved per primitive; a false value keeps the block in the normal render
+pass while excluding it from shadow-caster geometry. Dynamic Parts, non-block
 shapes, arbitrary rotations, and other unsupported cases remain fallback
 geometry with a diagnostic reason. Name filters remain available for focused
 imports, but are no longer required for the default conversion.
@@ -908,8 +910,8 @@ can explain which tree nodes are editable, read-only, or build-derived.
 - Add tree-to-viewport and viewport-to-tree selection synchronization,
   expansion persistence, focus, visibility, lock, and clear read-only states.
 - Show current Vegas content honestly: three baked mesh decorations, the
-  promoted chair instances, five signs, and seven interactions, with no fake
-  rows for the 10,566 source Parts.
+  promoted chair instances, promoted native Part primitives, five signs, and
+  seven interactions, with no fake rows for the 10,566 source Parts.
 
 **Exit gate:** tree navigation remains responsive with a synthetic 10k-node
 fixture, search reveals ancestor context, and selection survives rebuild.
@@ -986,8 +988,10 @@ carry those generated bounds so Studio can size handles without hand-authored
 
 For the Vegas fixture, the same importer promotes every `SofaChair` under
 the table hierarchy into an unlocked authoring node and every supported
-ordinary Part into a native primitive. Promoted primitives are organized under
-native groups derived from meaningful source Models/Folders, linked from the
+ordinary Part into a native primitive. Promoted primitives preserve
+`CanCollide`, `CastShadow`, color, and supported material mappings. They are
+organized under native groups derived from meaningful source Models/Folders,
+linked from the
 locked source tree, and excluded from the relevant baked meshes and collision
 outputs. The importer writes actual promotion counts and fallback reasons. The
 chair promotion preserves each source path and transform and deduplicates the
