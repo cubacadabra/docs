@@ -27,18 +27,28 @@ A raw project may include `studio.json` with a `previewWorld` and
 preview preferences: Studio validates the world, applies it to the temporary
 runtime manifest, and leaves the authored shipping launch destination intact.
 
-Overview and Showcase start by framing the world's presentation bounds and
-support left-drag orbit, right- or middle-drag pan, and wheel/pinch zoom.
-Clicking the selected preset again reframes the world. Navigation works while
-the preview is stopped and does not change gameplay camera state or snapshots.
-All embedded preview views fill the editor viewport; Gameplay keeps the player
-camera. This does not change the letterboxing policy of standalone player hosts.
-These renderer entry points and camera state are gated by `studio-ui`.
+Editable projects open stopped in Build mode. Build mode hides local and remote
+players and runtime HUD, reserves left-click and left-drag for object selection
+and manipulation, uses right-drag to orbit, middle-drag to pan, and wheel or
+pinch to zoom. Overview and Showcase start by framing the world's presentation
+bounds; clicking the selected preset again reframes the world. `F` frames the
+selected object. Arrow keys nudge it by a quarter-unit along camera-relative
+ground axes, and Command-D on macOS or Ctrl-D on Windows and Linux duplicates
+and selects a copy.
 
-Selecting a placeable scene object brings the local preview character near that
-object and turns the Gameplay camera toward it. This works while Play is
-running and while the preview is stopped; it only changes the in-memory preview
-state and does not change authored spawn data.
+Selection changes editor state only. It does not move the local player or the
+editor camera, and clicking empty viewport space or pressing Escape clears the
+object selection. Double-click and `F` are the explicit focus actions.
+
+Play saves and rebuilds stale source before entering Game mode. Game mode uses
+the gameplay camera, players, runtime HUD, and gameplay movement controls. Stop
+returns to the editor camera position held before Play. Rebuilds of the same
+project preserve that editor camera; opening another project or explicitly
+choosing a camera preset reframes it. These creator-only controls do not change
+gameplay camera state or snapshots. All embedded preview views fill the editor
+viewport; this does not change the letterboxing policy of standalone player
+hosts. The renderer entry points and editor camera state are gated by
+`studio-ui`.
 
 The raw-project path calls the shared Rust builder in-process. The native
 `cubacadabra` CLI in `tools` is a thin command-line frontend over the same

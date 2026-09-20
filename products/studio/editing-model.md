@@ -42,6 +42,14 @@ builder no longer owns the scene types. Studio still has a transitional
 source-string history and preview overlay, which are the next migration steps
 toward command-sized transactions and live editor rendering.
 
+Studio keeps stopped authoring separate from runtime play. Selection and editor
+camera navigation are host-owned presentation state and never mutate the local
+player. Play saves and rebuilds stale authoring source, then temporarily hands
+the viewport and movement controls to the embedded runtime; Stop restores the
+preserved editor camera. Object dragging, quarter-unit camera-relative arrow
+nudges, duplication, inspector edits, undo, and future agent edits all feed the
+same source transaction path.
+
 On the first supported world edit to a manifest-only project, Studio converts
 the active world's supported object collections into scene components and
 removes the migrated arrays from the source manifest before presenting either
