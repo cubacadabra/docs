@@ -33,7 +33,7 @@ The reference Vegas scene contains enough scale to expose the problem:
 | --- | --- |
 | `other-examples/vegas.json` | 68,873 source instances, 17,420 geometry records, 12,275 non-transparent geometry records, 10,566 `Part`s, 4,412 `MeshPart`s, 3,025 `Model`s, 2,041 `Folder`s, 1,825 `UnionOperation`s, 610 lights, 135 textures, and 3,676 text objects. Each geometry record has a source `path` and `parentPath`. |
 | `other-examples/vegas.rbxlx` | The full source instance hierarchy, including non-geometric folders, models, services, scripts, UI, lights, and properties. |
-| `examples/vegas-101/manifest.json` | The current Cubacadabra package has one `vegas-floor` world, three baked mesh decorations plus one extracted editable chair, five signs, seven interactions, and no blocks. |
+| `examples/vegas-101/manifest.json` | The current Cubacadabra package has one `vegas-floor` world, three baked environment meshes plus 245 promoted editable chairs backed by eight reusable chair assets, five signs, seven interactions, and no blocks. |
 | Current Studio shell | `SceneNode` is already recursive and selectable, but it is synthesized from a small set of typed manifest arrays. IDs are collection/index paths such as `world/vegas-floor/signs/2`. |
 | Current viewport | Selection and limited X/Z Move/Resize already work for projected placeable objects. The viewport is still primarily a runtime preview; it is not a general authoring surface with a transform gizmo. |
 
@@ -53,14 +53,15 @@ vegas.rbxlx
     -> vegas.json                         [reference/evidence]
     -> export-reference-mesh
        -> vegas_map.glb / vegas_tables.glb / vegas_slots.glb
+          + eight deduplicated local-space chair GLBs
        -> vegas-collision.json
     -> vegas-101 manifest
     -> normal Cubacadabra runtime
 ```
 
-`vegas-101` remains compact after compilation: three baked mesh decorations,
-one extracted chair mesh decoration, five signs, seven interaction zones, and
-one collision file. The source place
+`vegas-101` remains compact after compilation: three baked environment mesh
+decorations, 245 chair mesh decorations sharing eight reusable local-space
+assets, five signs, seven interaction zones, and one collision file. The source place
 does not need to remain a live runtime object graph. However, the current
 `export-reference-mesh` path discards substantial source fidelity before the
 runtime ever sees the scene:
@@ -189,10 +190,11 @@ Roblox/source hierarchy
                                     source IDs, and provenance
 ```
 
-The Vegas package makes this reduction concrete: four visual GLBs preserve
+The Vegas package makes this reduction concrete: three baked environment GLBs
+and eight reusable chair GLBs preserve
 roughly 135,000 rendered triangles while each large exported scene mesh is
 represented by one mesh node with a small number of material groups, rather
-than thousands of runtime entities. Its 50,780 collision triangles remain
+than thousands of runtime entities. Its 47,852 environment collision triangles remain
 available to physics, currently inline in the compiled manifest, while the
 source collision document remains authoring-only. Signs, interactions, spawn,
 presentation bounds, lighting, fog, and camera settings remain manifest data
@@ -748,8 +750,9 @@ can explain which tree nodes are editable, read-only, or build-derived.
   the current manifest arrays.
 - Add tree-to-viewport and viewport-to-tree selection synchronization,
   expansion persistence, focus, visibility, lock, and clear read-only states.
-- Show current Vegas content honestly: three mesh decorations, five signs, and
-  seven interactions, with no fake rows for the 10,566 source Parts.
+- Show current Vegas content honestly: three baked mesh decorations, the
+  promoted chair instances, five signs, and seven interactions, with no fake
+  rows for the 10,566 source Parts.
 
 **Exit gate:** tree navigation remains responsive with a synthetic 10k-node
 fixture, search reveals ancestor context, and selection survives rebuild.
@@ -763,12 +766,13 @@ fixture, search reveals ancestor context, and selection survives rebuild.
   cancel-on-Escape, one-transaction undo, and Inspector synchronization.
 - Keep Play as a separate Preview state with gameplay input routing.
 
-The first working slice now covers one extracted Vegas chair: after stopping
-Preview, select **Chair — Roulette Player 3** in the Scene tree, choose Resize,
-and drag its corner handles for X/Z size or the top-edge handle for height.
+The first working slice now covers every extracted Vegas `SofaChair`: after
+stopping Preview, select any of the 245 promoted chairs in the Scene tree,
+choose Resize, and drag its corner handles for X/Z size or the top-edge handle
+for height.
 The same non-uniform scale is editable numerically in the Inspector and is
-compiled back into the mesh decoration. The extracted chair is deliberately
-visual-only until instance-local collision is available; it must not be added
+compiled back into the mesh decoration. The extracted chairs are deliberately
+visual-only until instance-local collision is available; they must not be added
 to the world-space baked collision file. Viewport drags are transient and
 commit one source transaction on release. The rest of the imported Vegas
 source remains intentionally read-only until source hierarchy import and
