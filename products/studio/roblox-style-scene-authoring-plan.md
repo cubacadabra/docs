@@ -204,6 +204,119 @@ reconstruct the full editable imported scene; Studio uses the project-owned
 runtime compiler may flatten, batch, instance, or spatially partition content
 without making those implementation details part of the authoring model.
 
+### Current transition: manifest-first projects and scene authoring
+
+The two files answer different questions:
+
+```text
+manifest.json
+    What does this game need at runtime?
+
+scene.json
+    What is the editable world in Studio?
+```
+
+Today, a simple project can still use the original manifest-native authoring
+path:
+
+```text
+my-game/
+  manifest.json
+  src/main.luau
+```
+
+For example, a block may still be authored directly in a manifest world:
+
+```json
+{
+  "id": "my-game",
+  "version": "1",
+  "blocks": [
+    {
+      "position": [0, 2, 0],
+      "size": [4, 4, 4]
+    }
+  ]
+}
+```
+
+No `scene.json` is required for that project. Studio's current simple-object
+editing path can update the manifest, and the builder can package it directly.
+This is supported compatibility behavior, not the intended long-term model for
+large editable worlds.
+
+When a project has a native authoring scene, the boundary becomes:
+
+```text
+manifest.json       game and runtime configuration
+scene.json          editable world root and nodes
+imports/            original imported hierarchy and provenance
+src/                game behavior
+assets/             meshes, textures, audio, and other source assets
+studio.json         editor-only state and preferences
+```
+
+The current builder performs this transition at build time:
+
+```text
+read manifest.json
+        |
+        +-- if scene.json exists:
+        |       validate it
+        |       compile supported scene components into the manifest
+        |
+        +-- package the resulting runtime manifest and assets
+```
+
+The resulting manifest is the runtime representation. Player hosts do not load
+`scene.json`, `scene/nodes/`, or `imports/`. Studio, the CLI, and future editors
+must operate on the project-owned authoring data instead of reconstructing a
+second scene interpretation from compiled runtime output.
+
+This means a project may legitimately be in either state during the migration:
+
+```text
+manifest-only project
+    manifest.json owns the authored world objects
+    Studio's manifest editor reads and writes that data
+
+scene-backed project
+    scene.json owns the represented editable world objects
+    manifest.json owns package/runtime configuration and any content not
+    represented by the scene
+    the builder compiles the scene into the runtime manifest
+```
+
+Do not edit the same object independently in both files. A block or other
+world object must have one authoritative source. Existing manifest-only
+projects can continue to build while the native scene workflow expands, but a
+new Studio feature should add or migrate data into the scene model rather than
+creating another copy in the manifest.
+
+The difference is especially visible at Vegas scale. A small game containing a
+few blocks, a sign, and a spawn point fits naturally in manifest collections.
+The Vegas reference contains 68,873 source objects, including 3,025 models,
+2,041 folders, 10,566 parts, 4,412 mesh parts, and 610 lights. At that scale,
+stable IDs, parent/child relationships, folders, selection, reparenting,
+duplication, transforms, undo/redo, and import provenance belong in a scene
+graph rather than in growing runtime arrays.
+
+The intended end state is that even a one-block project uses the same authoring
+model as Vegas:
+
+```text
+manifest.json
+scene.json
+scene/nodes/...
+src/main.luau
+```
+
+The exact sharded layout is still a storage migration. The currently supported
+`scene.json` format is a single `formatVersion: 1` document with a `nodes`
+array, as used by the Vegas authoring scene. The larger-project target is a
+small root/index document plus stable-ID shards under `scene/nodes/`; it must
+not be treated as live until its format and migration tooling are versioned.
+
 The native authoring scene is a project format, not a Studio-specific format.
 The format is text-first and sharded so that a large imported project remains
 reviewable and editable in Git:
@@ -218,17 +331,18 @@ assets/             source assets and compiler inputs
 studio.json         editor-only state such as previewWorld and reviewCamera
 ```
 
-`scene.json` is the root document for the canonical editable world. It declares
-the format version, roots, and node stores; it does not require every
-`NodeRecord` to be physically embedded in one JSON document. Studio is one
-editor of the dataset; Codex, the CLI, scripts, other editors, and future web
-tooling must be able to read and write the same files. `manifest.json` remains
-the package/config boundary used by current projects, while the builder
-compiles the supported authoring dataset into the existing manifest, asset,
-and collision outputs.
+`scene.json` is the root document for the canonical editable world. In the
+target sharded layout it declares the format version, roots, and node stores;
+it does not require every `NodeRecord` to be physically embedded in one JSON
+document. The currently supported v1 compatibility form embeds its `nodes`
+array directly in `scene.json`. Studio is one editor of the dataset; Codex, the
+CLI, scripts, other editors, and future web tooling must be able to read and
+write the same files. `manifest.json` remains the package/config boundary used
+by current projects, while the builder compiles the supported authoring dataset
+into the existing manifest, asset, and collision outputs.
 
-The first native storage contract is sharded JSON rather than a binary scene
-format. A root document may look like:
+The target native storage contract is sharded JSON rather than a binary scene
+format. A target root document may look like:
 
 ```json
 {

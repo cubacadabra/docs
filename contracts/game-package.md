@@ -16,6 +16,17 @@ specified by the builder's schema/tests and must be migrated here before those
 sources are retired. Never infer a format field from a sample that the
 builder does not accept.
 
+Creator source may also include a project-owned `scene.json` authoring scene.
+The builder reads and validates it when present, compiles its supported scene
+components into the manifest, and then packages the resulting runtime data.
+This is a migration boundary: manifest-only projects remain valid, and the
+manifest is authoritative for their authored world objects. In a scene-backed
+project, `scene.json` is authoritative for the objects it represents; the same
+object must not be independently edited in both documents. `scene.json` and
+`imports/` are authoring inputs, not files that player hosts load. The detailed
+Studio transition and the current v1 versus planned sharded scene formats are
+documented in the [scene-authoring plan](../products/studio/roblox-style-scene-authoring-plan.md#current-transition-manifest-first-projects-and-scene-authoring).
+
 The backend upload boundary currently accepts ZIP archives up to 25 MiB, with
 at most 256 extracted files, 64 MiB per extracted file, and 96 MiB total
 uncompressed content. `manifest.json` may be up to 64 MiB within those bounds.
@@ -36,6 +47,8 @@ flowchart LR
     subgraph Source["Creator source"]
         direction TB
         Manifest["manifest.json"]
+        Scene["scene.json<br/>optional authoring world"]
+        Imports["imports/<br/>optional provenance"]
         Main["src/main.luau"]
         Server["src/server.luau<br/>optional"]
         Assets["Local assets"]
@@ -55,6 +68,8 @@ flowchart LR
     Host["Host loader<br/>verify descriptor and files"]
 
     Manifest --> Builder
+    Scene --> Builder
+    Imports -.->|"import/provenance context"| Scene
     Main --> Builder
     Server -->|"optional authority source"| Builder
     Assets --> Builder
