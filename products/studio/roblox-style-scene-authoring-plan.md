@@ -317,6 +317,79 @@ array, as used by the Vegas authoring scene. The larger-project target is a
 small root/index document plus stable-ID shards under `scene/nodes/`; it must
 not be treated as live until its format and migration tooling are versioned.
 
+### What Studio can create today
+
+Studio does not currently create `scene.json` from its UI. There is no **New
+Scene**, **Create Scene**, or **Convert to Scene** action in the normal new-game
+workflow. The native import pipeline can create one through
+`cubacadabra import-roblox-scene`, which is how the Vegas authoring scene was
+produced, but that is a source-import workflow rather than a general project
+workflow. There is also no equivalent `cubacadabra create-scene` command.
+
+When Studio opens a project, its current decision is effectively:
+
+```text
+Does scene.json exist?
+        |
+   +----+----+
+   no       yes
+   |         |
+   v         v
+manifest   scene.json +
+editing    manifest editing
+```
+
+If `scene.json` is absent, **Scene → Add** uses the manifest editing path. An
+Add Block operation appends to the active manifest world's `blocks` collection;
+the same path currently handles the other ordinary world collections, including
+Signs, Ladders, Interactions, Checkpoints, Hazards, and Safe Zones. Studio does
+not infer that the project now needs a native scene and create one implicitly.
+
+If `scene.json` is present, Studio parses the authoring scene and uses its
+component-node editing path. That path is intentionally incomplete: the Add
+menu currently exposes only Signs and Interactions for a component scene. Block
+and the other manifest-native object kinds do not yet have corresponding scene
+components and compiler adapters, so they cannot be added there. This is why
+the same **Add → Block** gesture takes two different source-editing paths
+depending only on whether `scene.json` already exists.
+
+This split is useful migration evidence, but it is not a good creator-facing
+model. A new creator should not have to know which file exists before placing a
+cube. The intended direction is for a new project to start with the smallest
+valid native scene:
+
+```text
+new-game/
+  manifest.json
+  scene.json       # initially contains a World root
+  src/main.luau
+```
+
+Then **Scene → Add → Block** should create a native scene node, and the builder
+should compile that node into the runtime manifest. This requires the Block
+scene component and its manifest compiler adapter to land together; merely
+emitting an empty `scene.json` is not enough. The same migration should cover
+the other currently editable world kinds as their scene components become
+available.
+
+Existing manifest-only projects still need an explicit migration path. A
+future **Scene → Convert to editable scene** action should:
+
+1. create a native `World` root and deterministic stable IDs for the existing
+   manifest objects;
+2. convert supported blocks, signs, ladders, interactions, and other world
+   collections into scene nodes, preserving order and supported properties;
+3. report unsupported or lossy fields instead of silently dropping them;
+4. write the scene source and make it authoritative for the converted objects;
+5. leave package/runtime configuration and non-converted content in the
+   manifest; and
+6. stop editing the corresponding manifest arrays directly after conversion.
+
+The conversion must not leave the same object independently editable in both
+files. Until automatic scene creation and conversion exist, the manifest-first
+behavior is expected compatibility behavior and should be described as such in
+Studio's UI and creator documentation.
+
 The native authoring scene is a project format, not a Studio-specific format.
 The format is text-first and sharded so that a large imported project remains
 reviewable and editable in Git:

@@ -13,6 +13,13 @@ shared Rust `cubacadabra-builder` crate in-process, so the complete create,
 open, rebuild, and preview loop is self-contained in the installed Studio
 release.
 
+The current New Project flow does not write `scene.json`, and Studio has no UI
+action to create or convert one. New projects therefore use the manifest-first
+world-editing path described in the [scene-authoring plan](roblox-style-scene-authoring-plan.md#what-studio-can-create-today).
+Imported projects can receive a native scene through the tools import pipeline;
+the longer-term direction is for every new project to start with a minimal
+scene root and for Studio's world additions to edit that scene directly.
+
 A raw project may include `studio.json` with a `previewWorld` and
 `reviewCamera` (`gameplay`, `overview`, or `showcase`). These are creator-only
 preview preferences: Studio validates the world, applies it to the temporary
