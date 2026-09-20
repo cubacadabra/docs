@@ -34,6 +34,15 @@ decoration contract does not consume them. Source importers should generate
 this field from exported vertices (normally alongside a `*.bounds.json`
 sidecar), not ask creators to estimate it manually.
 
+Authoring model entries may also carry a `collision` path to a format-1 static
+collision JSON sidecar. A scene node with
+`collision: {"kind": "mesh", "asset": "..."}` refers to that sidecar by
+model asset ID. The native builder validates the sidecar, applies each node's
+world transform, and merges the resulting triangles into the world's inline
+collision document. This association is creator metadata: runtime hosts
+consume only the final inline world-space collision and never load GLB or
+sidecar geometry.
+
 ## Terrain
 
 Static terrain is an SDK `0.4.0`/`0.5.0` capability. It accepts ordered block, ball,

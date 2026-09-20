@@ -921,17 +921,23 @@ stopping Preview, select any of the 245 promoted chairs in the Scene tree,
 choose Resize, and drag its corner handles for X/Z size or the top-edge handle
 for height.
 The same non-uniform scale is editable numerically in the Inspector and is
-compiled back into the mesh decoration. The extracted chairs are deliberately
-visual-only until instance-local collision is available; they must not be added
-to the world-space baked collision file. Viewport drags are transient and
-commit one source transaction on release. Other imported Vegas source nodes
-remain intentionally read-only because their visible geometry is still baked
-into the environment assets; chair source paths and picking metadata are now
-available for the promoted instances.
+compiled back into the mesh decoration. Extracted chairs carry reusable
+instance-local collision sidecars: the source baked collision continues to
+exclude them, while Play/build expands each sidecar at the editable node's
+current transform into the one world-space static collision structure. Viewport
+drags are transient and commit one source transaction on release. Other
+imported Vegas source nodes remain intentionally read-only because their visible
+geometry is still baked into the environment assets; chair source paths and
+picking metadata are now available for the promoted instances.
 
 The Phase 2 contract also rejects unsupported parent/shear compositions,
 suppresses manipulation handles for locked baked assets, and gates non-uniform
-runtime mesh scale behind SDK `0.6.0`. These constraints keep the first
+runtime mesh scale behind SDK `0.6.0`. Promoted imported instances may now carry
+an authoring `collision: {"kind": "mesh", "asset": "..."}` component. The
+builder expands each reusable asset's local collision sidecar through the
+instance world transform and merges it into the existing inline world collision;
+the runtime still receives one static triangle structure rather than one
+physics body per instance. These constraints keep the first
 editable furniture set honest while broader source hierarchy editing remains
 future work.
 
