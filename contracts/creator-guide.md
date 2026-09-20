@@ -15,20 +15,21 @@ my-game/
   src/main.luau
   assets/                 optional local content
   effects.json            optional effect library source
-  scene.json              optional native authoring scene
+  scene.json              native authoring scene for Studio-created projects;
+                          optional for manifest-first projects
   scene/nodes/            future sharded scene storage
   imports/                optional imported source/provenance data
 ```
 
-The smallest project is still manifest-first: `manifest.json` can contain
-simple world objects such as blocks, and no `scene.json` is required. Studio's
-current **New Project** flow does not create `scene.json`; the native import
-pipeline can create one for imported source hierarchies. When a native
-authoring scene is present, Studio treats that scene as the source of truth for
-the world objects it represents and the builder compiles its supported
-components into the runtime manifest. Do not edit the same object independently
-in both files. See the [Studio scene-authoring plan](../products/studio/roblox-style-scene-authoring-plan.md#current-transition-manifest-first-projects-and-scene-authoring)
-for the current UI gap, migration boundary, and planned sharded layout.
+The smallest generic project is still manifest-first: `manifest.json` can
+contain simple world objects such as blocks, and no `scene.json` is required.
+Studio's **New Project** flow creates the native scene shape up front with a
+single world root and no authored objects. When a native authoring scene is
+present, Studio treats that scene as the source of truth for the world objects
+it represents and the builder compiles its supported components into the
+runtime manifest. Do not edit the same object independently in both files. See
+the [Studio scene-authoring plan](../products/studio/roblox-style-scene-authoring-plan.md#current-transition-manifest-first-projects-and-scene-authoring)
+for the migration boundary and planned sharded layout.
 
 Use Studio's **File → New Project** to create and open a starter project
 without an external CLI or Python installation. The native `cubacadabra` CLI

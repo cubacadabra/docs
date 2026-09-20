@@ -319,12 +319,13 @@ not be treated as live until its format and migration tooling are versioned.
 
 ### What Studio can create today
 
-Studio does not currently create `scene.json` from its UI. There is no **New
-Scene**, **Create Scene**, or **Convert to Scene** action in the normal new-game
-workflow. The native import pipeline can create one through
-`cubacadabra import-roblox-scene`, which is how the Vegas authoring scene was
-produced, but that is a source-import workflow rather than a general project
-workflow. There is also no equivalent `cubacadabra create-scene` command.
+Studio's **New Project** workflow creates a minimal `scene.json` with one
+`Starter World` root and no authored objects. It does not offer scene template
+selection yet: a new project is intentionally blank, and **Scene → Add →
+Block** is the first authored world object. The native import pipeline can also
+create a scene through `cubacadabra import-roblox-scene`, as it did for the
+Vegas authoring scene. There is still no equivalent `cubacadabra create-scene`
+command for arbitrary existing projects.
 
 When Studio opens a project, its current decision is effectively:
 
@@ -346,17 +347,13 @@ Signs, Ladders, Interactions, Checkpoints, Hazards, and Safe Zones. Studio does
 not infer that the project now needs a native scene and create one implicitly.
 
 If `scene.json` is present, Studio parses the authoring scene and uses its
-component-node editing path. That path is intentionally incomplete: the Add
-menu currently exposes only Signs and Interactions for a component scene. Block
-and the other manifest-native object kinds do not yet have corresponding scene
-components and compiler adapters, so they cannot be added there. This is why
-the same **Add → Block** gesture takes two different source-editing paths
-depending only on whether `scene.json` already exists.
+component-node editing path. That path currently supports Blocks, Signs, and
+Interactions; the remaining manifest-native object kinds still need scene
+components and compiler adapters. Existing manifest-only projects continue to
+use their manifest editing path until they are explicitly migrated.
 
-This split is useful migration evidence, but it is not a good creator-facing
-model. A new creator should not have to know which file exists before placing a
-cube. The intended direction is for a new project to start with the smallest
-valid native scene:
+This split remains for compatibility with existing projects, but new projects
+now start with the smallest valid native scene:
 
 ```text
 new-game/
@@ -365,12 +362,10 @@ new-game/
   src/main.luau
 ```
 
-Then **Scene → Add → Block** should create a native scene node, and the builder
-should compile that node into the runtime manifest. This requires the Block
-scene component and its manifest compiler adapter to land together; merely
-emitting an empty `scene.json` is not enough. The same migration should cover
-the other currently editable world kinds as their scene components become
-available.
+**Scene → Add → Block** creates a native scene node, and the builder compiles
+that node into the runtime manifest. The scene root is deliberately empty so
+this flow tests the authoring-to-runtime boundary directly; a genre-specific
+starter such as an obby should be a separate future template choice.
 
 Existing manifest-only projects still need an explicit migration path. A
 future **Scene → Convert to editable scene** action should:

@@ -7,18 +7,17 @@ runtime preview features, and can import supported local Morph assets.
 ## Project creation and build prerequisites
 
 Studio's **File → New Project** workflow creates and opens a starter project
-without an external CLI or Python installation. It writes a manifest, Luau
-entry point, embedded SDK, and asset directories. Raw source projects use the
-shared Rust `cubacadabra-builder` crate in-process, so the complete create,
-open, rebuild, and preview loop is self-contained in the installed Studio
-release.
+without an external CLI or Python installation. It writes a manifest, a
+minimal `scene.json` with one world root, a minimal Luau entry point, embedded
+SDK, and asset directories. Raw source projects use the shared Rust
+`cubacadabra-builder` crate in-process, so the complete create, open, rebuild,
+and preview loop is self-contained in the installed Studio release.
 
-The current New Project flow does not write `scene.json`, and Studio has no UI
-action to create or convert one. New projects therefore use the manifest-first
-world-editing path described in the [scene-authoring plan](roblox-style-scene-authoring-plan.md#what-studio-can-create-today).
-Imported projects can receive a native scene through the tools import pipeline;
-the longer-term direction is for every new project to start with a minimal
-scene root and for Studio's world additions to edit that scene directly.
+New projects start with a blank world rather than a genre template. **Scene →
+Add → Block** appends a primitive node to `scene.json`; rebuilding then compiles
+that node into the runtime manifest. Imported and older manifest-only projects
+can still receive or migrate to a native scene through the tools import and
+Studio editing paths described in the [scene-authoring plan](roblox-style-scene-authoring-plan.md#what-studio-can-create-today).
 
 A raw project may include `studio.json` with a `previewWorld` and
 `reviewCamera` (`gameplay`, `overview`, or `showcase`). These are creator-only
