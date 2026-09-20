@@ -336,21 +336,24 @@ Does scene.json exist?
    no       yes
    |         |
    v         v
-manifest   scene.json +
-editing    manifest editing
+preview    scene.json editing
+manifest   + manifest configuration
 ```
 
-If `scene.json` is absent, **Scene → Add** uses the manifest editing path. An
-Add Block operation appends to the active manifest world's `blocks` collection;
-the same path currently handles the other ordinary world collections, including
-Signs, Ladders, Interactions, Checkpoints, Hazards, and Safe Zones. Studio does
-not infer that the project now needs a native scene and create one implicitly.
+If `scene.json` is absent, Studio can still preview the manifest-owned objects.
+The first supported world edit creates a native scene, converts the active
+world's Blocks, asset-backed mesh Decorations, Signs, Interactions, Ladders,
+Checkpoints, Hazards, and Safe Zones into component nodes, and removes those
+collections from the source manifest. Migration is prepared and validated
+before either in-memory source changes. Unsupported legacy decorations stop
+the conversion rather than disappearing.
 
 If `scene.json` is present, Studio parses the authoring scene and uses its
-component-node editing path. That path currently supports Blocks, Signs, and
-Interactions; the remaining manifest-native object kinds still need scene
-components and compiler adapters. Existing manifest-only projects continue to
-use their manifest editing path until they are explicitly migrated.
+component-node editing path. `primitive`, `text`, `interaction`, `ladder`,
+`checkpoint`, `hazard`, and `safeZone` components support the corresponding Add
+menu entries; asset-backed `render` components cover migrated mesh decorations.
+The builder always regenerates all corresponding runtime arrays from the scene,
+including empty arrays.
 
 This split remains for compatibility with existing projects, but new projects
 now start with the smallest valid native scene:
@@ -367,23 +370,22 @@ that node into the runtime manifest. The scene root is deliberately empty so
 this flow tests the authoring-to-runtime boundary directly; a genre-specific
 starter such as an obby should be a separate future template choice.
 
-Existing manifest-only projects still need an explicit migration path. A
-future **Scene → Convert to editable scene** action should:
+The automatic migration now:
 
-1. create a native `World` root and deterministic stable IDs for the existing
+1. creates a native `World` root and deterministic stable IDs for the existing
    manifest objects;
-2. convert supported blocks, signs, ladders, interactions, and other world
+2. converts supported blocks, signs, ladders, interactions, and other world
    collections into scene nodes, preserving order and supported properties;
-3. report unsupported or lossy fields instead of silently dropping them;
-4. write the scene source and make it authoritative for the converted objects;
-5. leave package/runtime configuration and non-converted content in the
+3. reports unsupported or lossy fields instead of silently dropping them;
+4. makes the scene source authoritative for the converted objects;
+5. leaves package/runtime configuration and non-converted content in the
    manifest; and
-6. stop editing the corresponding manifest arrays directly after conversion.
+6. removes the corresponding manifest arrays after successful conversion.
 
-The conversion must not leave the same object independently editable in both
-files. Until automatic scene creation and conversion exist, the manifest-first
-behavior is expected compatibility behavior and should be described as such in
-Studio's UI and creator documentation.
+The conversion does not leave the same object independently editable in both
+files. A future explicit conversion command may still be useful for reviewable
+batch migration before the first edit, but it is no longer required to
+establish the single-source rule.
 
 The native authoring scene is a project format, not a Studio-specific format.
 The format is text-first and sharded so that a large imported project remains

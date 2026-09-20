@@ -42,6 +42,13 @@ builder no longer owns the scene types. Studio still has a transitional
 source-string history and preview overlay, which are the next migration steps
 toward command-sized transactions and live editor rendering.
 
+On the first supported world edit to a manifest-only project, Studio converts
+the active world's supported object collections into scene components and
+removes the migrated arrays from the source manifest before presenting either
+file as dirty. The conversion either succeeds as one in-memory source
+transition or leaves both sources unchanged; unsupported legacy decorations
+still stop it rather than losing data.
+
 ## Acceptance scenario
 
 1. Import a project-owned texture and see all relevant viewports update.

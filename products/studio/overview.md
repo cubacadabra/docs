@@ -13,11 +13,14 @@ SDK, and asset directories. Raw source projects use the shared Rust
 `cubacadabra-builder` crate in-process, so the complete create, open, rebuild,
 and preview loop is self-contained in the installed Studio release.
 
-New projects start with a blank world rather than a genre template. **Scene →
-Add → Block** appends a primitive node to `scene.json`; rebuilding then compiles
-that node into the runtime manifest. Imported and older manifest-only projects
-can still receive or migrate to a native scene through the tools import and
-Studio editing paths described in the [scene-authoring plan](roblox-style-scene-authoring-plan.md#what-studio-can-create-today).
+New projects start with a blank world rather than a genre template. Studio and
+the native CLI both call the shared `cubacadabra-project` generator; Studio
+requests its self-contained, vendored-SDK option. **Scene → Add** appends
+Blocks, Signs, Ladders, Interactions, Checkpoints, Hazards, and Safe Zones as
+native component nodes in `scene.json`; rebuilding compiles them into the
+runtime manifest. The first such edit to an older manifest-only project
+migrates those supported collections and removes their source-manifest copies.
+See the [scene-authoring plan](roblox-style-scene-authoring-plan.md#what-studio-can-create-today).
 
 A raw project may include `studio.json` with a `previewWorld` and
 `reviewCamera` (`gameplay`, `overview`, or `showcase`). These are creator-only

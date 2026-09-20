@@ -21,12 +21,15 @@ my-game/
   imports/                optional imported source/provenance data
 ```
 
-The smallest generic project is still manifest-first: `manifest.json` can
-contain simple world objects such as blocks, and no `scene.json` is required.
-Studio's **New Project** flow creates the native scene shape up front with a
-single world root and no authored objects. When a native authoring scene is
-present, Studio treats that scene as the source of truth for the world objects
-it represents and the builder compiles its supported components into the
+The smallest legacy project may still be manifest-first: `manifest.json` can
+contain simple world objects such as blocks, and no `scene.json` is required to
+build it. Studio's **New Project** flow creates the native scene shape up front
+with a single world root and no authored objects. The first supported world
+edit to a manifest-only project migrates its blocks, mesh decorations, signs,
+interactions, ladders, checkpoints, hazards, and safe zones into `scene.json`
+and removes those collections from the source manifest. When a native
+authoring scene is present, Studio treats that scene as the source of truth for
+those objects and the builder compiles its supported components into the
 runtime manifest. Do not edit the same object independently in both files. See
 the [Studio scene-authoring plan](../products/studio/roblox-style-scene-authoring-plan.md#current-transition-manifest-first-projects-and-scene-authoring)
 for the migration boundary and planned sharded layout.
