@@ -685,8 +685,15 @@ tree look like a wall of locked objects.
 
 The importer does not need to explode every geometry record into a native node
 on the first pass. It can retain an efficient baked representation and promote
-objects as their authoring value becomes clear. The existing chair promotion
-provides the sequence:
+objects as their authoring value becomes clear. The current ordinary-Part
+milestone now provides a bounded automatic promotion path: anchored, ordinary
+block Parts with axis-aligned rotations and no unsupported mesh, transparency,
+or reflectance behavior become native box primitives. Dynamic Parts, non-block
+shapes, arbitrary rotations, and other unsupported cases remain fallback
+geometry with a diagnostic reason. Name filters remain available for focused
+imports, but are no longer required for the default conversion.
+
+The chair and primitive pipelines provide the sequence:
 
 ```text
 identify source instances
@@ -977,13 +984,16 @@ exporters also emit local GLB bounds sidecars; manifest model declarations may
 carry those generated bounds so Studio can size handles without hand-authored
 `render.bounds` values.
 
-For the Vegas fixture, the same importer now promotes every `SofaChair` under
-the table hierarchy into an unlocked authoring node. The promotion excludes
-those subtrees from the baked table mesh, preserves each source path and
-transform, and deduplicates the 245 instances into eight reusable local-space
-chair assets. The remaining source tree stays read-only until a native render
-and runtime representation exists; chair collision is still intentionally
-deferred because the current collision contract is world-static.
+For the Vegas fixture, the same importer promotes every `SofaChair` under
+the table hierarchy into an unlocked authoring node and every supported
+ordinary Part into a native primitive. Promoted primitives are organized under
+native groups derived from meaningful source Models/Folders, linked from the
+locked source tree, and excluded from the relevant baked meshes and collision
+outputs. The importer writes actual promotion counts and fallback reasons. The
+chair promotion preserves each source path and transform and deduplicates the
+245 instances into eight reusable local-space chair assets; chair collision is
+still intentionally deferred because the current collision contract is
+world-static.
 
 The source dataset uses SHA-256-derived IDs from source paths, keeps duplicate
 names distinct, records geometry counts by source ID, and reconstructs source
