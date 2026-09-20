@@ -34,7 +34,7 @@ The reference Vegas scene contains enough scale to expose the problem:
 | `other-examples/vegas.json` | 68,873 source instances, 17,420 geometry records, 12,275 non-transparent geometry records, 10,566 `Part`s, 4,412 `MeshPart`s, 3,025 `Model`s, 2,041 `Folder`s, 1,825 `UnionOperation`s, 610 lights, 135 textures, and 3,676 text objects. Each geometry record has a source `path` and `parentPath`. |
 | `other-examples/vegas.rbxlx` | The full source instance hierarchy, including non-geometric folders, models, services, scripts, UI, lights, and properties. |
 | `examples/vegas-101/manifest.json` | The current Cubacadabra package has one `vegas-floor` world, three baked environment meshes plus 245 promoted editable chairs backed by eight reusable chair assets, five signs, seven interactions, and no blocks. |
-| Current Studio shell | `SceneNode` is already recursive and selectable, but it is synthesized from a small set of typed manifest arrays. IDs are collection/index paths such as `world/vegas-floor/signs/2`. |
+| Current Studio shell | `SceneNode` is recursive and selectable, with authoring-scene nodes using stable imported IDs while runtime-only fallback content still comes from typed manifest arrays. |
 | Current viewport | Selection and limited X/Z Move/Resize already work for projected placeable objects. The viewport is still primarily a runtime preview; it is not a general authoring surface with a transform gizmo. |
 
 `vegas.json` is therefore a valuable geometry/reference artifact but not, by
@@ -774,14 +774,16 @@ The same non-uniform scale is editable numerically in the Inspector and is
 compiled back into the mesh decoration. The extracted chairs are deliberately
 visual-only until instance-local collision is available; they must not be added
 to the world-space baked collision file. Viewport drags are transient and
-commit one source transaction on release. The rest of the imported Vegas
-source remains intentionally read-only until source hierarchy import and
-picking metadata are available.
+commit one source transaction on release. Other imported Vegas source nodes
+remain intentionally read-only because their visible geometry is still baked
+into the environment assets; chair source paths and picking metadata are now
+available for the promoted instances.
 
 The Phase 2 contract also rejects unsupported parent/shear compositions,
 suppresses manipulation handles for locked baked assets, and gates non-uniform
 runtime mesh scale behind SDK `0.6.0`. These constraints keep the first
-editable object honest while the full source hierarchy remains future work.
+editable furniture set honest while broader source hierarchy editing remains
+future work.
 
 **Exit gate:** in Vegas or the fixture, a creator can select a supported object
   from either surface, drag it, undo it, save it, rebuild, and observe the same
@@ -789,9 +791,9 @@ editable object honest while the full source hierarchy remains future work.
 
 ### Phase 3 — source hierarchy and imported Vegas tree
 
-- Add the normalized source graph produced from `vegas.rbxlx` to `scene.json`,
-  with `vegas.json` geometry attached by source path and stable IDs assigned to
-  records rather than derived from paths.
+- Extend the bounded normalized source graph produced from `vegas.rbxlx` in
+  `scene.json`, with `vegas.json` geometry attached by source path and stable
+  IDs assigned to records rather than derived from paths.
 - Display folders, models, parts, mesh parts, lights, and UI under an imported
   source root with type icons and provenance.
 - Add source-path search and “focus in source” navigation.
@@ -807,7 +809,7 @@ editable object honest while the full source hierarchy remains future work.
   exactly why it is read-only. The generated package remains valid and the
   existing Vegas gameplay loop still runs.
 
-The first import milestone implements this boundary in two layers:
+The current import milestone implements this boundary in two layers:
 `import-roblox-reference` normalizes source instances and specialized geometry
 facts, and `import-roblox-scene` writes a deterministic sharded import dataset
 (`imports/roblox/<name>/index.json` plus `nodes/` shards) and a bounded
@@ -818,6 +820,14 @@ than copying every source instance into a second monolithic index. Geometry
 exporters also emit local GLB bounds sidecars; manifest model declarations may
 carry those generated bounds so Studio can size handles without hand-authored
 `render.bounds` values.
+
+For the Vegas fixture, the same importer now promotes every `SofaChair` under
+the table hierarchy into an unlocked authoring node. The promotion excludes
+those subtrees from the baked table mesh, preserves each source path and
+transform, and deduplicates the 245 instances into eight reusable local-space
+chair assets. The remaining source tree stays read-only until a native render
+and runtime representation exists; chair collision is still intentionally
+deferred because the current collision contract is world-static.
 
 The source dataset uses SHA-256-derived IDs from source paths, keeps duplicate
 names distinct, records geometry counts by source ID, and reconstructs source
