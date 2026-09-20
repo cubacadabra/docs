@@ -18,6 +18,13 @@ position, width, and height. Named world materials can reference image assets
 and `tileU`/`tileV` repeat them in world units per tile; image materials are
 for surfaces, while billboards suit posters/signs.
 
+World `blocks` are visual cuboids. Their optional `collidable` field controls
+whether the block is included in player and camera obstacle queries; it
+defaults to `true` for backward compatibility. A block may use a named package
+image material or an explicitly namespaced engine material such as
+`builtin:rock`, `builtin:mud`, or `builtin:ground`. The block color remains the
+visual tint for either material form.
+
 The manifest's `effects` value may contain an inline effect library or
 `{ "source": "effects.json" }`; the builder validates the relative path and
 inlines the library so runtime packages stay self-contained. See
