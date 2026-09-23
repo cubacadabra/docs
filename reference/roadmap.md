@@ -46,6 +46,15 @@ and remaining evidence.
   simulation-time tasks, static terrain, package assets, and MorphPack v5
   have explicit contracts.
 
+## Next gameplay milestone
+
+[Lemonade 101](lemonade-101.md) is the next example target. It intentionally
+uses a tiny native park and a Luau-owned recipe/service loop to expose the
+platform gaps that imported-world work cannot: stationary world actors,
+world-space identity, explicit context actions, and eventually trusted game
+actions. The first source slice lives in `examples/lemonade-101`; it uses
+customer interaction zones and signs until the generic actor capability exists.
+
 The Maze 101 package is now a verified native-build milestone: its source
 declaration produces a self-contained terrain maze with twelve collectibles,
 four checkpoints, generated effects, a package-owned authored island shell,

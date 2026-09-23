@@ -52,6 +52,7 @@ Start from the repository you are changing, then follow its canonical links:
 - Continuing current work? Read [Current state](CURRENT_STATE.md).
 - New to Cubacadabra? Read [How Cubacadabra works](start/how-cubacadabra-works.md).
 - Building a game? Start with [Build your first Cube](start/build-your-first-cube.md).
+- Planning the next behavior-first example? Read [Lemonade 101](reference/lemonade-101.md).
 - Changing a host? Open the matching [repository entry](repos/README.md), then [host conformance](quality/compatibility/host-conformance.md).
 - Changing Rust? Read [runtime ownership](systems/runtime/overview.md), then [testing](quality/verification/testing.md).
 - Checking a public contract? Use [contracts](contracts/README.md) and [decisions](decisions/README.md).
