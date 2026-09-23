@@ -1,6 +1,6 @@
 # Lemonade 101
 
-**Status:** Slice 1 in progress — Studio acceptance pending
+**Status:** Slice 2 in progress — Studio acceptance pending
 
 **Owner:** `examples`, with platform work landing in the repository that owns
 the missing capability
@@ -83,7 +83,7 @@ generic capability that clears it.
 | Step | Capability | Owner / state |
 | --- | --- | --- |
 | 0 | Scene-backed native park, stand, stations, customer zones, HUD, and Luau recipe loop | `examples`; Studio acceptance pending |
-| 1 | Stationary world actors with stable id, name, position, yaw, and appearance | `rust` plus package/runtime contract; next |
+| 1 | Stationary world actors with stable id, name, position, yaw, and appearance | `rust`, `tools`, `studio`, and `examples`; implemented, Studio acceptance pending |
 | 2 | World-space names and compact order bubbles | shared runtime/renderer; next |
 | 3 | Four recognizable customers with rotating orders | `examples`; after actors |
 | 4 | Explicit context actions and creator-visible interaction inspection | runtime/Studio; the current slice uses HUD buttons |
@@ -99,11 +99,11 @@ seams rather than a `Customer` or `LemonadeStand` type.
 ## Current implementation boundary
 
 The first source slice intentionally contains no imported assets and keeps its
-world compact. The current package uses interaction zones and signs as
-customer placeholders because `avatars.npcs` currently carries appearance
-styles only, while local NPC simulation is disabled pending authoritative
-world ownership. This is a deliberate diagnostic boundary, not the finished
-game presentation.
+world compact. Customers are now authored stationary actors, rendered through
+the existing character renderer with stable ids, names, transforms, yaw, and
+legacy avatar colors. They have no AI, navigation, physics, or authoritative
+movement yet; those remain deliberately deferred until the stationary gameplay
+loop proves what moving customers actually need.
 
 Do not add RBXML, a giant GLB, terrain work, procedural crowds, pathfinding,
 persistent economy, dialogue trees, a generalized crafting system, or a

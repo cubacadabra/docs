@@ -52,8 +52,9 @@ and remaining evidence.
 uses a tiny native park and a Luau-owned recipe/service loop to expose the
 platform gaps that imported-world work cannot: stationary world actors,
 world-space identity, explicit context actions, and eventually trusted game
-actions. The first source slice lives in `examples/lemonade-101`; it uses
-customer interaction zones and signs until the generic actor capability exists.
+actions. The source now includes stationary authored customer actors with
+identity, appearance, and transform data. Studio acceptance of those actors is
+the current gate before adding world-space order UI or moving behavior.
 
 The Maze 101 package is now a verified native-build milestone: its source
 declaration produces a self-contained terrain maze with twelve collectibles,

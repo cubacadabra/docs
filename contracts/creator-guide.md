@@ -34,6 +34,10 @@ runtime manifest. Do not edit the same object independently in both files. See
 the [Studio scene-authoring plan](../products/studio/roblox-style-scene-authoring-plan.md#current-transition-manifest-first-projects-and-scene-authoring)
 for the migration boundary and planned sharded layout.
 
+Native scenes may also author stationary `actor` components. These compile to
+the world actor collection and are the source of truth for actor identity,
+transform, yaw, and appearance.
+
 Use Studio's **File → New Project** to create and open a starter project
 without an external CLI or Python installation. The native `cubacadabra` CLI
 in the `tools` repository uses the same Rust project and builder crates.

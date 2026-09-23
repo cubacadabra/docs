@@ -145,8 +145,8 @@ selection and camera state unless the creator explicitly resets them.
 ### Preserve source hierarchy; adapt explicitly to the package
 
 The current runtime package contract is intentionally compact: worlds contain
-typed collections such as blocks, signs, interactions, decorations, and
-terrain, while imported GLBs are visual-only and collision is supplied as a
+typed collections such as blocks, signs, interactions, actors, decorations,
+and terrain, while imported GLBs are visual-only and collision is supplied as a
 separate baked asset. That contract should remain the runtime boundary.
 
 For a Roblox import or a similarly detailed source asset, tools should produce
@@ -352,10 +352,13 @@ the conversion rather than disappearing.
 
 If `scene.json` is present, Studio parses the authoring scene and uses its
 component-node editing path. `primitive`, `text`, `interaction`, `ladder`,
-`checkpoint`, `hazard`, and `safeZone` components support the corresponding Add
-menu entries; asset-backed `render` components cover migrated mesh decorations.
-The builder always regenerates all corresponding runtime arrays from the scene,
-including empty arrays.
+`actor`, `checkpoint`, `hazard`, and `safeZone` components support the
+corresponding scene editing path; asset-backed `render` components cover
+migrated mesh decorations. Actor components represent stationary authored
+characters with identity, transform, yaw, and appearance. They do not imply
+AI, navigation, physics, or authoritative movement. The builder always
+regenerates all corresponding runtime arrays from the scene, including empty
+arrays.
 
 This split remains for compatibility with existing projects, but new projects
 now start with the smallest valid native scene:

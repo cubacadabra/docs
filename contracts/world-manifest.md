@@ -11,8 +11,9 @@ are in [compatibility](../quality/compatibility/versions.md).
 
 ## Assets and world content
 
-Worlds can declare palettes, blocks, signs, clouds, interaction zones, launch
-pads, decorations, imported mesh instances, and image billboards. Package images may be JPG, JPEG, or PNG files under
+Worlds can declare palettes, blocks, signs, clouds, interaction zones, actors,
+launch pads, decorations, imported mesh instances, and image billboards.
+Package images may be JPG, JPEG, or PNG files under
 `assets.images`. A world billboard references the image asset ID and supplies
 position, width, and height. Named world materials can reference image assets
 and `tileU`/`tileV` repeat them in world units per tile; image materials are
@@ -36,6 +37,35 @@ inlines the library so runtime packages stay self-contained. See
 Keep state schemas and interaction IDs stable within a package version. Use
 small semantic IDs that form the bridge between manifest, Luau, and retained
 presentation.
+
+World `actors` are stationary authored characters. Each actor has an optional
+stable `id`, display `name`, world-space `position`, `yaw`, and an additive
+legacy avatar `appearance` object containing fields such as `skin`, `shirt`,
+`pants`, and `shoes`:
+
+```json
+{
+  "actors": [
+    {
+      "id": "maya",
+      "name": "Maya",
+      "position": [-10, 0, 8],
+      "yaw": 3.14159,
+      "appearance": {
+        "skin": "#E8AE86",
+        "shirt": "#EF846B",
+        "pants": "#4C3F91",
+        "shoes": "#19343A"
+      }
+    }
+  ]
+}
+```
+
+Actors render through the shared character renderer and can receive world-space
+identity labels. This contract does not imply AI, navigation, physics,
+authoritative movement, or a customer/NPC game type; those behaviors remain
+game and runtime capabilities layered on top.
 
 Model entries under `assets.models` may carry authoring-only `bounds: [x, y, z]`
 metadata. The dimensions are the positive local-space bounds of the declared
