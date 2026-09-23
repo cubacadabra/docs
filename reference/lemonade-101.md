@@ -1,6 +1,6 @@
 # Lemonade 101
 
-**Status:** Planned next gameplay milestone
+**Status:** Slice 1 in progress — Studio acceptance pending
 
 **Owner:** `examples`, with platform work landing in the repository that owns
 the missing capability
@@ -45,6 +45,36 @@ Initial recipes:
 | Sweet | 1 | 2 | yes |
 | Tart | 3 | 1 | no |
 
+## Studio-centered development loop
+
+Lemonade 101 is built in vertical slices, with Studio as the human acceptance
+test. Codex can make the cross-repository edits, but each slice must be opened
+as a raw project in Studio before the next capability is started:
+
+1. Codex makes one focused game or platform change.
+2. Open the source project in Studio and inspect the scene tree and viewport.
+3. Try the obvious creator action yourself: select, move, rotate, duplicate,
+   rename, adjust a radius, or press Play.
+4. Fix an authoring gap immediately when it is a normal visual creator task;
+   leave game rules, reducers, probabilities, and authority decisions in
+   Luau or the owning runtime boundary.
+5. Use the desktop player, then other hosts, at milestone checks rather than
+   after every small ingredient or layout edit.
+
+The first Studio gate is intentionally modest: the native park must open as a
+scene-backed project with a legible hierarchy, and its stand, stations, and
+customer placeholders must be selectable and movable without editing raw
+manifest arrays. The next gate adds a real stationary Maya actor and expects
+the same workflow to work in Build mode, after save/rebuild, and in Play mode.
+
+| Change Codex makes | Studio expectation |
+| --- | --- |
+| Luau recipe logic, state reducer, order probabilities | Code is appropriate |
+| NPC position, name, appearance, or rotation | Direct authoring should be supported |
+| Interaction radius, stand dimensions, station placement | Direct authoring should be supported |
+| Win target, balance, customer preferences | Probably game-code authoring initially |
+| Multiplayer authority and trusted rewards | Runtime/backend boundary, not scene editing |
+
 ## Capability sequence
 
 The game should be built by hitting the smallest platform wall and adding the
@@ -52,7 +82,7 @@ generic capability that clears it.
 
 | Step | Capability | Owner / state |
 | --- | --- | --- |
-| 0 | Native park, stand, stations, customer zones, HUD, and Luau recipe loop | `examples`; started in `examples/lemonade-101` |
+| 0 | Scene-backed native park, stand, stations, customer zones, HUD, and Luau recipe loop | `examples`; Studio acceptance pending |
 | 1 | Stationary world actors with stable id, name, position, yaw, and appearance | `rust` plus package/runtime contract; next |
 | 2 | World-space names and compact order bubbles | shared runtime/renderer; next |
 | 3 | Four recognizable customers with rotating orders | `examples`; after actors |
