@@ -90,6 +90,12 @@ The first implementation supports a deliberately small vertical slice:
   canonical Roblox names and types.
 - Native Cubacadabra block primitives without a Roblox source link export as
   anchored Roblox Parts under a `Cubacadabra Export` model.
+- For a native scene exported without a preserved Roblox place, the selected
+  world's implicit ground exports as one anchored `Ground` Part in `Workspace`.
+  Its size, height, color, and collision follow that world's ground settings;
+  a world with terrain operations and `terrain.hideDefaultGround` does not get
+  this Part. An imported place keeps the ground from its preserved Roblox
+  source instead.
 - Export reports updated Parts, new Parts, omitted native components, and
   compatibility warnings.
 
@@ -99,6 +105,8 @@ This is not full round-tripping yet. Current limitations are explicit:
   Parts with unmapped materials, transparent/reflective Parts, terrain, GUI,
   constraints, lights, effects, characters, and scripts are preserved in the
   Roblox source but are not editable through this interchange path.
+- Native terrain operations are not exported; export reports a compatibility
+  warning when they are present.
 - Preservation covers instances and properties decoded by the pinned Roblox
   XML/reflection libraries. Data unknown to those libraries cannot be promised
   byte-for-byte preservation.
