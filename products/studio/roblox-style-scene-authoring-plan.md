@@ -2,6 +2,12 @@
 
 **Status:** Proposed product and implementation plan
 
+The first unified authoring command surface is now specified and implemented
+by the [Add palette milestone](add-palette.md). That palette is the extension
+point for future Build, Looks, Bind, Motion, Interface, Code, Character, and
+Geometry capabilities; this plan continues to own the deeper scene hierarchy,
+transform, import, and compilation direction.
+
 This plan describes how Studio should approach the useful parts of Roblox
 Studio's Explorer and viewport authoring workflow without making Roblox's
 `Instance` model, services, or runtime behavior a Cubacadabra dependency.

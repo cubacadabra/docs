@@ -7,6 +7,8 @@ uses so creators can test the package boundary honestly.
 - [Overview](overview.md) — purpose, prerequisites, and current limits.
 - [Asset workflow](asset-workflow.md) — local GLB import and Morph handling.
 - [Editing model](editing-model.md) — proposed shared edit path.
+- [Unified Add palette](add-palette.md) — contextual creation UX and the
+  capability map for future authoring systems.
 - [Roblox-style scene authoring plan](roblox-style-scene-authoring-plan.md) —
   proposed hierarchy, viewport, import, and validation path for large worlds.
 - [Toolchain](../../systems/toolchain/overview.md) — native builder migration.
