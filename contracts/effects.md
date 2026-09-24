@@ -54,7 +54,12 @@ Animation properties are composable. `orbitRadius`, `orbitSpeed`, `bobAmount`,
 motion. Speeds are radians per second. `expandAmount`, `radialAmount`, and
 `fade` use normalized progress when the template is played as a one-shot;
 `radialAmount` moves copies away from or toward the origin. `count` creates
-evenly phased copies of a node.
+evenly phased copies of a node. A box may also provide `rotation: [x, y, z]`
+in radians. One-shot effects can interpolate `travelTo`, `travelSize`, and
+`travelRotation` from the node's authored position, size, and rotation to the
+supplied endpoints. These endpoints are relative to the position passed to
+`effects:play`, so a game can animate a carried object from an interaction to
+its destination without adding game-specific renderer types.
 
 Luau changes an attached interaction's visual state or plays a template at a
 world position:
