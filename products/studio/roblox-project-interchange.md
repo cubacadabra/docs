@@ -91,10 +91,14 @@ The first implementation supports a deliberately small vertical slice:
 - Native Cubacadabra block primitives without a Roblox source link export as
   anchored Roblox Parts under a `Cubacadabra Export` model.
 - Box-based interaction visuals export in their initial `available` or
-  `default` state as anchored, non-collidable Parts. This preserves authored
-  pickup markers such as the starter game's loose letter lines. Export reports
-  that their interaction behavior and later visual states still require Roblox
-  scripting.
+  `default` state as anchored, non-collidable Parts. When a visible box has one
+  unambiguous authored `travelTo` animation, export also writes its target
+  CFrame, size, and duration as Roblox attributes and adds one generated server
+  Script to the export model. Walking a Humanoid character over the Part claims
+  it once and tweens it to that authored target. This preserves and animates
+  pickup markers such as the starter game's loose letter lines without putting
+  Roblox behavior in the native scene schema. Visuals that cannot be mapped
+  safely remain static and produce a compatibility warning.
 - For a native scene exported without a preserved Roblox place, the selected
   world's implicit ground exports as one anchored `Ground` Part in `Workspace`.
   Its size, height, color, and collision follow that world's ground settings;
@@ -108,8 +112,10 @@ This is not full round-tripping yet. Current limitations are explicit:
 
 - MeshParts, unions, non-block shapes, dynamic Parts,
   Parts with unmapped materials, transparent/reflective Parts, terrain, GUI,
-  constraints, lights, effects, characters, and scripts are preserved in the
-  Roblox source but are not editable through this interchange path.
+  constraints, lights, effects, characters, and source-authored scripts are
+  preserved in the Roblox source but are not editable through this interchange
+  path. The generated interaction Script is an export adapter, not native
+  script conversion.
 - Native terrain operations are not exported; export reports a compatibility
   warning when they are present.
 - Preservation covers instances and properties decoded by the pinned Roblox
