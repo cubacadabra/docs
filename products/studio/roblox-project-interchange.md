@@ -74,8 +74,10 @@ The first implementation supports a deliberately small vertical slice:
 
 - File → Import From → Roblox Place reads XML `.rbxlx` files.
 - Ordinary block `Part` instances under `Workspace` become editable native
-  primitive nodes with names, hierarchy, transforms, size, color, collision,
-  and shadow state.
+  primitive nodes when they are anchored, axis-aligned, opaque,
+  non-reflective, use a supported material, and have a valid size. Their names,
+  transforms, size, color, collision, and shadow state are editable; the source
+  hierarchy is represented by native groups but remains preservation-owned.
 - Source `Model` and `Folder` ancestors become native groups.
 - The original `.rbxlx` bytes are copied under
   `imports/roblox/<name>-<hash>/source.rbxlx` and referenced as project-relative
@@ -83,6 +85,9 @@ The first implementation supports a deliberately small vertical slice:
 - Unsupported Roblox instances remain in that preserved source. Export starts
   from the preserved DOM, updates supported source-linked Parts, and serializes
   the rest of the decoded Roblox instances and properties unchanged.
+- The decoder reads properties missing from the pinned reflection database and
+  the encoder writes them back. Known properties still use reflection-backed
+  canonical Roblox names and types.
 - Native Cubacadabra block primitives without a Roblox source link export as
   anchored Roblox Parts under a `Cubacadabra Export` model.
 - Export reports updated Parts, new Parts, omitted native components, and
@@ -90,9 +95,10 @@ The first implementation supports a deliberately small vertical slice:
 
 This is not full round-tripping yet. Current limitations are explicit:
 
-- MeshParts, unions, non-block shapes, transparent/reflective Parts, terrain,
-  GUI, constraints, lights, effects, characters, and scripts are preserved in
-  the Roblox source but are not editable through this interchange path.
+- MeshParts, unions, non-block shapes, dynamic or non-axis-aligned Parts,
+  Parts with unmapped materials, transparent/reflective Parts, terrain, GUI,
+  constraints, lights, effects, characters, and scripts are preserved in the
+  Roblox source but are not editable through this interchange path.
 - Preservation covers instances and properties decoded by the pinned Roblox
   XML/reflection libraries. Data unknown to those libraries cannot be promised
   byte-for-byte preservation.
@@ -105,6 +111,9 @@ This is not full round-tripping yet. Current limitations are explicit:
 - Import/export currently runs as a synchronous desktop operation. Large-place
   progress and cancellation are required before this path is suitable for
   Vegas-scale projects.
+- Studio currently requires exactly one preserved Roblox place when exporting.
+  A scene containing multiple imports is rejected until the UI can select an
+  explicit export target; overlapping source paths are never merged implicitly.
 
 ## Preservation rules
 
@@ -131,6 +140,12 @@ not be silently discarded or retargeted.
    referent text.
 6. Never claim successful compatibility for an omitted native feature.
 7. Never require a Roblox XML round trip to build or run a Cubacadabra package.
+
+Export updates only properties whose editable native values actually changed.
+An untouched promoted Part is not rewritten, avoiding color quantization,
+floating-point transform churn, and insertion of explicit defaults. Missing,
+class-mismatched, or foreign-import source links produce compatibility warnings
+and are never reclassified as newly authored native Parts.
 
 Scripts remain embedded in the preserved XML in the current slice. A later
 script adapter may materialize them as ordinary `.luau` files with mapping
@@ -185,6 +200,31 @@ an editable Part containing an Attachment with a ParticleEmitter and PointLight,
 plus a Decal, Sound, Script, value objects, attributes, and an instance
 reference. The test edits the Part and verifies that the nested hierarchy,
 typed properties, source material, and reference target survive export.
+
+## Genericity audit
+
+The Studio and tools interchange boundary was audited on 2026-09-24. The audit
+distinguishes the normalized reference importer—which intentionally recognizes
+selected classes for one-way visual extraction—from the preserved XML DOM used
+for editable round trips. A class allowlist in the former does not authorize
+dropping that class or its properties from the latter.
+
+| Surface | Round-trip rule | Regression evidence |
+| --- | --- | --- |
+| Native promotion | One shared tools-owned predicate recognizes only conservative block Parts. No project, path, or game name changes the decision. | Block, shape, mesh, dynamic, transform, transparency, reflectance, material, and size cases exercise the shared predicate. |
+| Unknown classes and properties | Decode with `ReadUnknown`; encode with `WriteUnknown`; retain reflection for known canonical Roblox migrations. | An unknown future class carries binary, numeric, sequence, range, optional CFrame, physical, protected string, ray, rectangle, shared string, security capability, enum, UI dimension, unique ID, and vector values through export. |
+| Unsupported children | Preserve them beneath a promoted parent in original order. | Attachment, ParticleEmitter, PointLight, Decal, Sound, Script, and value objects remain under an edited Part. |
+| References | Preserve relationships after serialization assigns new referent text. | Beam attachment links, weld Part links, and ObjectValue links are compared by semantic tree target. |
+| Root services | Preserve service trees without treating service names as native scene semantics. | Lighting, ReplicatedStorage, ServerStorage, ServerScriptService, StarterGui, StarterPlayer, SoundService, Teams, and MaterialService survive a Part edit. |
+| Scripts and GUI | Preserve decoded source and typed UI properties without making them native runtime components. | Script, LocalScript, ModuleScript, ScreenGui, Frame, and TextLabel properties are compared semantically. |
+| Assets and terrain | Preserve source IDs, payloads, and material values even when Studio cannot edit them. | MeshPart content IDs, Terrain binary payload, WoodPlanks, Metal, and Marble values survive export. |
+| Ordering and defaults | Retain child ordering and absent properties; do not rewrite untouched promoted Parts. | The semantic DOM comparator walks the entire fixture by child ordinal and compares every non-edited property. |
+| Multiple imports and stale links | Bind edits to the selected preserved source identity. Never fall through to native-Part creation. | Overlapping paths from two imports and a missing source path both have dedicated corruption regressions. |
+
+The remaining preservation boundary is explicit: XML tags or value encodings
+that the pinned `rbx_xml`/`rbx_types` stack cannot parse still fail import and
+cannot be promised byte-for-byte preservation. Such failures must remain loud;
+they must not be silently reinterpreted or omitted.
 
 ## Product guardrail
 
