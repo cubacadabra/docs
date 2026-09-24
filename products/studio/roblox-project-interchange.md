@@ -111,12 +111,26 @@ This is not full round-tripping yet. Current limitations are explicit:
 Preservation is the safety mechanism that makes progressive compatibility
 usable:
 
+> Anything Cubacadabra does not intentionally convert must survive an
+> import → supported edit → export cycle with the same Roblox semantics as
+> closely as the pinned XML and reflection libraries allow.
+
+This is semantic preservation, not byte identity. XML formatting, property
+ordering, explicit defaults, and referent spelling may change. Instance class,
+hierarchy, decoded properties, attributes, tags, scripts, and references must
+not be silently discarded or retargeted.
+
 1. Keep the original Roblox XML inside the project as provenance.
 2. Link native representations to stable Roblox hierarchy paths.
-3. On export, mutate only the properties owned by a supported adapter.
-4. Leave unsupported decoded instances and properties in the source DOM.
-5. Never claim successful compatibility for an omitted native feature.
-6. Never require a Roblox XML round trip to build or run a Cubacadabra package.
+3. On export, mutate only the properties owned by a supported adapter. A visual
+   fallback such as a Cubacadabra material must not replace the preserved
+   Roblox source property unless the creator intentionally edits that property.
+4. Preserve unsupported decoded instances and properties in place, including
+   unsupported children of a natively editable parent.
+5. Preserve instance references as relationships, not merely as serialized
+   referent text.
+6. Never claim successful compatibility for an omitted native feature.
+7. Never require a Roblox XML round trip to build or run a Cubacadabra package.
 
 Scripts remain embedded in the preserved XML in the current slice. A later
 script adapter may materialize them as ordinary `.luau` files with mapping
@@ -157,6 +171,20 @@ The fixture ladder should include at least one block, multiple blocks, nested
 models, materials, scripts, hinges, ropes, and GUI. Each fixture should prove
 both the native facts promised by its adapter and preservation of unrelated
 Roblox content across import → edit → export → re-import.
+
+Every preservation fixture must make at least one supported edit. A no-op
+import/export can pass by copying the source and does not exercise the merge
+boundary. The baseline edit is to rename and transform one promoted Part while
+comparing the rest of the decoded Roblox tree semantically.
+
+The regression suite should grow around focused fixtures for unknown children,
+scripts, attributes and tags, attachments and constraints, GUI, effects,
+lights, sounds, MeshParts, terrain, material variants, unusual property types,
+nested models, and root services. It also includes a compact kitchen-sink case:
+an editable Part containing an Attachment with a ParticleEmitter and PointLight,
+plus a Decal, Sound, Script, value objects, attributes, and an instance
+reference. The test edits the Part and verifies that the nested hierarchy,
+typed properties, source material, and reference target survive export.
 
 ## Product guardrail
 
