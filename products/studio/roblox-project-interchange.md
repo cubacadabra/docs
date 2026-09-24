@@ -105,7 +105,7 @@ The first implementation supports a deliberately small vertical slice:
   The Part's color uses the selected world's `palette.ground`, or the runtime's
   pale green default `#A7BD99` when that world has no ground color; another
   world's palette does not override it. The default color-only surface uses
-  Roblox Plastic. A world with terrain operations and
+  Roblox Plastic with smooth top and bottom faces. A world with terrain operations and
   `terrain.hideDefaultGround` does not get
   this Part. An imported place keeps the ground from its preserved Roblox
   source instead.
