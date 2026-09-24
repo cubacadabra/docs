@@ -114,6 +114,16 @@ This is not full round-tripping yet. Current limitations are explicit:
 - Studio currently requires exactly one preserved Roblox place when exporting.
   A scene containing multiple imports is rejected until the UI can select an
   explicit export target; overlapping source paths are never merged implicitly.
+- Duplicating an imported node creates new authored content and severs its
+  Roblox source identity, so the duplicate exports as a new object. Deleting a
+  Roblox-linked node is rejected until explicit source tombstones are added.
+- Source-derived groups that contain preserved, unsupported descendants are
+  locked for transform operations; this prevents editable and preserved Roblox
+  children from silently separating. Unsupported native materials produce an
+  export warning instead of silently becoming Plastic.
+- Export refuses a preserved source whose bytes no longer match the import
+  identity recorded in the scene, and it retains absent default-valued Part
+  properties when an unrelated edit is exported.
 
 ## Preservation rules
 
