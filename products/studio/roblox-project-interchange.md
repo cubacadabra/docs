@@ -101,8 +101,12 @@ The first implementation supports a deliberately small vertical slice:
   safely remain static and produce a compatibility warning.
 - For a native scene exported without a preserved Roblox place, the selected
   world's implicit ground exports as one anchored `Ground` Part in `Workspace`.
-  Its size, height, color, and collision follow that world's ground settings;
-  a world with terrain operations and `terrain.hideDefaultGround` does not get
+  Its size, height, color, and collision follow that world's ground settings.
+  The Part's color uses the selected world's `palette.ground`, or the runtime's
+  pale green default `#A7BD99` when that world has no ground color; another
+  world's palette does not override it. The default color-only surface uses
+  Roblox Plastic. A world with terrain operations and
+  `terrain.hideDefaultGround` does not get
   this Part. An imported place keeps the ground from its preserved Roblox
   source instead.
 - Export reports updated Parts, new Parts, omitted native components, and
