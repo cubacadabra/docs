@@ -351,7 +351,7 @@ manifest   + manifest configuration
 If `scene.json` is absent, Studio can still preview the manifest-owned objects.
 The first supported world edit creates a native scene, converts the active
 world's Blocks, asset-backed mesh Decorations, Signs, Interactions, Ladders,
-Checkpoints, Hazards, and Safe Zones into component nodes, and removes those
+Actors, Checkpoints, Hazards, and Safe Zones into component nodes, and removes those
 collections from the source manifest. Migration is prepared and validated
 before either in-memory source changes. Unsupported legacy decorations stop
 the conversion rather than disappearing.
@@ -365,6 +365,11 @@ characters with identity, transform, yaw, and appearance. They do not imply
 AI, navigation, physics, or authoritative movement. The builder always
 regenerates all corresponding runtime arrays from the scene, including empty
 arrays.
+
+Primitive appearance uses `color` for tint and `material` for a portable
+surface material. The compiler reads the earlier preview-only `material` color
+and `runtimeMaterial` surface spelling for compatibility, while current Studio
+and importer writes use the canonical names.
 
 This split remains for compatibility with existing projects, but new projects
 now start with the smallest valid native scene:

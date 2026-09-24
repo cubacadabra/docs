@@ -12,7 +12,7 @@ parity.
 | Step | Cubacadabra workflow | Status |
 | --- | --- | --- |
 | 1. Arena | Add Blocks, rename them, and use viewport Place, Shape, and Turn tools | Ready |
-| 2. Bridge | Duplicate Blocks, rotate them, add a Group, and move the planks below it | Ready |
+| 2. Bridge | Shift-select Blocks, add a Group or drag the selection below one, then move or duplicate the complete Group | Ready |
 | 3. Appearance and crystal | Choose primitive color and a portable built-in surface material; a vivid small Block can stand in for the crystal | Partial: emissive/glow appearance is not yet a portable material capability |
 | 4. Hinged gate | Add relationship components referencing stable node IDs | Not yet: Bind/hinge runtime semantics are required |
 | 5. Swinging hazard | Add a rope relationship between authored bodies | Not yet: Bind plus dynamic-body physics are required |
@@ -25,7 +25,8 @@ parity.
 ## Cubacadabra-specific rules
 
 - Groups are ordinary componentless scene nodes. They do not become a runtime
-  `Model` class and may be compiled away.
+  `Model` class and may be compiled away. Grouping, multi-row reparenting, and
+  subtree duplication are each one source transaction.
 - Color and surface material are properties of a renderable component. They do
   not create hierarchy helper objects.
 - Future hinges, ropes, and actuators must reference stable scene-node IDs and

@@ -95,7 +95,11 @@ materials already supported by the runtime. These edits update `scene.json`,
 participate in undo/redo, compile into the package, and rebuild through the
 normal Preview path. Named groups, hierarchy reparenting that preserves world
 placement, renaming, and stationary Actor creation use that same transaction
-path.
+path. When authoring nodes are selected, adding a Group places those nodes below
+the new Group atomically; adding a Group without a selection still creates an
+empty organizer. Primitive source now spells tint and surface material as
+`color` and `material`; the compiler remains compatible with the earlier
+`material` and `runtimeMaterial` spelling.
 
 The next capability milestones are **Bind** relationship components and
 **Motion** actuators. Neither should appear in the palette until the shared

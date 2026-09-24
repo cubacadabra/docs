@@ -50,10 +50,15 @@ preserved editor camera. Object dragging, quarter-unit camera-relative arrow
 nudges, duplication, inspector edits, undo, and future agent edits all feed the
 same source transaction path.
 
-Renaming, primitive appearance changes, and hierarchy reparenting also use this
-path. Reparenting is a source-model operation that preserves world placement
-and rejects cycles or transforms that would introduce unsupported shear; it is
-not a presentation-only tree rearrangement.
+Renaming, primitive appearance changes, grouping, and hierarchy reparenting also
+use this path. Shift-click or Command/Ctrl-click builds a multi-selection in the
+Scene tree or viewport. Adding a Group with that selection creates one
+componentless node at the selection's center and reparents the top-level
+selected nodes as one undoable transaction. Dragging any selected tree row onto
+a Group moves the same selection. Reparenting preserves world placement and
+rejects cycles or transform combinations that would distort an object's shape;
+it is not a presentation-only tree rearrangement. Duplicating a Group copies
+its complete authored subtree and assigns new document-local and runtime IDs.
 
 On the first supported world edit to a manifest-only project, Studio converts
 the active world's supported object collections into scene components and

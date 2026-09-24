@@ -28,13 +28,21 @@ Studio transition and the current v1 versus planned sharded scene formats are
 documented in the [scene-authoring plan](../products/studio/roblox-style-scene-authoring-plan.md#current-transition-manifest-first-projects-and-scene-authoring).
 
 The v1 scene compiler currently maps `primitive`, asset-backed `render`,
-`text`, `interaction`, `ladder`, `checkpoint`, `hazard`, and `safeZone`
+`text`, `interaction`, `actor`, `ladder`, `checkpoint`, `hazard`, and `safeZone`
 components to their runtime manifest collections. Primitive, ladder, and
 hazard sizes include the complete world scale. Their compiled boxes must remain
 axis-aligned; non-axis-aligned rotation and transform shear are rejected rather
 than approximated. Checkpoint, interaction, and safe-zone radii may use only
 uniform world scale. Authoring serialization normalizes floating-point values
 to six decimal places to keep project diffs stable.
+
+A primitive's canonical appearance fields are `color` for its tint or palette
+reference and `material` for its optional runtime surface material. The scene
+compiler continues to read the original preview spelling—`material` as color
+and `runtimeMaterial` as surface material—so existing format-1 scenes remain
+buildable. Studio and importers write only the canonical fields. Actor runtime
+adapters accept world position and Y-axis yaw; unsupported actor scale or X/Z
+rotation is rejected instead of being silently discarded.
 
 The backend upload boundary currently accepts ZIP archives up to 25 MiB, with
 at most 256 extracted files, 64 MiB per extracted file, and 96 MiB total
