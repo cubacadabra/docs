@@ -50,6 +50,11 @@ preserved editor camera. Object dragging, quarter-unit camera-relative arrow
 nudges, duplication, inspector edits, undo, and future agent edits all feed the
 same source transaction path.
 
+Renaming, primitive appearance changes, and hierarchy reparenting also use this
+path. Reparenting is a source-model operation that preserves world placement
+and rejects cycles or transforms that would introduce unsupported shear; it is
+not a presentation-only tree rearrangement.
+
 On the first supported world edit to a manifest-only project, Studio converts
 the active world's supported object collections into scene components and
 removes the migrated arrays from the source manifest before presenting either

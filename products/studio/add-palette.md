@@ -33,13 +33,14 @@ new item, marks source dirty, and preserves save, rebuild, Preview, undo, and
 redo behavior. Creating a Block also enters Craft mode so it can be manipulated
 immediately.
 
-## Initial catalog
+## Current catalog
 
 The initial palette exposes the scene objects Studio already compiles:
 
 | Group | Items |
 | --- | --- |
-| Build | Block, Sign, Ladder |
+| Build | Block, Group, Sign, Ladder |
+| Characters | Actor |
 | Gameplay | Interaction, Checkpoint, Hazard, Safe Zone |
 
 The catalog owns presentation metadata such as labels, descriptions, aliases,
@@ -88,6 +89,14 @@ owns them.
 7. The palette remains usable in narrow windows and scrolls instead of
    overflowing.
 
-The next intended capability milestone is **Appearance**: real color and
-material selection over the existing source and runtime support, registered in
-the palette only when it is no longer a preview-only control.
+The first **Appearance** milestone is implemented for primitive blocks. The
+Inspector provides a compact color swatch set and the portable built-in surface
+materials already supported by the runtime. These edits update `scene.json`,
+participate in undo/redo, compile into the package, and rebuild through the
+normal Preview path. Named groups, hierarchy reparenting that preserves world
+placement, renaming, and stationary Actor creation use that same transaction
+path.
+
+The next capability milestones are **Bind** relationship components and
+**Motion** actuators. Neither should appear in the palette until the shared
+runtime can simulate, render, snapshot, and validate them across hosts.
