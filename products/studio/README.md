@@ -13,6 +13,8 @@ uses so creators can test the package boundary honestly.
   coverage against a compact Roblox Studio authoring benchmark.
 - [Roblox-style scene authoring plan](roblox-style-scene-authoring-plan.md) —
   proposed hierarchy, viewport, import, and validation path for large worlds.
+- [Roblox project interchange](roblox-project-interchange.md) — Roblox as an
+  import/export target, preservation rules, and the current `.rbxlx` slice.
 - [Toolchain](../../systems/toolchain/overview.md) — native builder migration.
 - [Studio repository](../../repos/studio/README.md)
 

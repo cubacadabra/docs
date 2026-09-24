@@ -12,6 +12,10 @@ This plan describes how Studio should approach the useful parts of Roblox
 Studio's Explorer and viewport authoring workflow without making Roblox's
 `Instance` model, services, or runtime behavior a Cubacadabra dependency.
 
+Roblox is also a first-class interchange target rather than only a migration
+source. The current narrow implementation and the preservation contract are
+documented in [Roblox project interchange](roblox-project-interchange.md).
+
 ## Goal
 
 Make a creator able to understand and edit a large world from one coherent
