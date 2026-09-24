@@ -30,9 +30,11 @@ documented in the [scene-authoring plan](../products/studio/roblox-style-scene-a
 The v1 scene compiler currently maps `primitive`, asset-backed `render`,
 `text`, `interaction`, `actor`, `ladder`, `checkpoint`, `hazard`, and `safeZone`
 components to their runtime manifest collections. Primitive, ladder, and
-hazard sizes include the complete world scale. Their compiled boxes must remain
-axis-aligned; non-axis-aligned rotation and transform shear are rejected rather
-than approximated. Checkpoint, interaction, and safe-zone radii may use only
+hazard sizes include the complete world scale. Renderable primitive boxes retain
+their XYZ Euler rotation in radians, allowing thin boxes to be used as precise
+planar strokes; the runtime uses conservative axis-aligned bounds for physics.
+Transform shear is rejected rather than approximated. Ladder and hazard boxes
+remain axis-aligned. Checkpoint, interaction, and safe-zone radii may use only
 uniform world scale. Authoring serialization normalizes floating-point values
 to six decimal places to keep project diffs stable.
 

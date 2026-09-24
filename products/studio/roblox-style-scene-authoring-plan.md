@@ -705,13 +705,13 @@ The importer does not need to explode every geometry record into a native node
 on the first pass. It can retain an efficient baked representation and promote
 objects as their authoring value becomes clear. The current ordinary-Part
 milestone now provides a bounded automatic promotion path: anchored, ordinary
-block Parts with axis-aligned rotations and no unsupported mesh, transparency,
-or reflectance behavior become native box primitives. `CastShadow` is
-preserved per primitive; a false value keeps the block in the normal render
-pass while excluding it from shadow-caster geometry. Dynamic Parts, non-block
-shapes, arbitrary rotations, and other unsupported cases remain fallback
-geometry with a diagnostic reason. Name filters remain available for focused
-imports, but are no longer required for the default conversion.
+block Parts with supported transforms and no unsupported mesh, transparency, or
+reflectance behavior become native box primitives. `CastShadow` is preserved
+per primitive; a false value keeps the block in the normal render pass while
+excluding it from shadow-caster geometry. Dynamic Parts, non-block shapes,
+transform shear, and other unsupported cases remain fallback geometry with a
+diagnostic reason. Name filters remain available for focused imports, but are
+no longer required for the default conversion.
 
 The chair and primitive pipelines provide the sequence:
 

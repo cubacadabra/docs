@@ -74,7 +74,7 @@ The first implementation supports a deliberately small vertical slice:
 
 - File → Import From → Roblox Place reads XML `.rbxlx` files.
 - Ordinary block `Part` instances under `Workspace` become editable native
-  primitive nodes when they are anchored, axis-aligned, opaque,
+  primitive nodes when they are anchored, opaque,
   non-reflective, use a supported material, and have a valid size. Their names,
   transforms, size, color, collision, and shadow state are editable; the source
   hierarchy is represented by native groups but remains preservation-owned.
@@ -95,7 +95,7 @@ The first implementation supports a deliberately small vertical slice:
 
 This is not full round-tripping yet. Current limitations are explicit:
 
-- MeshParts, unions, non-block shapes, dynamic or non-axis-aligned Parts,
+- MeshParts, unions, non-block shapes, dynamic Parts,
   Parts with unmapped materials, transparent/reflective Parts, terrain, GUI,
   constraints, lights, effects, characters, and scripts are preserved in the
   Roblox source but are not editable through this interchange path.
