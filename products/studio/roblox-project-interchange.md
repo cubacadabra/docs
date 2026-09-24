@@ -90,6 +90,11 @@ The first implementation supports a deliberately small vertical slice:
   canonical Roblox names and types.
 - Native Cubacadabra block primitives without a Roblox source link export as
   anchored Roblox Parts under a `Cubacadabra Export` model.
+- Box-based interaction visuals export in their initial `available` or
+  `default` state as anchored, non-collidable Parts. This preserves authored
+  pickup markers such as the starter game's loose letter lines. Export reports
+  that their interaction behavior and later visual states still require Roblox
+  scripting.
 - For a native scene exported without a preserved Roblox place, the selected
   world's implicit ground exports as one anchored `Ground` Part in `Workspace`.
   Its size, height, color, and collision follow that world's ground settings;
