@@ -49,9 +49,13 @@ On macOS these commands live in the native application menu. On Windows and
 Linux they live in Studio's in-window File menu. Both dispatch the same shared
 Studio commands and use native file dialogs.
 
-Import adds content to the open source project. It does not silently replace
-the project. Export writes a generated artifact chosen by the creator; it does
-not change the native project or publish anything.
+Import opens a file picker for a Roblox XML place (`.rbxlx` or `.xml`). When a
+source project is open, it adds the place to that project. From the start
+screen or a read-only preview, Studio asks the creator to name and locate a new
+project, then imports the selected place after that project opens. Canceling
+project creation cancels the import. Import never silently replaces a project.
+Export writes a generated artifact chosen by the creator; it does not change
+the native project or publish anything.
 
 ## Compatibility states
 
@@ -72,7 +76,7 @@ unreviewed omissions remain, not that the two platforms are identical.
 
 The first implementation supports a deliberately small vertical slice:
 
-- File → Import From → Roblox Place reads XML `.rbxlx` files.
+- File → Import From → Roblox Place reads Roblox XML `.rbxlx` and `.xml` files.
 - Ordinary block `Part` instances under `Workspace` become editable native
   primitive nodes when they are anchored, opaque,
   non-reflective, use a supported material, and have a valid size. Their names,
