@@ -33,6 +33,10 @@ components to their runtime manifest collections. Primitive, ladder, and
 hazard sizes include the complete world scale. Renderable primitive boxes retain
 their XYZ Euler rotation in radians, allowing thin boxes to be used as precise
 planar strokes; the runtime uses conservative axis-aligned bounds for physics.
+Uniform `sphere` primitives compile to round visual decorations at the authored
+world position and diameter. They currently have no native collision or dynamic
+physics adapter; importers preserve those source properties separately when
+round-tripping Roblox places.
 Transform shear is rejected rather than approximated. Ladder and hazard boxes
 remain axis-aligned. Checkpoint, interaction, and safe-zone radii may use only
 uniform world scale. Authoring serialization normalizes floating-point values

@@ -52,7 +52,8 @@ Studio commands and use native file dialogs.
 Import opens a file picker for a Roblox XML place (`.rbxlx` or `.xml`). When a
 source project is open, it adds the place to that project. From the start
 screen or a read-only preview, Studio asks the creator to name and locate a new
-project, then imports the selected place after that project opens. Canceling
+project, writes the selected place into an empty project, then builds that
+import as the initial preview. Canceling
 project creation cancels the import. Import never silently replaces a project.
 Export writes a generated artifact chosen by the creator; it does not change
 the native project or publish anything.
@@ -78,10 +79,15 @@ The first implementation supports a deliberately small vertical slice:
 
 - File → Import From → Roblox Place reads Roblox XML `.rbxlx` and `.xml` files.
 - Ordinary block `Part` instances under `Workspace` become editable native
-  primitive nodes when they are anchored, opaque,
-  non-reflective, use a supported material, and have a valid size. Their names,
-  transforms, size, color, collision, and shadow state are editable; the source
-  hierarchy is represented by native groups but remains preservation-owned.
+  primitive nodes when they are opaque, non-reflective, use a supported material,
+  and have a valid size. Uniform round `Part` instances become editable sphere
+  primitives. This includes unanchored Parts: the Cubacadabra preview shows
+  their starting positions as static geometry, while Roblox physics properties
+  remain in the preserved XML for export. Block names, transforms, size, color,
+  collision, and shadow state are editable. Sphere visuals compile as round
+  decorations; sphere collision and source physics are not simulated in the
+  Cubacadabra preview. The source hierarchy is represented by native groups
+  but remains preservation-owned.
 - Source `Model` and `Folder` ancestors become native groups.
 - The original `.rbxlx` bytes are copied under
   `imports/roblox/<name>-<hash>/source.rbxlx` and referenced as project-relative
@@ -118,9 +124,9 @@ The first implementation supports a deliberately small vertical slice:
 
 This is not full round-tripping yet. Current limitations are explicit:
 
-- MeshParts, unions, non-block shapes, dynamic Parts,
+- MeshParts, unions, non-block and non-sphere shapes, non-uniform spheres,
   Parts with unmapped materials, transparent/reflective Parts, terrain, GUI,
-  constraints, lights, effects, characters, and source-authored scripts are
+  dynamic physics, constraints, lights, effects, characters, and source-authored scripts are
   preserved in the Roblox source but are not editable through this interchange
   path. The generated interaction Script is an export adapter, not native
   script conversion.
@@ -248,7 +254,7 @@ dropping that class or its properties from the latter.
 
 | Surface | Round-trip rule | Regression evidence |
 | --- | --- | --- |
-| Native promotion | One shared tools-owned predicate recognizes only conservative block Parts. No project, path, or game name changes the decision. | Block, shape, mesh, dynamic, transform, transparency, reflectance, material, and size cases exercise the shared predicate. |
+| Native promotion | One shared tools-owned predicate recognizes supported block Parts and uniform sphere Parts. Unanchored parts receive static preview geometry, with their source physics preserved for export. No project, path, or game name changes the decision. | Block, sphere, mesh, dynamic, transform, transparency, reflectance, material, and size cases exercise the shared predicate. |
 | Unknown classes and properties | Decode with `ReadUnknown`; encode with `WriteUnknown`; retain reflection for known canonical Roblox migrations. | An unknown future class carries binary, numeric, sequence, range, optional CFrame, physical, protected string, ray, rectangle, shared string, security capability, enum, UI dimension, unique ID, and vector values through export. |
 | Unsupported children | Preserve them beneath a promoted parent in original order. | Attachment, ParticleEmitter, PointLight, Decal, Sound, Script, and value objects remain under an edited Part. |
 | References | Preserve relationships after serialization assigns new referent text. | Beam attachment links, weld Part links, and ObjectValue links are compared by semantic tree target. |

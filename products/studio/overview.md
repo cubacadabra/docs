@@ -8,14 +8,15 @@ runtime preview features, and can import supported local Morph assets.
 
 Studio's **File → New Project** workflow creates and opens a starter project
 without an external CLI or Python installation. It writes a manifest, a
-minimal `scene.json` with one world root, a minimal Luau entry point, embedded
-SDK, and asset directories. Raw source projects use the shared Rust
+starter letter puzzle in `scene.json`, a Luau entry point, embedded SDK, and
+asset directories. Raw source projects use the shared Rust
 `cubacadabra-builder` crate in-process, so the complete create, open, rebuild,
 and preview loop is self-contained in the installed Studio release.
 
-New projects start with a blank world rather than a genre template. Studio and
-the native CLI both call the shared `cubacadabra-project` generator; Studio
-requests its self-contained, vendored-SDK option. **Scene → Add** appends
+Studio and the native CLI both call the shared `cubacadabra-project` generator;
+Studio requests its self-contained, vendored-SDK option. Importing a Roblox XML
+place from the start screen creates an empty project and builds the imported
+scene as its first preview. **Scene → Add** appends
 Blocks, Signs, Ladders, Interactions, Checkpoints, Hazards, and Safe Zones as
 native component nodes in `scene.json`; rebuilding compiles them into the
 runtime manifest. The first such edit to an older manifest-only project
