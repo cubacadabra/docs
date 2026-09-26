@@ -9,9 +9,11 @@ runtime preview features, and can import supported local Morph assets.
 Studio's **File → New Project** workflow creates and opens a starter project
 without an external CLI or Python installation. It writes a manifest, a
 starter letter puzzle in `scene.json`, a Luau entry point, embedded SDK, and
-asset directories. Raw source projects use the shared Rust
-`cubacadabra-builder` crate in-process, so the complete create, open, rebuild,
-and preview loop is self-contained in the installed Studio release.
+asset directories. The starter Luau document includes a left movement joystick
+and right Jump and Run buttons for touch play on iPad. Raw source projects use
+the shared Rust `cubacadabra-builder` crate in-process, so the complete
+create, open, rebuild, and preview loop is self-contained in the installed
+Studio release.
 
 Studio and the native CLI both call the shared `cubacadabra-project` generator;
 Studio requests its self-contained, vendored-SDK option. Importing a Roblox XML
