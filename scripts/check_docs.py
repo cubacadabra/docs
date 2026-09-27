@@ -10,7 +10,7 @@ ROOT = Path(__file__).resolve().parents[1]
 MARKDOWN = sorted(ROOT.rglob("*.md"))
 LINK_RE = re.compile(r"\[[^\]]+\]\(([^)]+)\)")
 RETIRED_LINK_RE = re.compile(
-    r"(?:^|/)(?:backend|developer|ios_app|rust|studio|tools|web)/docs(?:/|$)"
+    r"(?:^|/)(?:backend|developer|ios|ios_app|rust|studio|tools|web)/docs(?:/|$)"
 )
 ALLOWED_MATURITY = {"Preview", "Experimental", "Stable"}
 

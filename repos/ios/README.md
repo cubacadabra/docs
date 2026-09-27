@@ -1,4 +1,4 @@
-# `cubacadabra/ios_app`
+# `cubacadabra/ios`
 
 **Owns:** Swift/iOS lifecycle, touch input, Metal view integration, credentials,
 networking, and the Rust native bridge.
@@ -12,4 +12,4 @@ networking, and the Rust native bridge.
 - Verify with: real host checks in [host conformance](../../quality/compatibility/host-conformance.md).
 - Incomplete: device-level proof for full package, asset, and network parity.
 
-Repository: [github.com/cubacadabra/ios_app](https://github.com/cubacadabra/ios_app)
+Repository: [github.com/cubacadabra/ios](https://github.com/cubacadabra/ios)

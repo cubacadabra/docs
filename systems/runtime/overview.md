@@ -40,7 +40,7 @@ flowchart LR
 | `tools` | Project creation, SDK bundling, validation and package construction; native Rust CLI migration in progress | Runtime authority or host presentation |
 | `studio` | Local authoring, preview, asset workflow and editor interactions | A separate interpretation of package validity |
 | `backend` | Authentication, world routing, service validation, retained data and package delivery | Game-specific rules such as a particular score or gate |
-| `web`, `ios_app`, `android_app` | Current Player host UI, device APIs, credentials, transport and platform decoding | Independent copies of shared gameplay or account decisions where Rust owns them |
+| `web`, `ios`, `android_app` | Current Player host UI, device APIs, credentials, transport and platform decoding | Independent copies of shared gameplay or account decisions where Rust owns them |
 | `desktop` | Native desktop Player shell and OS integration | Studio editor, project/build machinery, or a separate gameplay implementation |
 | `docs` | Canonical hand-written platform docs, contracts, decisions, and verification criteria | Generated API output or executable fixtures |
 

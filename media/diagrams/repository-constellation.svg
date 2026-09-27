@@ -42,7 +42,7 @@
     <text class="kicker" fill="#ff9a88">CREATOR</text><text y="35" class="groupTitle">Author and build</text><text y="70" class="repos">studio  ·  tools  ·  examples</text><text y="98" class="role">source, import, preview, packaging</text>
   </g>
   <g transform="translate(876 258)">
-    <text class="kicker" fill="#9fb0ff">PLAYER HOSTS</text><text y="35" class="groupTitle">Open and play</text><text y="70" class="repos">web  ·  ios_app</text><text y="96" class="repos">android_app  ·  desktop</text>
+    <text class="kicker" fill="#9fb0ff">PLAYER HOSTS</text><text y="35" class="groupTitle">Open and play</text><text y="70" class="repos">web  ·  ios</text><text y="96" class="repos">android_app  ·  desktop</text>
   </g>
   <g transform="translate(82 451)">
     <text class="kicker" fill="#ff9a88">CONTENT</text><text y="35" class="groupTitle">Ship worlds</text><text y="70" class="repos">first-game  ·  second-game</text><text y="96" class="repos">third-game</text>

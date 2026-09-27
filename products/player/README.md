@@ -7,7 +7,7 @@ not Studio, even when both embed the shared Rust runtime.
 | Host | Owns | Start here |
 | --- | --- | --- |
 | [Web](web.md) | browser shell, DOM/HUD, WASM boundary, package host | `cubacadabra/web` |
-| [iOS](ios.md) | Swift lifecycle, touch, Metal view, native bridge | `cubacadabra/ios_app` |
+| [iOS](ios.md) | Swift lifecycle, touch, Metal view, native bridge | `cubacadabra/ios` |
 | [Android](android.md) | Compose UI, lifecycle, JNI bridge, NDK integration | `cubacadabra/android_app` |
 | [Desktop](desktop.md) | window, keyboard/mouse input, native player shell | `cubacadabra/desktop` |
 

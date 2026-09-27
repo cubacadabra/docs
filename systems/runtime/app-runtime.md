@@ -196,7 +196,7 @@ cargo test --workspace
 cargo clippy -p cubacadabra-app --all-targets -- -D warnings
 sh scripts/build_web_renderer.sh --release
 
-# In ios_app/ — production Swift/C bridge plus app-only host lifecycle on macOS
+# In ios/ — production Swift/C bridge plus app-only host lifecycle on macOS
 sh scripts/check_app_contract.sh
 
 # In web/ — tests the actual generated WASM plus host lifecycle/projection

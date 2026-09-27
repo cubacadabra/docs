@@ -9,7 +9,7 @@ backend persistence.
 - Runs in: Studio directly; Web through WASM; iOS/Android through native bridges.
 - Depends on: game packages, [tools](../tools/README.md) for build output.
 - Used by: [Studio](../studio/README.md), [Web](../web/README.md),
-  [iOS](../ios_app/README.md), [Android](../android_app/README.md), and [Desktop](../desktop/README.md).
+  [iOS](../ios/README.md), [Android](../android_app/README.md), and [Desktop](../desktop/README.md).
 - Read next: [runtime overview](../../systems/runtime/overview.md),
   [runtime decision](../../decisions/0003-rust-shared-runtime.md),
   [host conformance](../../quality/compatibility/host-conformance.md).

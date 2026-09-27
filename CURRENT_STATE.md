@@ -89,7 +89,7 @@ completed milestones should be removed as they stop being relevant.
 - `tools` — builder and CLI
 - `examples` — example games, including Maze 101
 - `studio` — desktop creator app
-- `web`, `ios_app`, `android_app`, `desktop` — player hosts
+- `web`, `ios`, `android_app`, `desktop` — player hosts
 - `docs` — canonical project documentation
 
 ## Important constraints
