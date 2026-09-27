@@ -62,10 +62,12 @@ preview clients in one private backend game namespace. Each client runs its own
 game session and camera, and the World viewport shows them in equal tiles. The
 top-left player receives Studio's keyboard and pointer controls first. Click a
 different tile to control that player; the outlined tile and its label show the
-current choice. Stop closes the extra clients and restores the ordinary editor
-layout. Private preview sessions require a reachable backend for player presence
-and shared game state; the individual game views still render locally while the
-backend is unavailable.
+current choice. Uncontrolled preview players wander, occasionally pause,
+sprint, and jump using the same movement input as a player. Control transfers
+immediately when a different tile is selected. Stop closes the extra clients
+and restores the ordinary editor layout. Private preview sessions require a
+reachable backend for player presence and shared game state; the individual game
+views still render locally while the backend is unavailable.
 
 The raw-project path calls the shared Rust builder in-process. The native
 `cubacadabra` CLI in `tools` is a thin command-line frontend over the same
