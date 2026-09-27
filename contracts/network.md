@@ -10,6 +10,9 @@ theme or rules.
 
 ```luau
 api.network:publish("round-events", { kind = "sparkle" })
+if api.network:is_connected() then
+    -- The socket has a server-assigned player identity.
+end
 api.network:set_state("round-progress", { score = 4 })
 api.network:compare_set_state("shared-round", 7, { round = 3, score = 5 })
 
@@ -20,6 +23,10 @@ end
 ```
 
 `publish` is an ephemeral broadcast to everyone currently in the same world.
+`is_connected()` is false in direct/offline engine previews and until the
+backend assigns a socket identity; it becomes false again when that session
+disconnects or changes worlds. A game may use it to pause network retry loops
+while offline without pausing local gameplay.
 `set_state` replaces the latest JSON value for a channel, broadcasts it, and
 causes it to be sent to players who join that world later. The backend stores
 the latest retained value in the world instance but does not validate its
@@ -104,3 +111,24 @@ for ordering and prevents lost updates, while payload meaning remains entirely
 game-owned. It is still a cooperative MVP contract: untrusted competitive games
 will eventually need a generic sandboxed server-rules mechanism rather than
 putting game names or rules into the platform backend.
+
+## Pushable world blocks
+
+When a socket receives `session_identity`, the shared Rust client enables
+networked pushes. It sends small `world_block_move` deltas with `blockIndex`,
+`dx`, `dz`, a connection-local `requestId`, and a content fingerprint derived
+from the exact manifest and script bytes. The World Durable Object orders and
+stores the offset for each content fingerprint and block index, broadcasts a
+sequenced `world_block_state` to connected players, and replays the latest
+position to late joiners. Clients apply that offset to visual blocks and their
+collision boxes; authored child blocks and effect nodes attached to the block
+follow it. Clients with different package bytes ignore the state because the
+block index might describe different geometry.
+
+The server bounds each delta and offset, but does not run package collision
+physics or decide whether a push is physically valid. A rejected, well-formed
+move receives `world_block_rejected` with its request ID and current position,
+so the sender removes that predicted delta. Cube moves are live proposals and
+must not be replayed from a host transport queue after reconnect; the server's
+retained position is replayed instead. This is cooperative shared state, not
+trusted physics authority.

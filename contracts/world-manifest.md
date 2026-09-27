@@ -32,6 +32,13 @@ lighting and shadows normally, and is omitted only from the shadow-caster pass.
 Collidable box blocks may set `pushable: true`; grounded players can push them
 horizontally against world bounds and other obstacles. A block with `attachedTo`
 equal to a pushable block's `id` follows that block's displacement visually.
+The runtime also moves collision for collidable child blocks. The shared client
+uses the backend's ordered block offset for all connected players and late
+joiners loading the same package bytes. Effect state, such as whether a loose
+floor line has been restored, is separate game-owned state; the built-in
+starter game retains those completion flags through the shared-state SDK.
+Its local pickup animation starts immediately, including in an offline editor
+preview; accepted state makes the result visible to peers and late joiners.
 
 The manifest's `effects` value may contain an inline effect library or
 `{ "source": "effects.json" }`; the builder validates the relative path and

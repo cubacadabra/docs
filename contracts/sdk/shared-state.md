@@ -166,7 +166,9 @@ function Game.on_interaction(api, event)
 end
 
 function Game.on_tick(api, delta_seconds)
-    store:update(api, delta_seconds)
+    if api.network:is_connected() then
+        store:update(api, delta_seconds)
+    end
 end
 ```
 
@@ -178,6 +180,10 @@ an unanswered compare-and-set. Before the first authoritative snapshot,
 `update` also repeats the initial sequence-zero proposal. If the first send or
 response is lost during a connection transition, a later proposal either
 initializes the channel or receives the retained state as a conflict response.
+Direct engine previews have no socket identity, so games that also support
+offline editing should gate `update` with `api.network:is_connected()`. They
+can still show local feedback when an intent is dispatched; the retained state
+will reconcile the result when a backend connection exists.
 
 Public read-only state used by game presentation:
 

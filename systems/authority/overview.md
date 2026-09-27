@@ -53,6 +53,7 @@ as a score or capture legitimate.
 | `move` with `authoritative: true` | server → clients | server-authoritative projection | The World applies finite-value, respawn, rate, and travel-envelope checks, canonicalizes the proposed position, then replicates it. It does not currently simulate Maze collision or prove that the player traversed the route. |
 | `experience_state`, `experience_launch` | server → client | server-authoritative | Build state, lobby occupancy, launch timing, and the selected session are produced by the Durable Object. |
 | `build_action` / `build_save` | client → server | server-validated | The backend validates bounds, shape, color, block count, and target existence before broadcasting the next build state. |
+| `world_block_move` / `world_block_state` | client → server → clients | client-predicted, server-ordered | The World bounds and retains each push delta and replays the sequenced offset to late joiners. It does not validate package collision or the player's contact with the block. Rejected deltas are returned to the sender for prediction rollback. |
 
 ## Game-owned network lanes
 
