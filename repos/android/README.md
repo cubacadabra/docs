@@ -1,4 +1,4 @@
-# `cubacadabra/android_app`
+# `cubacadabra/android`
 
 **Owns:** Kotlin/Compose presentation, lifecycle, input, JNI shim, and NDK
 integration for the shared Rust engine.
@@ -12,4 +12,4 @@ integration for the shared Rust engine.
 - Verify with: real Android checks in [host conformance](../../quality/compatibility/host-conformance.md).
 - Incomplete: device-level host conformance beyond target compilation.
 
-Repository: [github.com/cubacadabra/android_app](https://github.com/cubacadabra/android_app)
+Repository: [github.com/cubacadabra/android](https://github.com/cubacadabra/android)

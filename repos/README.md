@@ -8,7 +8,7 @@ and quality docs; it is not a second specification.
 | --- | --- |
 | Creator | [studio](studio/README.md), [tools](tools/README.md), [examples](examples/README.md) |
 | Core | [rust](rust/README.md) |
-| Hosts | [web](web/README.md), [ios](ios/README.md), [android_app](android_app/README.md), [desktop](desktop/README.md) |
+| Hosts | [web](web/README.md), [ios](ios/README.md), [android](android/README.md), [desktop](desktop/README.md) |
 | Content | [first-game](first-game/README.md), [second-game](second-game/README.md), [third-game](third-game/README.md) |
 | Services and docs | [backend](backend/README.md), [developer](developer/README.md), [deployed](deployed/README.md), [docs](docs/README.md) |
 
