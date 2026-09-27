@@ -90,6 +90,11 @@ enums. It should not route Rust-to-Rust calls through JSON or the C ABI. A
 Desktop Player can use the same native Rust style while keeping a player shell
 separate from editor/project UI.
 
+When a native host reuses a `native::Renderer` with a replacement `Engine`, it
+calls `invalidate_package_cache()` before `sync()`. Package generations are
+local to each engine instance, so equal generation numbers do not identify the
+same game's scene across session replacements.
+
 iOS and Android create an opaque `CubacadabraClient`. `client_engine` returns a
 borrowed engine pointer for existing input, snapshot, and renderer APIs. The
 pointer becomes invalid when the client is destroyed.
