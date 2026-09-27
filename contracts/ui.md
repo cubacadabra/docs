@@ -130,6 +130,8 @@ shared UI to own mobile movement controls safely with multiple simultaneous
 pointers. The engine-owned `player-joystick` also accepts pointer-down anywhere
 in the left half of the safe play area; its visible control remains anchored in
 the lower-left, and movement is derived from the gesture displacement.
+Studio Play previews suppress that engine-owned joystick and its gesture area;
+touch Player hosts continue to show and accept it.
 
 Nodes are visible in every world by default. Set `visibleIn` to a list of
 manifest world IDs when a node (including an entire container subtree) should

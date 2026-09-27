@@ -53,6 +53,10 @@ viewport; this does not change the letterboxing policy of standalone player
 hosts. The renderer entry points and editor camera state are gated by
 `studio-ui`.
 
+Studio hides the engine-owned touch movement joystick in every Play preview
+view, including local multiplayer tiles. Its keyboard and mouse controls remain
+available. The same package still shows the joystick on touch Player hosts.
+
 The Play button starts one player. Its adjacent menu starts 3, 6, or 9 local
 preview clients in one private backend game namespace. Each client runs its own
 game session and camera, and the World viewport shows them in equal tiles. The
