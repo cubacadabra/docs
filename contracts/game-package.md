@@ -33,6 +33,10 @@ components to their runtime manifest collections. Primitive, ladder, and
 hazard sizes include the complete world scale. Renderable primitive boxes retain
 their XYZ Euler rotation in radians, allowing thin boxes to be used as precise
 planar strokes; the runtime uses conservative axis-aligned bounds for physics.
+Pushable, collidable box primitives compile with `pushable: true`. Direct child
+box primitives of a pushable primitive compile with `attachedTo` and follow
+their parent block's horizontal movement in the runtime.
+
 Uniform `sphere` primitives compile to round visual decorations at the authored
 world position and diameter. They currently have no native collision or dynamic
 physics adapter; importers preserve those source properties separately when

@@ -29,6 +29,10 @@ whether the block contributes geometry to the directional shadow map; it also
 defaults to `true`. A block with `castShadow: false` remains visible, receives
 lighting and shadows normally, and is omitted only from the shadow-caster pass.
 
+Collidable box blocks may set `pushable: true`; grounded players can push them
+horizontally against world bounds and other obstacles. A block with `attachedTo`
+equal to a pushable block's `id` follows that block's displacement visually.
+
 The manifest's `effects` value may contain an inline effect library or
 `{ "source": "effects.json" }`; the builder validates the relative path and
 inlines the library so runtime packages stay self-contained. See

@@ -7,6 +7,12 @@ package files, lists latest versions, and serves files to clients. The tools
 also include maintainer-oriented upload workflows. This is a basic release
 path, not a complete creator release-management system.
 
+Web's Developer → Upload a Cube accepts a ZIP produced by `build-game`.
+Studio's **File → Publish Game** saves the open project and uses the same
+native builder to create that ZIP, then sends it to the same `/cubes/upload`
+endpoint using the creator's Studio sign-in. Studio builds and uploads in the
+background and reports the result in its status area.
+
 ### Upload entitlement
 
 The `/cubes/upload` boundary requires an authenticated user with an active

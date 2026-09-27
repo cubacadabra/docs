@@ -61,6 +61,13 @@ supplied endpoints. These endpoints are relative to the position passed to
 `effects:play`, so a game can animate a carried object from an interaction to
 its destination without adding game-specific renderer types.
 
+An effect node may set `attachedTo` to the `id` of a pushable block in the
+current world. The node follows that block's horizontal displacement. For a
+one-shot node with `travelTo`, the displacement is blended in over the travel,
+so its starting point stays at the authored position and its endpoint follows
+the block. Other attached nodes, including persistent interaction visuals,
+follow the block immediately. The interaction zone itself does not move.
+
 Luau changes an attached interaction's visual state or plays a template at a
 world position:
 

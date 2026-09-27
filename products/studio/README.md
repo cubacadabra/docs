@@ -18,5 +18,7 @@ uses so creators can test the package boundary honestly.
 - [Toolchain](../../systems/toolchain/overview.md) — native builder migration.
 - [Studio repository](../../repos/studio/README.md)
 
-Studio is creator software, not the end-user desktop Player. Publishing also
-remains an explicit platform workflow rather than a presumed editor action.
+Studio is creator software, not the end-user desktop Player. A signed-in creator
+can use **File → Publish Game** to save the open project, build a portable Cube
+ZIP with the shared native builder, and upload it. The backend checks the
+developer-plan entitlement and package validity before accepting the version.
