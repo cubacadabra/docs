@@ -17,6 +17,11 @@ library in-process and depends on the scene model directly. The Python implement
 and the compatibility harness that have not yet moved into Rust; it is not
 required by Studio or its release packaging.
 
+The shared About preview uses the builder's in-memory Luau bundling entry
+point for its generated starter script. It resolves Cubacadabra SDK imports
+with the same module bundler as a normal package build before the shared client
+loads the script. In-memory preview sources cannot import local game files.
+
 The first migrated surface is the creator-critical path: native project
 creation, source building, Luau dependency resolution, SDK bundling, package
 metadata, asset copying, hashes, and guarded transactional output. The CLI
