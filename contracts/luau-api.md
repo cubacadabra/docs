@@ -30,6 +30,16 @@ types for pickups, gates, doors, or checkpoints.
 The public API is versioned through `manifest.sdkVersion`. The detailed
 contracts are split by behavior:
 
+Games using SDK `0.6.0` can replace the current world's runtime build blocks
+with `api.world:set_build_blocks(blocks)`. Each block has a finite `position`
+and positive `size` vector, an RGB integer `color` (`0xRRGGBB`), and an
+optional quarter-turn `rotation` from 0 to 3. An empty list clears them. The
+operation accepts at most 2,048 blocks and replaces the previous list after
+the script callback returns. Blocks render and collide through the same
+runtime build-block path used by hosts. Games that use host-managed building
+should not also replace that list from Luau. The list is local runtime state;
+cooperative games must project it from shared game state on each client.
+
 Game code can read `api.build_mode`, which is either `"DEBUG"` or `"RELEASE"`
 and reflects the host runtime's compile profile. It is read-only; use it only
 to expose development conveniences such as test controls. Release builds must
