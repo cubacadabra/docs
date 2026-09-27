@@ -50,6 +50,9 @@ preserved editor camera. Object dragging, quarter-unit camera-relative arrow
 nudges, duplication, inspector edits, undo, and future agent edits all feed the
 same source transaction path.
 
+During Studio Play, the preview hides the shared four-icon header and touch
+Jump button. Stop restores them. Player clients retain both controls.
+
 Renaming, primitive appearance changes, grouping, and hierarchy reparenting also
 use this path. Shift-click or Command/Ctrl-click builds a multi-selection in the
 Scene tree or viewport. Adding a Group with that selection creates one
