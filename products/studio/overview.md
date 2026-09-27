@@ -53,6 +53,16 @@ viewport; this does not change the letterboxing policy of standalone player
 hosts. The renderer entry points and editor camera state are gated by
 `studio-ui`.
 
+The Play button starts one player. Its adjacent menu starts 3, 6, or 9 local
+preview clients in one private backend game namespace. Each client runs its own
+game session and camera, and the World viewport shows them in equal tiles. The
+top-left player receives Studio's keyboard and pointer controls first. Click a
+different tile to control that player; the outlined tile and its label show the
+current choice. Stop closes the extra clients and restores the ordinary editor
+layout. Private preview sessions require a reachable backend for player presence
+and shared game state; the individual game views still render locally while the
+backend is unavailable.
+
 The raw-project path calls the shared Rust builder in-process. The native
 `cubacadabra` CLI in `tools` is a thin command-line frontend over the same
 library. Installed Studio releases do not require Python, `PYTHONPATH`, or a
