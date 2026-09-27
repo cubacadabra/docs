@@ -32,10 +32,16 @@ contracts are split by behavior:
 
 Games using SDK `0.6.0` can replace the current world's runtime build blocks
 with `api.world:set_build_blocks(blocks)`. Each block has a finite `position`
-and positive `size` vector, an RGB integer `color` (`0xRRGGBB`), and an
-optional quarter-turn `rotation` from 0 to 3. An empty list clears them. The
+and positive `size` vector, an RGB integer `color` (`0xRRGGBB`), an
+optional quarter-turn `rotation` from 0 to 3, and optional `collidable`
+(defaults to `true`). Set `collidable = false` for decorative geometry such as
+paint, borders, or lettering so it does not block players or pushable objects.
+Set `attachedTo` to the ID of an authored pushable block when geometry should
+move with it in the same collision step. The attached block still uses its
+supplied world position; the engine applies push displacement to that position.
+An empty list clears the blocks. The
 operation accepts at most 2,048 blocks and replaces the previous list after
-the script callback returns. Blocks render and collide through the same
+the script callback returns. Solid blocks render and collide through the same
 runtime build-block path used by hosts. Games that use host-managed building
 should not also replace that list from Luau. The list is local runtime state;
 cooperative games must project it from shared game state on each client.
