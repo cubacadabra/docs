@@ -64,7 +64,9 @@ with the other live views shown as smaller previews around it. In a nine-player
 preview, eight views surround the full view. Player 1 receives Studio's keyboard
 and pointer controls first. Click a smaller view to bring that player to the
 full view and control it; the previous full view moves into the selected preview
-position. Uncontrolled preview players wander, occasionally pause, sprint, and
+position. Each preview keeps its own character animation history, including
+when its view changes size; taking control stops autopilot input for that player.
+Uncontrolled preview players wander, occasionally pause, sprint, and
 jump using the same movement input as a player. Stop closes the extra clients
 and restores the ordinary editor layout. Private preview sessions require a
 reachable backend for player presence and shared game state; the individual game
