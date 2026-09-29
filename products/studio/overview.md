@@ -59,12 +59,13 @@ available. The same package still shows the joystick on touch Player hosts.
 
 The Play button starts one player. Its adjacent menu starts 3, 6, or 9 local
 preview clients in one private backend game namespace. Each client runs its own
-game session and camera, and the World viewport shows them in equal tiles. The
-top-left player receives Studio's keyboard and pointer controls first. Click a
-different tile to control that player; the outlined tile and its label show the
-current choice. Uncontrolled preview players wander, occasionally pause,
-sprint, and jump using the same movement input as a player. Control transfers
-immediately when a different tile is selected. Stop closes the extra clients
+game session and camera. The controlled player's view fills the World viewport,
+with the other live views shown as smaller previews around it. In a nine-player
+preview, eight views surround the full view. Player 1 receives Studio's keyboard
+and pointer controls first. Click a smaller view to bring that player to the
+full view and control it; the previous full view moves into the selected preview
+position. Uncontrolled preview players wander, occasionally pause, sprint, and
+jump using the same movement input as a player. Stop closes the extra clients
 and restores the ordinary editor layout. Private preview sessions require a
 reachable backend for player presence and shared game state; the individual game
 views still render locally while the backend is unavailable.
