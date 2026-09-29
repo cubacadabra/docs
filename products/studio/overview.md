@@ -68,6 +68,11 @@ and pointer controls first. Click a smaller view to bring that player to the
 full view and control it; the previous full view moves into the selected preview
 position. Each preview keeps its own character animation history, including
 when its view changes size; taking control stops autopilot input for that player.
+Studio mirrors the locally simulated player positions directly between these
+views, so a person appears in the same place across cameras while the backend
+continues to handle presence and shared game state. Each preview player has a
+distinct shirt color tied to their player slot, consistent in every view and
+through swaps; these preview colors do not change the game's saved appearance.
 Uncontrolled preview players wander, occasionally pause, sprint, and
 jump using the same movement input as a player. Stop closes the extra clients
 and restores the ordinary editor layout. Private preview sessions require a
