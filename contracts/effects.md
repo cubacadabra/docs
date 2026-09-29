@@ -69,11 +69,17 @@ the block. Other attached nodes, including persistent interaction visuals,
 follow the block immediately. The interaction zone itself does not move.
 
 Luau changes an attached interaction's visual state or plays a template at a
-world position:
+world position. `effects:play` may override a template's `travelTo` endpoint;
+the override is relative to the supplied effect position, like authored
+animation endpoints:
 
 ```luau
 api.effects:set_state("checkpoint-a", "open")
 api.effects:play("finish-flash", { position = { 4, 1, -8 } })
+api.effects:play("moving-object", {
+  position = { 0, 0, 0 },
+  travelTo = { 0, 8, 0 }
+})
 ```
 
 `visibleStates` controls which nodes appear for the current state. An empty
