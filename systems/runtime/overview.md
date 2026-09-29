@@ -89,6 +89,34 @@ whether the game rule was legitimate. See [authority](../authority/overview.md).
 - A tested prototype is not production integration. Status definitions are in
   the [documentation README](../../README.md#documentation-authority).
 
+## C and C++ boundaries
+
+Rust remains the owner of Cubacadabra's shared engine semantics: simulation,
+client/runtime state, Luau hosting, and rendering-facing behavior. Native
+platform integration does not require moving those responsibilities to C or
+C++.
+
+C is appropriate at narrow native boundaries. Android's JNI shim is one such
+case: it adapts `JNIEnv`, Java arrays and handles, and `ANativeWindow` to the
+Rust engine's C ABI. Swift and Kotlin hosts can likewise call Rust through a C
+ABI, while the browser uses Rust's WASM bindings and Studio calls Rust APIs
+directly. Keep these boundaries small and use the Rust-exported C headers as
+the canonical declarations; host shims should not maintain duplicate function
+prototypes.
+
+C++ is welcome when a platform SDK or a mature third-party library is best
+consumed through C++. Keep that integration at the edge, behind a narrow C ABI
+where practical, rather than moving shared engine ownership into C++. The
+existing Luau dependency is an example of using a C++ implementation beneath a
+Rust interface. Console SDKs may make native C/C++ integration useful in the
+future, but their eventual requirements do not by themselves call for an
+engine rewrite.
+
+Native language choice is not a performance claim. Profile a measured hot
+path and address its algorithm or implementation directly; changing the
+surrounding engine language does not inherently improve GPU-bound work. See
+the [shared Rust runtime decision](../../decisions/0003-rust-shared-runtime.md).
+
 ## Current implementation boundaries
 
 The shared Rust `DataModel` is a generic entity graph and ordered mutation
