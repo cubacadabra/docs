@@ -50,6 +50,8 @@ internals.
 
 Each mutable build block records whether it collides. Snapshots written before
 that field was added restore existing blocks as collidable.
+Each block also records whether its rendered outline is enabled; older snapshots
+restore with outlines enabled.
 An optional pushable attachment ID is also retained; older snapshots restore
 without an attachment.
 

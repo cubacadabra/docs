@@ -34,7 +34,9 @@ Games using SDK `0.6.0` can replace the current world's runtime build blocks
 with `api.world:set_build_blocks(blocks)`. Each block has a finite `position`
 and positive `size` vector, an RGB integer `color` (`0xRRGGBB`), an
 optional quarter-turn `rotation` from 0 to 3, and optional `collidable`
-(defaults to `true`). Set `collidable = false` for decorative geometry such as
+(defaults to `true`). The optional `outline` also defaults to `true`; set
+`outline = false` when the game draws its own block edges or uses adjacent
+blocks as one surface. Set `collidable = false` for decorative geometry such as
 paint, borders, or lettering so it does not block players or pushable objects.
 Set `attachedTo` to the ID of an authored pushable block when geometry should
 move with it in the same collision step. The attached block still uses its
