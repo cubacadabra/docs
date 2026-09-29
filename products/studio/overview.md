@@ -56,6 +56,8 @@ hosts. The renderer entry points and editor camera state are gated by
 Studio hides the engine-owned touch movement joystick in every Play preview
 view, including local multiplayer tiles. Its keyboard and mouse controls remain
 available. The same package still shows the joystick on touch Player hosts.
+In local multiplayer, the touch Run button appears only in the full view of the
+controlled player; smaller player previews omit it.
 
 The Play button starts one player. Its adjacent menu starts 3, 6, or 9 local
 preview clients in one private backend game namespace. Each client runs its own
