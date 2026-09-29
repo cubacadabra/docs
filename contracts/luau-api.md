@@ -27,6 +27,28 @@ Interaction state is generic and includes each zone's inside/nearby/player
 state, kind, label, and event cursor. It does not introduce game-specific Rust
 types for pickups, gates, doors, or checkpoints.
 
+## Studio preview test players
+
+Studio invokes `Game.on_test_player(api, delta_seconds)` for simulated preview
+players when the game defines that callback. The callback can read the bot's
+position and camera yaw and submit movement for the next simulation tick:
+
+```luau
+function Game.on_test_player(api, delta_seconds)
+    local position = api.test_player:get_position()
+    local yaw = api.test_player:get_yaw()
+    api.test_player:set_input(forward, strafe, sprint, jump, look_x)
+end
+```
+
+`get_position()` returns a three-number position and `get_yaw()` returns the
+current camera yaw while the callback is active. `set_input` accepts forward
+and strafe values from -1 to 1, sprint and jump booleans, and a finite look
+delta bounded to -100 through 100; it returns `true` when accepted. This API
+is active only for simulated players in Studio preview. It does not replace
+the controlled preview player's or a normal game's input. Games without this
+callback keep using Studio's general preview autopilot.
+
 The public API is versioned through `manifest.sdkVersion`. The detailed
 contracts are split by behavior:
 

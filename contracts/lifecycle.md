@@ -12,6 +12,7 @@ local Game = {}
 
 function Game.on_start(api) end
 function Game.on_tick(api, delta_seconds) end
+function Game.on_test_player(api, delta_seconds) end
 function Game.on_interaction(api, event) end
 function Game.on_network_message(api, event) end
 function Game.on_ui_event(api, event) end
@@ -27,6 +28,12 @@ return Game
 elapsed seconds. The runtime execution budget and callback error behavior are
 part of the [Luau API](luau-api.md) and
 [task scheduler contract](tasks.md).
+
+Studio calls the optional `on_test_player` callback for simulated preview
+players on each tick. Games can use `api.test_player` to inspect that avatar
+and set its movement input. The callback does not run for a player's normal
+game session or for the player currently controlled in Studio preview. Games
+that omit it use Studio's general preview autopilot.
 
 ## World transition timing
 
