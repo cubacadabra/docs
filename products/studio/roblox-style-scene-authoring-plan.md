@@ -16,6 +16,21 @@ Roblox is also a first-class interchange target rather than only a migration
 source. The current narrow implementation and the preservation contract are
 documented in [Roblox project interchange](roblox-project-interchange.md).
 
+The central import model is **selective promotion**: retain source evidence,
+make the environment playable, and progressively give selected objects native
+editable representations. This also applies to captured rooms. A photographed
+couch can remain static while a lamp gains an interaction and a door is
+promoted into an editable object. Full object reconstruction is not a
+prerequisite for gameplay.
+
+For captured environments, test native splats and textured meshes from the
+same capture early, using shared collision and authored gameplay. The first
+acceptance test is:
+
+> A Cubacadabra character can walk from in front of a captured couch to behind
+> it, disappear correctly behind the photographed couch, collide with it, jump
+> beside it, and interact with an authored object placed on it.
+
 ## Goal
 
 Make a creator able to understand and edit a large world from one coherent
@@ -627,6 +642,13 @@ That is the general mechanism for imported-scene migration. The native node
 retains where it came from without requiring the runtime or the authoring tree
 to treat the original Roblox object model as Cubacadabra's type system.
 
+Promotion is a source-to-native authoring operation, not a requirement to
+convert the entire imported environment. Static source-backed appearance,
+reviewed collision, and authored gameplay can coexist with selectively editable
+objects in one scene. Source classes and inferred household labels stay in
+provenance; native identity, hierarchy, transforms, and composable components
+remain the common model.
+
 #### Translate meaning, not just class names
 
 The next useful promotion after chairs is ordinary geometry. A Roblox `Part`
@@ -752,6 +774,105 @@ Success should not be measured by driving the locked count to zero. The better
 metric is whether every object a game developer reasonably expects to
 manipulate has a native representation, while everything else is clearly
 labeled source/reference data and stays out of the way.
+
+#### Captured environments use the same promotion model
+
+A captured room should become playable before every photographed object has
+an editable reconstruction. Its authoring relationships can look like:
+
+```text
+Captured Environment                         [retained source and alignment]
+  Wall                                       photographic/static
+  Couch                                      photographic + collision
+  Lamp                                       photographic + interaction
+  Door                                       promoted -> native editable object
+  Table                                      promoted -> native editable object
+```
+
+These are conceptual relationships, not a new native class taxonomy or a claim
+that scan import exists today. Creators can author an interaction beside a
+photographed lamp without reconstructing the lamp. Promoting a door or table
+requires a supported native representation and explicit source-region mapping.
+The capture remains inspectable source evidence.
+
+Keep three representation roles distinct:
+
+| Representation | Responsibility |
+| --- | --- |
+| Splat or textured mesh | Visible captured appearance |
+| Visual-depth proxy, where needed | Occlusion between captured surfaces, characters, and authored objects |
+| Collision proxy | Player support, movement clearance, and camera obstruction |
+
+A couch collision box can be sufficient for movement while hiding a player's
+legs incorrectly at the photographed silhouette. Depth and collision proxies
+may share geometry when suitable, but neither role requires them to do so.
+Record one metric scale and reconstruction-to-world transform and apply it to
+appearance, proxies, and authored objects. Dense surface reconstruction is
+optional for the first splat experiment: reviewed floor, walls, doorway, and
+furniture boxes can supply the playable geometry.
+
+Promotion must update appearance, applicable depth proxies, and collision
+together. Exclude or mask the promoted source region so a replacement does
+not leave a photographic duplicate. Moving furniture or opening a door can
+expose surfaces never captured; require recapture or an explicitly reviewed
+authored/generated repair. A semantic label alone does not establish geometry,
+a hinge, clearance, or physical dimensions.
+
+Preserve creator corrections, native IDs, region mappings, and scripts across
+reconstruction reruns. Ambiguous matches become reviewable conflicts. Keep
+capture provenance and mappings in inspectable, bounded source datasets;
+freeze reviewed assets so ordinary package builds are deterministic and do
+not retrain a reconstruction model. Raw footage and private evidence remain
+authoring inputs, with review and masking before sharing derived appearance.
+
+### Captured-room experiment: splats and meshes early
+
+Run two small prototypes from the same capture and alignment: a visible native
+splat with simple collision, and a reconstructed textured mesh with the same
+collision and gameplay. The mesh is the portability/fallback baseline. Do not
+make splat integration depend on first completing mesh cleanup automation or
+finding a sufficiently large visual gap in mesh output.
+
+The couch acceptance test must exercise the real character controller, camera,
+Luau interaction, and shared production renderer. Use one camera and deliberate depth/compositing
+integration; correct foreground/background overlap is part of acceptance.
+Preserve captured lighting initially and check the renderer's color pipeline.
+Relighting, transparent effects, and dynamic scanned objects are later work.
+
+For `scanned-room-101`, the proposed order is:
+
+1. Capture one small room, measure a scale anchor, and withhold evaluation views.
+2. Recover cameras and produce one good splat; record tools and resource use.
+3. Align the splat to Cubacadabra world coordinates, gravity, and metric scale.
+4. Add manually reviewed floor, wall, doorway, and furniture collision plus a
+   clear spawn; fit separate depth proxies where visual tests require them.
+5. Spike native splat rendering in Studio with the real Cubacadabra character.
+6. Run the couch test, including camera obstruction and silhouette artifacts.
+7. Add one game-owned Luau interaction with an authored object on the couch.
+8. In parallel with the splat spike, produce the supported textured-mesh
+   baseline using the same alignment, collision, character, and interaction.
+9. Compare withheld-view fidelity, load time, decoded/GPU memory, and frame time.
+
+The first renderer spike may load a developer-only prepared splat, such as
+SPZ, directly. It must remain isolated from normal package validation and
+shipping paths. That experiment tests integration before committing to a
+durable asset format, public registration API, or host-loading contract.
+
+After the rendering gate, design the versioned authoring/package capability,
+immutable asset identity, bounded decoding and memory limits, builder rules,
+registration APIs, host loaders, mesh fallback, and unsupported-version
+behavior as one cross-repository change. Runtime rendering belongs in `rust`,
+asset preparation and compilation in `tools`, and creator review in `studio`.
+Reconstruction dependencies stay outside player clients and ordinary builds.
+
+Test WebGPU early after Studio, then actual iOS, Android, and Desktop loading
+and traversal. Android's current GLES path and WebGL cannot be assumed to
+support a compute/storage-based splat renderer; evaluate a capability-gated
+strategy while protecting existing fallback paths. Fallback selection must
+preserve gameplay geometry. A Studio spike does not establish portable package
+support. The [room-capture proposal](room-capture-to-playable-world.md) provides
+additional capture and reconstruction considerations; this plan specifies the
+early comparison and promotion requirements for the shared authoring model.
 
 ### Authoring graph versus final scene compiler
 
@@ -922,6 +1043,11 @@ Save behavior must be explicit:
 **Exit gate:** the fixture can be imported deterministically, and a reviewer
 can explain which tree nodes are editable, read-only, or build-derived.
 
+The captured-room experiment is a parallel feasibility track, not a later
+phase gated on mesh fidelity or the full Vegas hierarchy. Run its splat and
+mesh comparison early; promote it into a durable package capability only
+after the couch acceptance test and initial host measurements justify it.
+
 ### Phase 1 — Explorer-quality tree on the current package model
 
 - Rework the World tree into a dense, searchable, virtualized outline.
@@ -1085,6 +1211,25 @@ judging Vegas against the Roblox reference screenshot.
 - Read-only imported nodes cannot create silent package changes.
 - Rebuild rejects invalid source data and leaves the last good preview intact.
 
+### Captured-room feasibility and promotion
+
+- Run the couch acceptance test for both visual representations with identical
+  alignment, collision, camera, character, and Luau gameplay.
+- Compare fixed production-renderer views and player movement for occlusion,
+  halos, clipping, scale, camera obstruction, and authored-object placement.
+- Check depth proxies and collision independently; correcting a silhouette
+  must not silently change the navigable room.
+- Promote one supported object without leaving duplicated captured appearance,
+  stale occlusion, or stale collision. Review exposed missing surfaces.
+- Save/reload, undo, rebuild, and rerun reconstruction while preserving creator
+  edits, stable IDs, source links, and reviewed region exclusions.
+- Measure fidelity, load/decode time, memory, and frame-time distributions for
+  both representations on recorded devices. Test actual host loading and
+  fallback behavior before claiming portability; name unavailable targets.
+- Before shipping a splat capability, inspect built packages for declared
+  immutable assets, bounded decoding, unsupported-version handling, and
+  exclusion of private footage and reconstruction caches.
+
 ### Vegas parity
 
 - Import counts match the source fixture and `vegas.json` geometry summary.
@@ -1150,6 +1295,13 @@ into a live runtime entity.
    to authoring IDs.
 7. The default tree prioritizes useful authoring objects. Complete source
    internals remain available through **Show Source Internals**.
+8. Promotion is selective and applies to captured environments as well as
+   Roblox imports. Appearance, visual-depth proxies, and collision are separate
+   roles; selected native objects retain source links and reviewed exclusions.
+9. Captured-room feasibility compares native splats and textured meshes early
+   with shared gameplay geometry. A developer-only renderer spike precedes
+   durable package/API design; shipped support still requires versioning and
+   real host evidence.
 
 ## Remaining implementation decisions
 
