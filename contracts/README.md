@@ -15,4 +15,5 @@ Normative and versioned technical behavior:
   [audio](audio.md), [effects](effects.md), [tasks](tasks.md), and
   [snapshots](snapshots.md).
 - [MorphPack v5](morph-pack-v5.md).
+- [Local room-capture dataset](room-capture.md) — creator-only video intake.
 - [SDK modules](sdk/README.md).

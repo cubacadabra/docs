@@ -1,6 +1,7 @@
 # Local room-capture dataset
 
-**Status:** Initial video-intake format, version 1. Creator source only.
+**Status:** Current contract. **Maturity:** Initial video-intake format,
+version 1. Creator source only.
 
 The `tools` crate `cubacadabra-room-capture` owns video inspection, frame
 selection, and serialization. Studio and `cubacadabra capture-video` call the
