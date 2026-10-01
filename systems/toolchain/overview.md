@@ -31,6 +31,14 @@ library migrations.
 
 ## Target boundary
 
+Room-video intake is also tools-owned. The `cubacadabra-room-capture` crate is
+shared by Studio's **File → Import From → Room Video…** and the native
+`capture-video` command. It owns local decoder invocation, bounded frame
+selection, diagnostics, and the
+[creator-only capture dataset](../../contracts/room-capture.md). FFmpeg is an
+optional prerequisite for this operation; normal project creation, build, and
+player packages do not acquire a video-decoder or reconstruction dependency.
+
 The Studio-required project and build path is delivered by the shared Rust
 crates in `tools`. Studio builds a raw project into a temporary package and
 loads the result through the existing Rust runtime. The Studio release does

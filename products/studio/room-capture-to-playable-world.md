@@ -1,6 +1,8 @@
 # From a room capture to a playable Cubacadabra world
 
-**Status:** Proposal; not an implemented feature or a current contract.
+**Status:** Video intake implemented; reconstruction and playable-world stages
+remain a proposal. The current creator-source format is defined by the
+[local room-capture dataset contract](../../contracts/room-capture.md).
 
 Capture a real room with a phone, reconstruct its appearance, and turn it into
 an editable game environment. Cubacadabra can do this better than a workflow
@@ -35,6 +37,23 @@ measurements. Roblox export can be a separate downstream target if desired;
 it should not constrain native source.
 
 ## Current foundation and missing capabilities
+
+Studio now starts the workflow at **File → Import From → Room Video…**. This
+opens a compact local import/review dialog, available without an open game.
+The shared Rust `tools` crate inspects a video, selects sharp frames across its
+timeline, reserves evaluation frames, and writes a new capture dataset. The
+same operation is available through `cubacadabra capture-video`. FFmpeg is the
+optional decoder prerequisite; Python and the `splat-local` application are
+not dependencies. Camera recovery, scale alignment, dense geometry, splat
+training, and scene conversion are not implemented by this intake step.
+
+Start by reviewing these images and measuring one visible reference distance.
+The next implementation milestone is camera recovery in `tools`: typed
+intrinsics/poses, a sparse point cloud, registration and reprojection
+diagnostics, and a shared alignment record. Keep that result independent of
+the later appearance and solid-geometry branches. Use the checked-out
+`splat-local` stages as comparative evidence; own the adapters and result
+format rather than embedding its server or copying its Python orchestration.
 
 The [toolchain](../../systems/toolchain/overview.md) already separates editable
 `scene.json` source from compiled packages. The

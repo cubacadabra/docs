@@ -6,8 +6,8 @@ uses so creators can test the package boundary honestly.
 
 - [Overview](overview.md) — purpose, prerequisites, and current limits.
 - [Asset workflow](asset-workflow.md) — local GLB import and Morph handling.
-- [Room capture to playable world](room-capture-to-playable-world.md) — proposed
-  reconstruction, editable geometry, and optional native-splat pipeline.
+- [Room capture to playable world](room-capture-to-playable-world.md) — local
+  video intake, proposed reconstruction, editable geometry, and optional splats.
 - [Editing model](editing-model.md) — proposed shared edit path.
 - [Unified Add palette](add-palette.md) — contextual creation UX and the
   capability map for future authoring systems.
