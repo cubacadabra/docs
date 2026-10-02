@@ -20,6 +20,28 @@ folder:
 cubacadabra capture-video --video room.mov --output /path/to/room-capture
 ```
 
+The shared crate also exposes `capture_video_with_progress` with transient,
+typed `CaptureProgress` updates. The existing `capture_video` string callback
+remains compatible and reports stage transitions. The five steps are video
+inspection, source hashing, decoding, sharpness selection, and saving. Work
+units are source bytes, decoded video milliseconds from actual presentation
+timestamps, candidate frames checked, and selected frames saved plus one unit
+for metadata/finalization. Inspection has no known total. Updates are throttled
+to four per second, with step transitions and completed totals delivered
+immediately. `Complete` is emitted only after the completion marker is committed.
+Progress and timings do not change the version 1 dataset or selection algorithm.
+
+Studio displays a current-step progress bar, counts, step number, and elapsed
+capture time. After at least one second of measured work, it estimates the
+remaining time for that step using its observed average throughput. This is
+explicitly a step estimate; later steps have different costs. Before usable
+measurements, it displays an estimating state. Cancellation disables the
+cancel control and keeps its waiting state visible until the worker stops.
+Studio writes info-level logs at step transitions, every five seconds during
+work, and on completion, cancellation, or failure, including elapsed time and
+available progress/step estimates. Logs are local; dataset metadata still
+excludes absolute paths.
+
 FFmpeg and ffprobe are optional, local creator prerequisites for this workflow.
 They are invoked with argument arrays, without a shell. No Python, COLMAP,
 Brush, network service, or GPU training dependency is required for intake.
