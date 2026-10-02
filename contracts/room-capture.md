@@ -1,7 +1,9 @@
 # Local room-capture dataset
 
-**Status:** Current contract. **Maturity:** Initial video-intake format,
-version 1. Creator source only.
+**Status:** Current contract
+**Maturity:** Preview
+
+Initial video-intake format, version 1. Creator source only.
 
 The `tools` crate `cubacadabra-room-capture` owns video inspection, frame
 selection, and serialization. Studio and `cubacadabra capture-video` call the
@@ -145,9 +147,10 @@ and cancellation. An FFmpeg integration fixture exercises actual decoding,
 JPEG dimensions, timestamps, source identity, evaluation splitting, persisted
 metadata, and temporary-output cleanup when FFmpeg is installed.
 
-The next stage consumes reconstruction frames to recover shared camera
-intrinsics/poses and a sparse point cloud, records registration diagnostics,
-and asks for a measured scale anchor. It needs a separate versioned result
-contract and adapters in `tools`. See the
+The implemented [camera-recovery stage](room-reconstruction.md) consumes only
+reconstruction frames through the optional local COLMAP adapter. It recovers
+shared intrinsics/poses and sparse points, records registration and parallax
+diagnostics, and supports a reviewed measured distance and floor alignment.
+Its separate versioned result does not modify this capture format. See the
 [room-capture product proposal](../products/studio/room-capture-to-playable-world.md)
 for geometry, collision, editing, and subsequent splat experiments.

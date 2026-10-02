@@ -1,8 +1,9 @@
 # From a room capture to a playable Cubacadabra world
 
-**Status:** Video intake implemented; reconstruction and playable-world stages
-remain a proposal. The current creator-source format is defined by the
-[local room-capture dataset contract](../../contracts/room-capture.md).
+**Status:** Video intake, sparse camera recovery, and reviewed metric alignment
+implemented; dense reconstruction and playable-world stages remain a proposal.
+Creator-source formats are defined by the [capture](../../contracts/room-capture.md)
+and [camera-reconstruction](../../contracts/room-reconstruction.md) contracts.
 
 Capture a real room with a phone, reconstruct its appearance, and turn it into
 an editable game environment. Cubacadabra can do this better than a workflow
@@ -44,14 +45,22 @@ The shared Rust `tools` crate inspects a video, selects sharp frames across its
 timeline, reserves evaluation frames, and writes a new capture dataset. The
 same operation is available through `cubacadabra capture-video`. FFmpeg is the
 optional decoder prerequisite; Python and the `splat-local` application are
-not dependencies. Camera recovery, scale alignment, dense geometry, splat
-training, and scene conversion are not implemented by this intake step.
+not dependencies. Camera recovery is a separate optional COLMAP stage;
+dense geometry, splat training, and scene conversion are not implemented.
 
-Start by reviewing these images and measuring one visible reference distance.
-The next implementation milestone is camera recovery in `tools`: typed
-intrinsics/poses, a sparse point cloud, registration and reprojection
-diagnostics, and a shared alignment record. Keep that result independent of
-the later appearance and solid-geometry branches. Use the checked-out
+After frame review, **Recover cameras** runs the shared `tools` adapter. Studio
+can also reopen `capture.json` or `reconstruction.json`. The result includes
+typed intrinsics/poses, a sparse cloud, original point observations, registration,
+reprojection, and parallax diagnostics. Studio shows camera and point evidence
+and supports a measured-distance anchor plus three reviewed floor points for
+metric scale, orientation, and origin. Separate reconstructions stay separate;
+small pixel error does not certify accurate depth. The CLI exposes the same
+operations as `recover-cameras` and `align-capture`.
+
+The next implementation milestone is dense surface recovery from reviewed
+cameras, followed by supported textured visual geometry and explicit floor/wall
+collision. Reuse the shared camera and alignment result across the later
+appearance and solid-geometry branches. Use the checked-out
 `splat-local` stages as comparative evidence; own the adapters and result
 format rather than embedding its server or copying its Python orchestration.
 

@@ -39,6 +39,12 @@ selection, diagnostics, and the
 optional prerequisite for this operation; normal project creation, build, and
 player packages do not acquire a video-decoder or reconstruction dependency.
 
+The same crate now owns optional COLMAP sparse camera recovery and reviewed
+metric alignment through `recover-cameras` and `align-capture`. Studio consumes
+the [separate reconstruction evidence contract](../../contracts/room-reconstruction.md)
+for camera/point review. These source-only results are not packages or collision
+geometry; dense reconstruction and scene conversion remain later boundaries.
+
 The Studio-required project and build path is delivered by the shared Rust
 crates in `tools`. Studio builds a raw project into a temporary package and
 loads the result through the existing Rust runtime. The Studio release does

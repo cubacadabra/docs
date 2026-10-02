@@ -16,4 +16,5 @@ Normative and versioned technical behavior:
   [snapshots](snapshots.md).
 - [MorphPack v5](morph-pack-v5.md).
 - [Local room-capture dataset](room-capture.md) — creator-only video intake.
+- [Room camera reconstruction and alignment](room-reconstruction.md) — creator-only sparse evidence and reviewed metric coordinates.
 - [SDK modules](sdk/README.md).
