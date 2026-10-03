@@ -47,9 +47,12 @@ not authenticate, make a network request, or publish the asset.
   opened; `--morph-catalog` remains available as an override.
 - **Import character asset…** previews the selected GLB and validates its
   current rigid-wearable mapping.
-- **Add to this game** writes `source.glb`, `source.morph.json`,
+- **Add to local library** writes `source.glb`, `source.morph.json`,
   `runtime.morphpack`, and `thumbnail.png` under the project, upserts the local
   catalog entry, and registers the pack in the live Studio renderer.
+- The dialog identifies this as local preview. Manifest asset wiring and
+  reproducible package use are unfinished; the action does not promise that
+  every Player host can load the imported asset yet.
 - Local import does not require authentication or make a network request.
 
 The remaining authoring UI work is the classification step for new skinned

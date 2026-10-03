@@ -282,6 +282,23 @@ with inline fields are rejected. Runtime manifests must contain inline data;
 hosts do not follow these authoring paths. The retired Python builder rejects
 this capability rather than emitting unresolved collision.
 
+Large collision source may be a format-1 index instead of a triangle document:
+
+```json
+{"formatVersion": 1, "sources": ["hub-collision.parts/part-0000.json", "hub-collision.parts/part-0001.json"]}
+```
+
+Shard paths resolve relative to the index file's directory and must remain
+inside that directory, including after symlink resolution. An index references
+1–128 distinct JSON files; each shard is an inline format-1 triangle document
+at or below 4,000,000 bytes. Nested indexes, duplicate files, traversal, mixed
+fields, and unsupported versions are rejected. Index plus shard bytes remain
+bounded to 64 MiB, and the merged geometry retains the 200,000-triangle limit.
+The builder concatenates triangles in listed order and emits the same inline
+runtime format. This is an authoring extension, not a runtime format change.
+The reference mesh exporter automatically writes this representation when its
+collision output exceeds 4,000,000 bytes.
+
 The reference mesh exporter can emit the same baked geometry as a separate
 collision document. Source `canCollide` controls inclusion, independently of
 visual transparency; source transforms, mesh overrides, exclusions, and the

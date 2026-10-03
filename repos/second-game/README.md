@@ -1,15 +1,9 @@
-# `cubacadabra/second-game`
+# `second-game` moved to `examples`
 
-**Owns:** Signal Run's world layout, cooperative relay rules, reducer, effects,
-audio identity, and HUD source.
+Signal Run now lives in [`cubacadabra/examples/second-game`](https://github.com/cubacadabra/examples/tree/main/second-game).
+The standalone repository is retired. Clone `examples` alongside `tools` and
+`rust`; hosts and CI build this source from `examples/second-game`.
 
-**Does not own:** generic runtime semantics, package building, or host code.
-
-- Runs in: any host that loads the package.
-- Depends on: [tools](../tools/README.md), [Rust](../rust/README.md), and SDK contracts.
-- Used by: feature and cross-game demonstrations.
-- Read next: [Luau API](../../contracts/luau-api.md), [SDK contracts](../../contracts/sdk/README.md).
-- Verify with: package and host conformance checks.
-- Incomplete: release claims require the evidence gate in the [roadmap](../../reference/roadmap.md).
-
-Repository: [github.com/cubacadabra/second-game](https://github.com/cubacadabra/second-game)
+Its package ID remains `second-game`, and its hosted `/games/second-game/` URL remains
+unchanged. See the [examples repository entry](../examples/README.md) and
+[contribution guide](../../CONTRIBUTING.md).

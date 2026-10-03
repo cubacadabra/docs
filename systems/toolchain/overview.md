@@ -176,8 +176,8 @@ The migration is complete for Studio only when all of the following are true:
 
 - the native CLI preserves the current project/build command behavior and
   package-contract outputs, including validation failures and integrity data;
-- the compatibility workflow builds representative projects from
-  `first-game`, `second-game`, `third-game`, and `examples` with the native
+- the compatibility workflow builds all projects in `examples`, including
+  Cuboom and the consolidated schoolyard, relay, and capability probe, with the native
   builder and compares the resulting package semantics;
 - Studio's raw-project preview succeeds on macOS, Windows, and Linux on a
   clean machine with Python unavailable;

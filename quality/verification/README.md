@@ -9,6 +9,7 @@ host loading, and release evidence establish different claims.
 - [Performance](performance.md)
 - [Character runtime](character-runtime.md)
 - [Release readiness](release-readiness.md)
+- [Public source review — 2026-10-02](public-review-2026-10-02.md)
 
 Studio evidence is creator-host preview evidence. Player evidence belongs to
 Web, iOS, Android, and Desktop. See [compatibility](../compatibility/README.md)

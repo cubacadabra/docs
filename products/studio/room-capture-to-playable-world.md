@@ -39,7 +39,7 @@ it should not constrain native source.
 
 ## Current foundation and missing capabilities
 
-Studio now starts the workflow at **File → Import From → Room Video…**. This
+Studio now starts the workflow at **File → Import From → Room Video (experimental)…**. This
 opens a compact local import/review dialog, available without an open game.
 The shared Rust `tools` crate inspects a video, selects sharp frames across its
 timeline, reserves evaluation frames, and writes a new capture dataset. The

@@ -26,7 +26,7 @@ and remaining evidence.
 ## Working foundations
 
 - The tools builder produces package format 3 and accepts SDK `0.3.0` and
-  `0.4.0`; terrain requires `0.4.0`. Packages include generated Luau and
+  `0.4.0`, `0.5.0`, and `0.6.0`; terrain requires `0.4.0` or newer. Packages include generated Luau and
   integrity metadata. The native CLI is the sole expander for Maze 101's
   bounded procedural declaration, and the generated package loads through the
   Rust headless runtime. See [package contract](../contracts/game-package.md).
@@ -46,9 +46,15 @@ and remaining evidence.
   simulation-time tasks, static terrain, package assets, and MorphPack v5
   have explicit contracts.
 
-## Next gameplay milestone
+## Featured game and gameplay work
 
-[Lemonade 101](lemonade-101.md) is the next example target. It intentionally
+[Cuboom](https://github.com/cubacadabra/examples/tree/main/cuboom) is the
+public contribution focus. Improve its first minute, physical interactions,
+multiplayer convergence, reconnect behavior, touch controls, and the Studio
+workflows needed to author and inspect it. Its package identity is `heavy2`.
+Keep cooperative state separate from trusted authority and durable progression.
+
+[Lemonade 101](lemonade-101.md) remains a behavior-first experiment. It intentionally
 uses a tiny native park and a Luau-owned recipe/service loop to expose the
 platform gaps that imported-world work cannot: stationary world actors,
 world-space identity, explicit context actions, and eventually trusted game

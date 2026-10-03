@@ -1,7 +1,13 @@
 # Cubacadabra
 
-An open-source game platform where creators build once and players play
-everywhere.
+An open-source game platform inspired by Roblox. Author a game in JSON and
+Luau, build one portable package, and load it through a shared Rust runtime
+on Web, iOS, Android, and Desktop. Platform source is **GPL-3.0-or-later**.
+
+Cubacadabra is **pre-launch**. We are opening the code for review and help from
+game developers. Start with [Cuboom](https://github.com/cubacadabra/examples/tree/main/cuboom),
+our featured game, then [build it locally](start/build-your-first-cube.md) and
+[contribute](CONTRIBUTING.md).
 
 Cubacadabra Studio authors inspectable source. A native toolchain turns it into
 one portable, hashed Cube. Player hosts open that same package through a shared
@@ -9,9 +15,15 @@ Rust runtime on Web, iOS, Android, and Desktop.
 
 ![Cubacadabra platform overview](media/diagrams/platform-overview.svg)
 
-## Bring your existing game
+## For Roblox creators
 
-<img src="media/roblox-cubacadabra-migration.png" alt="roblox-cubacadabra-migration.png">
+Studio uses familiar workflows: a scene hierarchy, properties, picking,
+transforms, grouping, undo, and Play/Stop. Native source is deterministic JSON,
+Luau, and ordinary asset formats, so it can be reviewed in Git and edited by
+tools as well as Studio. Roblox XML import converts supported scene content;
+scripts and unsupported resources need adaptation. Read the
+[interchange limits](products/studio/roblox-project-interchange.md) before
+bringing an existing project.
 
 ## Explore Cubacadabra
 
@@ -52,7 +64,7 @@ Start from the repository you are changing, then follow its canonical links:
 - Continuing current work? Read [Current state](CURRENT_STATE.md).
 - New to Cubacadabra? Read [How Cubacadabra works](start/how-cubacadabra-works.md).
 - Building a game? Start with [Build your first Cube](start/build-your-first-cube.md).
-- Planning the next behavior-first example? Read [Lemonade 101](reference/lemonade-101.md).
+- Want to help with a game? Start with [Cuboom](https://github.com/cubacadabra/examples/tree/main/cuboom).
 - Changing a host? Open the matching [repository entry](repos/README.md), then [host conformance](quality/compatibility/host-conformance.md).
 - Changing Rust? Read [runtime ownership](systems/runtime/overview.md), then [testing](quality/verification/testing.md).
 - Checking a public contract? Use [contracts](contracts/README.md) and [decisions](decisions/README.md).
@@ -60,11 +72,12 @@ Start from the repository you are changing, then follow its canonical links:
 
 ## Current status
 
-The [current state snapshot](CURRENT_STATE.md) records the active visual
-milestone and the latest completed work. The native builder produces package
-format 3 and the Maze 101 package is a verified native-build milestone. Rust
-provides shared runtime foundations; Studio imports and previews supported GLBs;
-and the service has presence plus ordered cooperative retained state.
+The [current state snapshot](CURRENT_STATE.md) identifies working foundations
+and useful contribution areas. The native builder produces package format 3;
+Studio and the CLI share the same source and build path. The service has
+presence and ordered cooperative retained state. Cuboom exercises scene
+authoring, physics, effects, and cooperative play; smaller examples isolate
+other supported APIs.
 
 The major open gaps are trusted game authority, transactional release
 activation, end-to-end Morph asset wiring, full host conformance, durable

@@ -9,6 +9,7 @@ world authority.
 - Runs in: modern browsers; Rust is compiled to WebAssembly.
 - Depends on: [Rust](../rust/README.md), game packages, and [backend](../backend/README.md).
 - Used by: Web Player and the public developer distribution path.
+- Public preview release: Cuboom, Schoolyard, and Signal Run. Development builds include the full examples collection; large import experiments are excluded from the first static release.
 - Read next: [Player/Web](../../products/player/web.md), [runtime](../../systems/runtime/overview.md), [package contract](../../contracts/game-package.md).
 - Verify with: [host conformance](../../quality/compatibility/host-conformance.md).
 - Incomplete: full parity evidence for every host boundary and release artifact.

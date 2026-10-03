@@ -12,7 +12,7 @@ loading, and it does not establish a reconstructed world or calibrated camera.
 
 ## Intake and storage
 
-Studio exposes **File → Import From → Room Video…**, including when no project
+Studio exposes **File → Import From → Room Video (experimental)…**, including when no project
 is open. The creator chooses a local video and an existing output parent. The
 workflow creates a new capture folder, processes in the background, supports
 cancellation, and offers frame review. The CLI requires an explicit new output

@@ -1,7 +1,9 @@
 name: Documentation checks
 
 on:
+  pull_request:
   push:
+    branches: [main]
     tags:
       - "docs-check-*"
 

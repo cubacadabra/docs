@@ -97,6 +97,18 @@ and is not implied by local import.
 
 ## Current boundaries
 
+The available workspaces are **World**, **Files**, and **Morphs**. Mock Assets,
+Materials, and Test workspaces have been removed. Edit built-in surface
+materials in the Inspector and browse actual project assets in Files. Use the
+Play menu for real local multiplayer previews; a session/state/network
+inspector is still open work.
+
+**Add to local library** in Morphs saves and previews the local asset. The
+control explains that package manifest wiring is unfinished. Room Video is
+experimental capture and sparse-camera evidence; it does not yet turn a video
+into a playable world. Roblox XML import/export is partial; consult the
+[interchange limits](roblox-project-interchange.md).
+
 The existing plan includes panels and visual-authoring ideas that are not
 necessarily implemented. Studio directly calls Rust APIs rather than routing
 in-process editor calls through C/JSON. See the shared
